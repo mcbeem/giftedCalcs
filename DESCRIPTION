@@ -1,9 +1,14 @@
 Package: giftedCalcs
-Title: What the Package Does (one line, title case)
+Title: Psychometrics for Gifted Program Identification
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors: person("Matthew", "McBee", email = "mcbeem@etsu.edu", role = c("aut", "cre"))
+Description: Psychometrics for gifted and talented program identification, including one-
+  and two-stage identification systems, conditional multivariate moments, and functions for the 
+  conditional distribution of identified students.
 Depends: R (>= 3.4.0)
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Imports: mnormt,
+  SimDesign
+RoxygenNote: 6.0.1
