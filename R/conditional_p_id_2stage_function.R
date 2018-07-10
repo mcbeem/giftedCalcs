@@ -58,9 +58,7 @@ conditional_p_id_2stage <- function(relyt, valid, true.score, test.cutoff, nom.c
   b_N <- (qnorm(nom.cutoff)*sqrt(relyt)) / valid
   a_N <- sqrt(((valid^2) / relyt) / (1-((valid^2) / relyt)))
   
-  p.id.test <- pnorm(a_C*(true.score-b_C))
-  p.id.nom <- pnorm(a_N*(true.score-b_N))
-  p.identification <- p.id.test*p.id.nom
+  p.identification <- pnorm(a_C*(true.score-b_C))*pnorm(a_N*(true.score-b_N))
   
   return(p.identification)
 }
