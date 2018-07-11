@@ -1,4 +1,4 @@
-#' Conditional quantile function for the distribution of true scores for identified students
+#' Quantile function for true scores for identified students
 #'
 #' \code{q_identified} is the conditional quantile function for identified students.
 #' Given a percentile for the true score, it returns the corresponding true score (on a

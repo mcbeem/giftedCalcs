@@ -2,7 +2,7 @@
 % Please edit documentation in R/q_identified_function.R
 \name{q_identified}
 \alias{q_identified}
-\title{Conditional quantile function for the distribution of true scores for identified students}
+\title{Quantile function for true scores for identified students}
 \usage{
 q_identified(relyt, valid, test.cutoff, nom.cutoff, percentile, mu = 0)
 }

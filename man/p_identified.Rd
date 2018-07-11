@@ -2,7 +2,7 @@
 % Please edit documentation in R/p_identified_function.R
 \name{p_identified}
 \alias{p_identified}
-\title{Function for the conditional cumulative density of true scores for identified students}
+\title{Conditional cumulative density function of true scores for identified students}
 \usage{
 p_identified(relyt, valid, test.cutoff, nom.cutoff, true.score, mu = 0)
 }

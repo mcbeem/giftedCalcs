@@ -1,4 +1,4 @@
-#' Function for the conditional density of true scores for identified students
+#' Conditional density of true scores for identified students
 #'
 #' \code{d_identified} is the conditional probability density function (pdf) for
 #' identified students. It is a true probablity density with a total area of one.
@@ -34,13 +34,13 @@
 #' # make plot of the density
 #' #
 #' # create vector of true scores
-#' T <- seq(0,4, length.out=200)
+#' Tscores <- seq(0,4, length.out=200)
 #'
 #' # plot the density
-#' p.id <- sapply(T, d_identified, relyt=.95,
+#' p.id <- sapply(Tscores, d_identified, relyt=.95,
 #'   test.cutoff=.9, nom.cutoff=.9, valid=.5)
 #'
-#' plot(x=T, y=p.id, type="l", xlab="true score", ylab="density")
+#' plot(x=Tscores, y=p.id, type="l", xlab="true score", ylab="density")
 #' @export
 
 d_identified <- function(relyt, valid, test.cutoff, nom.cutoff, true.score, mu=0) {

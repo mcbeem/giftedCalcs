@@ -2,7 +2,7 @@
 % Please edit documentation in R/sd_identified_function.R
 \name{sd_identified}
 \alias{sd_identified}
-\title{Function for calculing the standard deviation of the conditional distribution of ability for identified students}
+\title{Standard deviation of the conditional distribution of ability for identified students}
 \usage{
 sd_identified(relyt, valid, test.cutoff, nom.cutoff, mu = 0)
 }
@@ -24,7 +24,7 @@ Must not be exactly 0 or 1.}
 Defaults to zero.}
 }
 \description{
-\code{sd_identified} calculates the expected value (mean) of the ability true
+\code{sd_identified} calculates the standard deviation of the ability true
   score distribution for identified students.
 }
 \examples{

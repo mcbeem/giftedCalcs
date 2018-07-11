@@ -2,14 +2,14 @@
 % Please edit documentation in R/conditional_moments_2stage_function.R
 \name{conditional_moments_2stage}
 \alias{conditional_moments_2stage}
-\title{Function for calculating the conditional mean vector and covariance matrix 
+\title{The conditional mean vector and covariance matrix
  of the observed nomination and confirmatory test scores given the true
  score for a two-stage identification system}
 \usage{
 conditional_moments_2stage(relyt, valid, true.score)
 }
 \arguments{
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1). 
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
@@ -19,22 +19,22 @@ must be less than the square root of the test reliability.}
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
 }
 \description{
-\code{conditional_moments_2stage} calculates the conditional mean vector and 
- covariance matrix of the bivarate normal distribution of the observed nomination 
+\code{conditional_moments_2stage} calculates the conditional mean vector and
+ covariance matrix of the bivarate normal distribution of the observed nomination
  and confirmatory test scores, given the student's true ability score and the system
  parameters. These parameters include the test reliability and the nomination validity.
 }
 \details{
 This function returns a list containing the following:
 
-conditional.mean: The mean vector of the bivariate normal distribution 
+conditional.mean: The mean vector of the bivariate normal distribution
   of the observed nomination and confirmatory test scores, in that order.
- 
- conditional.var: The covariance matrix of the bivariate normal distribution 
+
+conditional.var: The covariance matrix of the bivariate normal distribution
    of the observed nomination and confirmatory test scores, in that order.
 }
 \examples{
-# test reliability is .9, the student's true score 
+# test reliability is .9, the student's true score
 # is 2 SDs above the mean, and the nomination validity is
 # 0.6
 #

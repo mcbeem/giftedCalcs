@@ -1,6 +1,6 @@
 Package: giftedCalcs
 Title: Psychometrics for Gifted Program Identification
-Version: 0.0.4
+Version: 0.0.5
 Authors: person("Matthew", "McBee", email = "mcbeem@etsu.edu", role = c("aut", "cre"))
 Description: Psychometrics for gifted and talented program identification, including one-
   and two-stage identification systems, conditional multivariate moments, and functions for the 

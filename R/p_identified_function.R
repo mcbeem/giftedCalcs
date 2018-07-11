@@ -1,4 +1,4 @@
-#' Function for the conditional cumulative density of true scores for identified students
+#' Conditional cumulative density function of true scores for identified students
 #'
 #' \code{p_identified} is the conditional cumulative density function (cdf) for
 #' identified students. Given a value for the true score, it returns the proportion

@@ -1,4 +1,4 @@
-#' Function for calculing the mean of the conditional distribution of ability for identified students
+#' Mean of the conditional distribution of ability for identified students
 #'
 #' \code{mean_identified} calculates the expected value (mean) of the ability true
 #'   score distribution for identified students.

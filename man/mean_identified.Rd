@@ -2,7 +2,7 @@
 % Please edit documentation in R/mean_identified_function.R
 \name{mean_identified}
 \alias{mean_identified}
-\title{Function for calculing the mean of the conditional distribution of ability for identified students}
+\title{Mean of the conditional distribution of ability for identified students}
 \usage{
 mean_identified(relyt, valid, test.cutoff, nom.cutoff, mu = 0)
 }

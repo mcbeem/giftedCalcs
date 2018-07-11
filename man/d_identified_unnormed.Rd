@@ -2,7 +2,7 @@
 % Please edit documentation in R/d_identified_unnormed_function.R
 \name{d_identified_unnormed}
 \alias{d_identified_unnormed}
-\title{Function for the unnormalized conditional density of true scores for identified students}
+\title{Un-normalized conditional density of true scores for identified students}
 \usage{
 d_identified_unnormed(relyt, valid, true.score, test.cutoff, nom.cutoff,
   mu = 0)
@@ -53,18 +53,18 @@ d_identified_unnormed(relyt=.9, true.score=1,
 # make plot of the unnormalized density
 #
 # create vector of true scores
-T <- seq(0,4, length.out=200)
+Tscores <- seq(0,4, length.out=200)
 
 # plot the un-normed density for universal screening
-p.id <- sapply(T, d_identified_unnormed, relyt=.9,
+p.id <- sapply(Tscores, d_identified_unnormed, relyt=.9,
   test.cutoff=.9, nom.cutoff=.0000001, valid=.5)
 
-plot(x=T, y=p.id, type="l", xlab="true score",
+plot(x=Tscores, y=p.id, type="l", xlab="true score",
   col="blue")
 
 # plot the un-normed density for a bad system
-p.id2 <- sapply(T, d_identified_unnormed, relyt=.9,
+p.id2 <- sapply(Tscores, d_identified_unnormed, relyt=.9,
   test.cutoff=.9, nom.cutoff=.9, valid=.5)
 
-points(x=T, y=p.id2, type="l", col="red")
+points(x=Tscores, y=p.id2, type="l", col="red")
 }

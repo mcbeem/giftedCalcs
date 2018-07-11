@@ -2,24 +2,24 @@
 % Please edit documentation in R/marginal_psychometrics_1stage_function.R
 \name{marginal_psychometrics_1stage}
 \alias{marginal_psychometrics_1stage}
-\title{Function for calculating marginal performance statistics for a single-stage 
+\title{Marginal performance statistics for a single-stage
  identification system}
 \usage{
 marginal_psychometrics_1stage(relyt, test.cutoff, mu = 0)
 }
 \arguments{
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1). 
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1). 
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{mu}{Population mean true score on a standardized (z-score) metric.
 Defaults to zero.}
 }
 \description{
-\code{marginal_psychometrics_1stage} calculates marginal performance statistics 
- for a single-stage identification system with a single assessment. The results 
+\code{marginal_psychometrics_1stage} calculates marginal performance statistics
+ for a single-stage identification system with a single assessment. The results
  are valid if all students are tested on the confirmatory assessment. If only a
  subset are tested, use function \code{marginal_psychometrics_2stage}.
 }
@@ -27,18 +27,18 @@ Defaults to zero.}
 This function returns a list containing the following:
 
 sensitivity: The proprtion of qualifying students who are identified.
- 
- IIR: Incorrect identification rate; the proportion of identified students 
+
+IIR: Incorrect identification rate; the proportion of identified students
    who do not qualify.
- 
- identification.rate: The proportion of the student population that is identified.
+
+identification.rate: The proportion of the student population that is identified.
 }
 \examples{
-# the population mean ability is zero, the test cutoff is 
-# at the 90th percentile, and the confirmatory test 
+# the population mean ability is zero, the test cutoff is
+# at the 90th percentile, and the confirmatory test
 reliability is .9
 
-marginal_psychometrics_1stage(mu=0, 
+marginal_psychometrics_1stage(mu=0,
  test.cutoff=.9, relyt=.9)
 
 }

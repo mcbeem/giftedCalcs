@@ -1,6 +1,6 @@
-#' Function for calculing the standard deviation of the conditional distribution of ability for identified students
+#' Standard deviation of the conditional distribution of ability for identified students
 #'
-#' \code{sd_identified} calculates the expected value (mean) of the ability true
+#' \code{sd_identified} calculates the standard deviation of the ability true
 #'   score distribution for identified students.
 #'
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
