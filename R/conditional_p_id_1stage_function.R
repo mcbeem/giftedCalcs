@@ -1,4 +1,4 @@
-#' The conditional probability of identification given
+#' Conditional probability of identification given
 #'  the true score for a single-stage identification system
 #'
 #' \code{conditional_p_id_1stage} calculates the conditional probabilty of identification

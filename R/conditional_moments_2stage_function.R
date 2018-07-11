@@ -1,4 +1,4 @@
-#' The conditional mean vector and covariance matrix
+#' Conditional mean vector and covariance matrix
 #'  of the observed nomination and confirmatory test scores given the true
 #'  score for a two-stage identification system
 #'

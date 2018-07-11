@@ -1,4 +1,4 @@
-#' The conditional mean and variance of the observed scores given
+#' Conditional mean and variance of the observed scores given
 #'  the true score for a single-stage identification system
 #'
 #' \code{conditional_moments_1stage} calculates the conditional mean and variance
