@@ -2,7 +2,7 @@
 % Please edit documentation in R/conditional_moments_2stage_function.R
 \name{conditional_moments_2stage}
 \alias{conditional_moments_2stage}
-\title{The conditional mean vector and covariance matrix
+\title{Conditional mean vector and covariance matrix
  of the observed nomination and confirmatory test scores given the true
  score for a two-stage identification system}
 \usage{

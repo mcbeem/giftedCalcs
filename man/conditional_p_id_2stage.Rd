@@ -2,7 +2,7 @@
 % Please edit documentation in R/conditional_p_id_2stage_function.R
 \name{conditional_p_id_2stage}
 \alias{conditional_p_id_2stage}
-\title{The conditional probability of identification given
+\title{Conditional probability of identification given
  the true score for a two-stage identification system}
 \usage{
 conditional_p_id_2stage(relyt, valid, true.score, test.cutoff, nom.cutoff)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/conditional_moments_1stage_function.R
 \name{conditional_moments_1stage}
 \alias{conditional_moments_1stage}
-\title{The conditional mean and variance of the observed scores given
+\title{Conditional mean and variance of the observed scores given
  the true score for a single-stage identification system}
 \usage{
 conditional_moments_1stage(relyt, true.score)
