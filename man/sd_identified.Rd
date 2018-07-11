@@ -7,17 +7,17 @@
 sd_identified(relyt, valid, test.cutoff, nom.cutoff, mu = 0)
 }
 \arguments{
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1). 
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
 
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1). 
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
 
-\item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1). 
+\item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{mu}{Population mean true score on a standardized (z-score) metric.
@@ -29,10 +29,10 @@ Defaults to zero.}
 }
 \examples{
 # std dev on the z-score metric
-sd_identified(relyt=.9, valid=.8, 
+sd_identified(relyt=.9, valid=.8,
   test.cutoff=.9, nom.cutoff=.5, mu=0)
 
 # sd on the IQ-metric
-15*(sd_identified(relyt=.9, valid=.8, 
+15*(sd_identified(relyt=.9, valid=.8,
 test.cutoff=.9, nom.cutoff=.5, mu=0))
 }
