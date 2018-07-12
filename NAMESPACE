@@ -3,7 +3,6 @@
 export(conditional_moments)
 export(conditional_p_id)
 export(d_identified)
-export(d_identified_unnormed)
 export(errortrapping)
 export(marginal_psychometrics)
 export(mean_identified)

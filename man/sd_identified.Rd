@@ -4,7 +4,7 @@
 \alias{sd_identified}
 \title{Standard deviation of the conditional distribution of ability for identified students}
 \usage{
-sd_identified(relyt, valid, test.cutoff, nom.cutoff, mu = 0)
+sd_identified(...)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).

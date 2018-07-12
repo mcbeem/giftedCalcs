@@ -4,7 +4,7 @@
 \alias{marginal_psychometrics}
 \title{Marginal performance statistics identification systems}
 \usage{
-\code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff}
+\code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff)}
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).

@@ -4,55 +4,70 @@
 \alias{d_identified}
 \title{Conditional density of true scores for identified students}
 \usage{
-d_identified(relyt, valid, test.cutoff, nom.cutoff, true.score, mu = 0)
+\code{d_identified(true.score, relyt, test.cutoff, valid,
+ nom.cutoff, mu=0, normalize=T)}
 }
 \arguments{
+\item{true.score}{The student's true score on a standardized (z-score) metric.}
+
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
+
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
+Must not be exactly 0 or 1.}
+
+\item{mu}{Population mean true score on a standardized (z-score) metric.
+Defaults to zero.}
+
+\item{normalize}{Logical. Should the density be normalized to have a total area of one?
+Defaults to TRUE.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
 
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
-
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
-
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
-
-\item{mu}{Population mean true score on a standardized (z-score) metric.
-Defaults to zero.}
 }
 \description{
 \code{d_identified} is the conditional probability density function (pdf) for
-identified students. It is a true probablity density with a total area of one.
+identified students.
 }
 \details{
-See also \code{d_identified_unnormed} for the unnormalized density, \code{p_identified}
-for the cumulative density, \code{q_identified} for the quantile function, and
-\code{r_identified} for random generation.
+See also \code{p_identified} for the cumulative density, \code{q_identified}
+for the quantile function, and \code{r_identified} for random generation.
+
+Warning: use explicitly named arguments only; do not rely on position.
+ e.g., use \code{d_identified(true.score=1.5, relyt=.9, test.cutoff=.9)}
+ rather than \code{d_identified(1.5, .9, .9)}
 }
 \examples{
-# test reliability is .9, the student's true score
-# is 1 SD above the mean, the test cutoff is
-# at the 90th percentile, the nomination
-# cutoff is at the 90th percentile, the
-# nomination validity is 0.5, and the student's
-# population mean ability true score is 0
-#
+# un-normalized density for t=1.0
 d_identified(relyt=.9, true.score=1, test.cutoff=.9,
-  nom.cutoff=.9, valid=.5, mu=0)
+  nom.cutoff=.9, valid=.5, mu=0, normalize=F)
 
-# make plot of the density
+# normalized density for t=1.0
+d_identified(relyt=.9, true.score=1, test.cutoff=.9,
+  nom.cutoff=.9, valid=.5, mu=0, normalize=T)
+
+# compare the density of identified students for universal
+# screening vs. a poor-performing nomination stage
 #
+# area of each curve is proportion to the identification rate
+# under each system
+
 # create vector of true scores
 Tscores <- seq(0,4, length.out=200)
 
-# plot the density
-p.id <- sapply(Tscores, d_identified, relyt=.95,
-  test.cutoff=.9, nom.cutoff=.9, valid=.5)
+p.universal <- sapply(Tscores, d_identified, relyt=.9,
+  test.cutoff=.9, normalize=F)
 
-plot(x=Tscores, y=p.id, type="l", xlab="true score", ylab="density")
+plot(x=Tscores, y=p.universal, type="l", xlab="true score",
+  col="blue")
+
+# add the un-normed density for the bad system
+p.bad <- sapply(Tscores, d_identified, relyt=.9,
+  test.cutoff=.9, nom.cutoff=.9, valid=.5, normalize=F)
+
+points(x=Tscores, y=p.bad, type="l", col="red")
 }

@@ -4,7 +4,7 @@
 \alias{r_identified}
 \title{Random generation from the distribution of true scores for identified students}
 \usage{
-r_identified(n, relyt, valid, test.cutoff, nom.cutoff, mu = 0)
+r_identified(n, ...)
 }
 \arguments{
 \item{n}{The number of values to sample.}
@@ -30,9 +30,9 @@ Defaults to zero.}
   identified students.
 }
 \details{
-See also \code{d_identified_unnormed} for the unnormalized density, \code{d_identified}
-for the normalized density, \code{p_identified} for the cumulative density function, and
-\code{q_identified} for the quantile function.
+See also \code{d_identified} for the normalized density, \code{p_identified}
+for the cumulative density function, and \code{q_identified} for the quantile
+function.
 }
 \examples{
 r_identified(n=10, relyt=.9, valid=.6,

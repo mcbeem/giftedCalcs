@@ -23,7 +23,7 @@
 #'
 #'  identification.rate: The proportion of the student population that is identified.
 #'
-#'@usage \code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff}
+#' @usage \code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff)}
 #'
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
 #'  Must not be exactly 0 or 1.
@@ -52,8 +52,8 @@ marginal_psychometrics <- function(relyt, test.cutoff, mu=0, ...) {
   #   or two-stage version of the calculation should commence. If improper
   #   arguments are supplied, the function exits with an error.
 
-  #check for either 3 or 5 arguments
-  if (!nargs() %in% c(3,5)) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
+  #check for either 2, 3, 4, or 5 arguments
+  if (!nargs() %in% c(2, 3, 4 ,5)) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
 
   arguments <- as.list(match.call()[-1])
 
@@ -65,7 +65,8 @@ marginal_psychometrics <- function(relyt, test.cutoff, mu=0, ...) {
   argcheck <- arguments
   argcheck$valid <- NULL
   argcheck$nom.cutoff <- NULL
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
+  argcheck$mu <- NULL
+  if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
 
   # select 1- or 2-stage version based on the supplied arguments
   if ((("valid") %in% names(arguments)) &

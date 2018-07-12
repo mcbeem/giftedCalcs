@@ -13,7 +13,7 @@
 #'  and \code{nom.cutoff} are provided. Otherwise, the one-stage probability is
 #'  reported.
 #'
-#' @usage \code{conditional_p_id(true.score, relyt, test.cutoff, valid, nom.cutoff}
+#' @usage \code{conditional_p_id(true.score, relyt, test.cutoff, valid, nom.cutoff)}
 #'
 #' @param true.score The student's true score on a standardized (z-score) metric.
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
@@ -51,6 +51,7 @@
 #' abline(v=qnorm(.9), col="red")
 #' @export
 #'
+
 conditional_p_id <- function(true.score, relyt, test.cutoff, ...) {
 
   # this code checks the arguments supplied to determine if the one-stage

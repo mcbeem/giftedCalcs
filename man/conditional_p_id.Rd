@@ -4,7 +4,7 @@
 \alias{conditional_p_id}
 \title{Conditional probability of identification given the true score}
 \usage{
-\code{conditional_p_id(true.score, relyt, test.cutoff, valid, nom.cutoff}
+\code{conditional_p_id(true.score, relyt, test.cutoff, valid, nom.cutoff)}
 }
 \arguments{
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
