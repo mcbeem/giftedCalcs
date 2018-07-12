@@ -4,7 +4,7 @@
 \alias{r_identified}
 \title{Random generation from the distribution of true scores for identified students}
 \usage{
-r_identified(n, normalize = T, ...)
+\code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
 }
 \arguments{
 \item{n}{The number of values to sample.}

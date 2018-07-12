@@ -54,6 +54,8 @@ mean_identified <- function(...) {
   # there should be two arguments left
   if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?mean_identified")}
 
+  errortrapping(...)
+
   # expectation
   f1 <- function(true.score, ...) {
     return(true.score * d_identified(true.score=true.score, ...))

@@ -40,7 +40,7 @@ errortrapping <- function(relyt=.9999999, valid=1E-30,
     stop("\nThe value of test.cutoff must be between zero and one. It is the percentile cutoff score for the confirmatory test. For example, a value of 0.9 is a cutoff at the 90th percentile. It cannot be exactly zero or one, as these would imply infinite cutoff values. The pnorm() function can be used to convert a known cutoff score into a percentile. For example, a cutoff of 120 can be converted to a percentile by running\n\npnorm(120, mean=100, sd=15)")
   }
 
-  if (abs(mu)>1) {
-    warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -1 to +1. Please verify your value of mu.")
-  }
+   if (abs(mu)>2) {
+     warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -2 to +2. Please verify your value of mu.")
+   }
 }

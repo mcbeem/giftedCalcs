@@ -7,6 +7,8 @@
 #' for the cumulative density function, and \code{q_identified} for the quantile
 #' function.
 #'
+#' @usage \code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+#'
 #' @param n The number of values to sample.
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
 #'  Must not be exactly 0 or 1.
@@ -72,8 +74,10 @@ r_identified <- function(n, normalize=T, ...) {
     stop("\ncThe value of n must be greater than zero.")
   }
 
+  errortrapping(...)
+
   M <- d_identified(
-    true.score=mean_identified(...), normalize=T, ...)*2
+    true.score=mean_identified(...), normalize=T, ...)*3
 
   df <- function(true.score) {d_identified(true.score, normalize=T, ...)}
 
@@ -86,5 +90,5 @@ r_identified <- function(n, normalize=T, ...) {
     return(rnorm(n, mean=m, sd=s))
   }
 
-  return(SimDesign::rejectionSampling(n+1, df=df, dg=dg, rg=rg, M=M)[1:n])
+  return(SimDesign::rejectionSampling(n+20, df=df, dg=dg, rg=rg, M=M)[1:n])
 }

@@ -95,6 +95,8 @@ d_identified <- function(normalize=T, true.score, mu=0, ...) {
   # there should be three arguments left
   if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?d_identified")}
 
+  errortrapping(mu=mu, ...)
+
   d_identified_unnormed <- function(true.score, mu, ...) {
     p.id <- conditional_p_id(true.score, ...)
     return(p.id*dnorm(true.score, mean=mu))

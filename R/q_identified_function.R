@@ -35,7 +35,7 @@
 q_identified <- function(percentile, mu=0, ...) {
 
   #check for the correct number of arguments
-  if (!nargs() %in% c(3, 4, 5, 6)) {stop("Incorrect arguments supplied; see ?p_identified")}
+  if (!nargs() %in% c(3, 4, 5, 6)) {stop("Incorrect arguments supplied; see ?q_identified")}
 
   arguments <- as.list(match.call()[-1])
 
@@ -43,7 +43,7 @@ q_identified <- function(percentile, mu=0, ...) {
   if (!(("percentile") %in% names(arguments)) |
       !(("relyt") %in% names(arguments)) |
       !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?p_identified")}
+    stop("Incorrect arguments supplied; see ?q_identified")}
 
   argcheck <- arguments
   # how many arguments were supplied?

@@ -1,18 +1,14 @@
-# test functions
-
-?expect_equal
+expect_equal(
+  as.numeric(unlist(conditional_moments(relyt=.9, true.score=2))),
+  c(1.89736659610103, 0.1), tolerance=1e-7)
 
 expect_equal(
-  as.numeric(conditional_moments(relyt=.9, true.score=2)$conditional.mean),
-  1.897367, tolerance=.000001)
+  unlist(as.numeric(conditional_moments(relyt=.9, true.score=0))),
+  c(0, .1), tolerance=1e-7)
 
 expect_equal(
-  as.numeric(conditional_moments(relyt=.9, true.score=0)$conditional.mean),
-  0, tolerance=.000001)
-
-expect_equal(
-  as.numeric(conditional_moments(relyt=.99999, valid=.99, true.score=0)$conditional.mean),
-  c(0,0), tolerance=.000001)
+  as.numeric(unlist(conditional_moments(relyt=.99999, valid=.99, true.score=0))),
+  c(0, 0, 0.0198901989019891, 0, 0, 9.99999999995449e-06), tolerance=1e-7)
 
 expect_error(conditional_moments(relyt=.99999, valid=1, true.score=0))
 expect_error(conditional_moments(relyt=.99999, valid=0, true.score=0))
