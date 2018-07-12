@@ -58,8 +58,8 @@ conditional_p_id <- function(true.score, relyt, test.cutoff, ...) {
   #   or two-stage version of the calculation should commence. If improper
   #   arguments are supplied, the function exits with an error.
 
-  #check for either 3 or 5 arguments
-  if (!nargs() %in% c(3,5)) {stop("Incorrect arguments supplied; see ?conditional_p_id")}
+  # check that between 3 and 6 arguments were provided (6 in case of mu, which is not used)
+  if (!nargs() %in% c(3,4,5,6)) {stop("Incorrect arguments supplied; see ?conditional_p_id")}
 
   arguments <- as.list(match.call()[-1])
 
@@ -70,8 +70,17 @@ conditional_p_id <- function(true.score, relyt, test.cutoff, ...) {
       stop("Incorrect arguments supplied; see ?conditional_p_id")}
 
   argcheck <- arguments
-    argcheck$valid <- NULL
-    argcheck$nom.cutoff <- NULL
+  # how many arguments were supplied?
+  start.length <- length(arguments)
+  # remove valid and nom.cutoff from the set, if they are there
+  argcheck$valid <- NULL
+  argcheck$nom.cutoff <- NULL
+  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
+  if (start.length-length(argcheck) == 1) {
+    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?conditional_p_id")}
+  # remove mu if it was specified
+  argcheck$mu <- NULL
+  # there should be three arguments left
   if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?conditional_p_id")}
 
   # select 1- or 2-stage version based on the supplied arguments
@@ -103,5 +112,3 @@ conditional_p_id <- function(true.score, relyt, test.cutoff, ...) {
   }
   return(p.identification)
 }
-
-conditional_p_id <- Vectorize(conditional_p_id, vectorize.args="true.score")

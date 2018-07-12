@@ -53,11 +53,10 @@ sd_identified <- function(...) {
   if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?sd_identified")}
 
   f2 <- function(true.score, ...) {
-    return(true.score^2 * d_identified(true.score, ...))
+    return(true.score^2 * d_identified(true.score, normalize=T, ...))
   }
 
-  v <- integrate(f2, ...,
-                 lower=-Inf, upper=Inf)[[1]]-
+  v <- integrate(f2, ..., lower=-Inf, upper=Inf)[[1]]-
     mean_identified(...)^2
   return(sqrt(v))
 }

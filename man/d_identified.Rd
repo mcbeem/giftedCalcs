@@ -8,19 +8,19 @@
  nom.cutoff, mu=0, normalize=T)}
 }
 \arguments{
+\item{normalize}{Logical. Should the density be normalized to have a total area of one?
+Defaults to TRUE.}
+
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
+
+\item{mu}{Population mean true score on a standardized (z-score) metric.
+Defaults to zero.}
 
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
-
-\item{mu}{Population mean true score on a standardized (z-score) metric.
-Defaults to zero.}
-
-\item{normalize}{Logical. Should the density be normalized to have a total area of one?
-Defaults to TRUE.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and

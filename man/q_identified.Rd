@@ -10,6 +10,9 @@
 \item{percentile}{The percentile of the distribution of identified students. Range (0, 1).
 Must not be exactly 0 or 1.}
 
+\item{mu}{Population mean true score on a standardized (z-score) metric.
+Defaults to zero.}
+
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
@@ -22,9 +25,6 @@ must be less than the square root of the test reliability.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
-
-\item{mu}{Population mean true score on a standardized (z-score) metric.
-Defaults to zero.}
 }
 \description{
 \code{q_identified} is the conditional quantile function for identified students.

@@ -41,7 +41,7 @@
 #' points(x=Tscores, y=p.id, type="l", col="red")
 #' @export
 
-r_identified <- function(n, ...) {
+r_identified <- function(n, normalize=T, ...) {
 
   #check for the correct number of arguments
   if (!nargs() %in% c(3, 4, 5, 6)) {stop("aIncorrect arguments supplied; see ?r_identified")}
@@ -55,20 +55,27 @@ r_identified <- function(n, ...) {
     stop("bIncorrect arguments supplied; see ?r_identified")}
 
   argcheck <- arguments
+  # how many arguments were supplied?
+  start.length <- length(arguments)
+  # remove valid and nom.cutoff from the set, if they are there
   argcheck$valid <- NULL
   argcheck$nom.cutoff <- NULL
+  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
+  if (start.length-length(argcheck) == 1) {
+    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?r_identified")}
+  # remove mu if it was specified
   argcheck$mu <- NULL
-  if (length(argcheck) != 3) {stop("bIncorrect arguments supplied; see ?r_identified")}
-
+  # there should be three arguments left
+  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?r_identified")}
 
   if (n <= 0) {
     stop("\ncThe value of n must be greater than zero.")
   }
 
   M <- d_identified(
-    true.score=mean_identified(...), ...)*2
+    true.score=mean_identified(...), normalize=T, ...)*2
 
-  df <- function(true.score) {d_identified(true.score, ...)}
+  df <- function(true.score) {d_identified(true.score, normalize=T, ...)}
 
   dg <-function(x) {dnorm(x, mean=mean_identified(...),
                           sd=sd_identified(...))}

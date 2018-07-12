@@ -50,11 +50,18 @@ p_identified <- function(true.score, ...) {
     stop("Incorrect arguments supplied; see ?p_identified")}
 
   argcheck <- arguments
+  # how many arguments were supplied?
+  start.length <- length(arguments)
+  # remove valid and nom.cutoff from the set, if they are there
   argcheck$valid <- NULL
   argcheck$nom.cutoff <- NULL
+  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
+  if (start.length-length(argcheck) == 1) {
+    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?p_identified")}
+  # remove mu if it was specified
   argcheck$mu <- NULL
+  # there should be three arguments left
   if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?p_identified")}
 
-
-  return(integrate(d_identified, ..., lower=-Inf, upper=true.score)[[1]])
+  return(integrate(d_identified, normalize=T, ..., lower=-Inf, upper=true.score)[[1]])
 }

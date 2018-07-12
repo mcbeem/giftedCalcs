@@ -53,7 +53,7 @@
 
 conditional_moments <- function(true.score, relyt, ...) {
 
-    # this code checks the arguments supplied to determine if the one-stage
+  # this code checks the arguments supplied to determine if the one-stage
   #   or two-stage version of the calculation should commence. If improper
   #   arguments are supplied, the function exits with an error.
 

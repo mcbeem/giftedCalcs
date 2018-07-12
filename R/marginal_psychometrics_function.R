@@ -63,9 +63,17 @@ marginal_psychometrics <- function(relyt, test.cutoff, mu=0, ...) {
     stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
 
   argcheck <- arguments
+  # how many arguments were supplied?
+  start.length <- length(arguments)
+  # remove valid and nom.cutoff from the set, if they are there
   argcheck$valid <- NULL
   argcheck$nom.cutoff <- NULL
+  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
+  if (start.length-length(argcheck) == 1) {
+    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?marginal_psychometrics")}
+  # remove mu if it was specified
   argcheck$mu <- NULL
+  # there should be two arguments left
   if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
 
   # select 1- or 2-stage version based on the supplied arguments

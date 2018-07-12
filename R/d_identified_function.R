@@ -60,7 +60,7 @@
 #' points(x=Tscores, y=p.bad, type="l", col="red")
 #' @export
 
-d_identified <- function(true.score, relyt, test.cutoff, mu=0, normalize=T, ...) {
+d_identified <- function(normalize=T, true.score, mu=0, ...) {
 
   # this code checks the arguments supplied to determine if the one-stage
   #   or two-stage version of the calculation should commence. If improper
@@ -81,25 +81,31 @@ d_identified <- function(true.score, relyt, test.cutoff, mu=0, normalize=T, ...)
     stop("Incorrect arguments supplied; see ?d_identified")}
 
   argcheck <- arguments
+  # how many arguments were supplied?
+  start.length <- length(arguments)
+  # remove valid and nom.cutoff from the set, if they are there
   argcheck$valid <- NULL
   argcheck$nom.cutoff <- NULL
+  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
+  if (start.length-length(argcheck) == 1) {
+    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?d_identified")}
+  # remove mu if it was specified
   argcheck$mu <- NULL
   argcheck$normalize <- NULL
+  # there should be three arguments left
   if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?d_identified")}
 
-
-  d_identified_unnormed <- function(true.score, relyt, test.cutoff, mu=0, ...) {
-    p.id <- conditional_p_id(true.score, relyt, test.cutoff, ...)
+  d_identified_unnormed <- function(true.score, mu, ...) {
+    p.id <- conditional_p_id(true.score, ...)
     return(p.id*dnorm(true.score, mean=mu))
   }
 
   if (normalize==F) {
-    return(d_identified_unnormed(true.score, relyt, test.cutoff, mu, ...))
+    return(d_identified_unnormed(true.score=true.score, mu, ...))
   }
 
   if (normalize==T) {
-  return(d_identified_unnormed(true.score, relyt, test.cutoff, mu, ...) /
-   marginal_psychometrics(relyt=relyt, test.cutoff=test.cutoff,
-                          mu=mu, ...)$identification.rate)
-    }
+    return(d_identified_unnormed(true.score=true.score, mu, ...) /
+             integrate(d_identified_unnormed, mu, ..., lower=-Inf, upper=Inf)[[1]])
+  }
 }
