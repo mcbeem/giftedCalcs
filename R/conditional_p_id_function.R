@@ -52,51 +52,21 @@
 #' @export
 #'
 
-conditional_p_id <- function(true.score, relyt, test.cutoff, ...) {
-
-  # this code checks the arguments supplied to determine if the one-stage
-  #   or two-stage version of the calculation should commence. If improper
-  #   arguments are supplied, the function exits with an error.
-
-  # check that between 3 and 6 arguments were provided (6 in case of mu, which is not used)
-  if (!nargs() %in% c(3,4,5,6)) {stop("Incorrect arguments supplied; see ?conditional_p_id")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("true.score") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-      stop("Incorrect arguments supplied; see ?conditional_p_id")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?conditional_p_id")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be three arguments left
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?conditional_p_id")}
+conditional_p_id <- function(true.score, relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7) {
 
   # select 1- or 2-stage version based on the supplied arguments
-  if ((("valid") %in% names(arguments)) &
-      (("nom.cutoff") %in% names(arguments))) {stages=2} else {stages=1}
+  if (valid==1e-7 & nom.cutoff==1e-7) {stages=1} else {stages=2}
 
   if(stages==2) {
       errortrapping(relyt=relyt, test.cutoff=test.cutoff,
-                    nom.cutoff=arguments$nom.cutoff, valid=arguments$valid)
+                    nom.cutoff=nom.cutoff, valid=valid)
 
       b_C <- qnorm(test.cutoff) / sqrt(relyt)
       a_C <- sqrt(relyt / (1-relyt))
 
-      b_N <- (qnorm(arguments$nom.cutoff)*sqrt(relyt)) / arguments$valid
-      a_N <- sqrt(((arguments$valid^2) / relyt) /
-                    (1-((arguments$valid^2) / relyt)))
+      b_N <- (qnorm(nom.cutoff)*sqrt(relyt)) / valid
+      a_N <- sqrt(((valid^2) / relyt) /
+                    (1-((valid^2) / relyt)))
 
       p.identification <- pnorm(a_C*(true.score-b_C))*
               pnorm(a_N*(true.score-b_N))

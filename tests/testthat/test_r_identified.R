@@ -10,10 +10,10 @@ expect_equal(mean(x), 1.651817, tolerance=1e-2)
 
 expect_error(r_identified(relyt=.9, test.cutoff=.9, blarg=4))
 
-expect_error(r_identified(relyt=.9, n=1, test.cutoff=.9,
+expect_warning(r_identified(relyt=.9, n=1, test.cutoff=.9,
                           nom.cutoff=.9, mu=-1))
 
-expect_error(r_identified(relyt=.9, n=1, test.cutoff=.9,
+expect_warning(r_identified(relyt=.9, n=1, test.cutoff=.9,
                           valid=.6, mu=-1))
 
 expect_error(r_identified(relyt=.9, n=1, test.cutoff=1,

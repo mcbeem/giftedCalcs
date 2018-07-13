@@ -15,21 +15,16 @@ expect_equal(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           nom.cutoff=.9, valid=.5, mu=-1, normalize=T),
              0.4146193, tolerance=1e-5)
 
-
-
-expect_error(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
-                          nom.cutoff=.9, valid=.5, mu=0, normalize=1))
-
 expect_error(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           nom.cutoff=.9, valid=.99, mu=0, normalize=T))
 
 expect_error(sapply(Tscores, d_identified, relyt=.9,
                     test.cutoff=.9, blarg=4, normalize=F))
 
-expect_error(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
+expect_warning(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           nom.cutoff=.9, mu=-1, normalize=T))
 
-expect_error(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
+expect_warning(d_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           valid=.6, mu=-1, normalize=T))
 
 expect_error(d_identified(relyt=.9, true.score=1, test.cutoff=1,

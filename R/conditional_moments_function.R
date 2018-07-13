@@ -51,39 +51,19 @@
 #' conditional_moments(relyt=.9, true.score=2, valid=.6)
 #' @export
 
-conditional_moments <- function(true.score, relyt, ...) {
+conditional_moments <- function(true.score, relyt, valid=0) {
 
-  # this code checks the arguments supplied to determine if the one-stage
-  #   or two-stage version of the calculation should commence. If improper
-  #   arguments are supplied, the function exits with an error.
 
-  #check for either 2 or 3 arguments
-  if (!nargs() %in% c(2,3)) {stop("Incorrect arguments supplied; see ?conditional_moments")}
+  if(valid > 1e-7) {
 
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("true.score") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?conditional_moments")}
-
-  argcheck <- arguments
-  argcheck$valid <- NULL
-  if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?conditional_moments")}
-
-  # select 1- or 2-stage version based on the supplied arguments
-  if (("valid") %in% names(arguments)) {stages=2} else {stages=1}
-
-  if(stages==2) {
-
-    errortrapping(relyt=relyt, valid=arguments$valid)
+    errortrapping(relyt=relyt, valid=valid)
 
     # order:  n obs, t obs, t true
     means <- c(0, 0, 0)
 
-    sigma.xx = matrix(c(1, arguments$valid, arguments$valid, 1), nrow=2, byrow=T)
+    sigma.xx = matrix(c(1, valid, valid, 1), nrow=2, byrow=T)
     sigma.yy = 1
-    sigma.xy = matrix(c(arguments$valid/sqrt(relyt), sqrt(relyt)), nrow=2, byrow=T)
+    sigma.xy = matrix(c(valid/sqrt(relyt), sqrt(relyt)), nrow=2, byrow=T)
     sigma.yx = t(sigma.xy)
 
     # conditional means of nom true, nom obs, and test obs
@@ -92,7 +72,7 @@ conditional_moments <- function(true.score, relyt, ...) {
     conditional.cov = sigma.xx - sigma.xy %*% solve(sigma.yy) %*% sigma.yx
   }
 
-  if (stages==1) {
+  if (valid <= 1e-7) {
     errortrapping(relyt=relyt)
 
     # marginal mean of the true [1] and observed [2] scores

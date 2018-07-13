@@ -17,7 +17,7 @@ expect_error(sd_identified(relyt=.9, test.cutoff=0))
 
 expect_error(sd_identified(relyt=.9, valid=.99, test.cutoff=.9, nom.cutoff=.5, mu=0))
 
-expect_error(sd_identified(relyt=.9, valid=.8, test.cutoff=.9, mu=0))
+expect_warning(sd_identified(relyt=.9, valid=.8, test.cutoff=.9, mu=0))
 
 expect_warning(sd_identified(relyt=.9, valid=.8, test.cutoff=.9, nom.cutoff=.5, mu=-3))
 

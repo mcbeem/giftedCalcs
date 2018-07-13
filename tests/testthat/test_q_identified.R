@@ -22,10 +22,10 @@ expect_error(q_identified(relyt=.9, percentile=.7, test.cutoff=.9,
 
 expect_error(q_identified(relyt=.9, test.cutoff=.9, blarg=4))
 
-expect_error(q_identified(relyt=.9, percentile=.7, test.cutoff=.9,
+expect_warning(q_identified(relyt=.9, percentile=.7, test.cutoff=.9,
                           nom.cutoff=.9, mu=-1))
 
-expect_error(q_identified(relyt=.9, percentile=.7, test.cutoff=.9,
+expect_warning(q_identified(relyt=.9, percentile=.7, test.cutoff=.9,
                           valid=.6, mu=-1))
 
 expect_error(q_identified(relyt=.9, percentile=.7, test.cutoff=1,

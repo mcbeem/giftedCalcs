@@ -12,12 +12,12 @@
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
+Must not be exactly 0 or 1.}
+
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
-
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}

@@ -46,57 +46,29 @@
 #'         nom.cutoff=.8, relyt=.95, valid=.7)
 #' @export
 
-marginal_psychometrics <- function(relyt, test.cutoff, mu=0, ...) {
+marginal_psychometrics <- function(relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0) {
 
-  # this code checks the arguments supplied to determine if the one-stage
-  #   or two-stage version of the calculation should commence. If improper
-  #   arguments are supplied, the function exits with an error.
-
-  #check for either 2, 3, 4, or 5 arguments
-  if (!nargs() %in% c(2, 3, 4 ,5)) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?marginal_psychometrics")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be two arguments left
-  if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?marginal_psychometrics")}
 
   # select 1- or 2-stage version based on the supplied arguments
-  if ((("valid") %in% names(arguments)) &
-      (("nom.cutoff") %in% names(arguments))) {stages=2} else {stages=1}
+  if (valid==1e-7 & nom.cutoff==1e-7) {stages=1} else {stages=2}
 
   if(stages==2) {
-      errortrapping(relyt=relyt, valid=arguments$valid, nom.cutoff=arguments$nom.cutoff,
-                  test.cutoff=test.cutoff, mu=mu)
+       errortrapping(relyt=relyt, valid=valid, nom.cutoff=nom.cutoff,
+                   test.cutoff=test.cutoff, mu=mu)
 
     # order:  t true, n obs, t obs
     cov <- matrix(c(
-      1, arguments$valid/sqrt(relyt), sqrt(relyt),
-      arguments$valid/sqrt(relyt), 1, arguments$valid,
-      sqrt(relyt), arguments$valid, 1),
+      1, valid/sqrt(relyt), sqrt(relyt),
+      valid/sqrt(relyt), 1, valid,
+      sqrt(relyt), valid, 1),
       nrow=3, ncol=3)
 
     # cutoffs
-    nu <- qnorm(arguments$nom.cutoff, 0, 1)
+    nu <- qnorm(nom.cutoff, 0, 1)
     tau <- qnorm(test.cutoff, 0, 1)
 
     # order:  t true, n obs, t obs
-    means <- c(mu, mu*arguments$valid/sqrt(relyt), mu*sqrt(relyt))
+    means <- c(mu, mu*valid/sqrt(relyt), mu*sqrt(relyt))
 
     # Sensitivity
     sensitivity <- mnormt::sadmvn(lower=c(tau, nu, tau), upper=c(5,5,5),
@@ -117,7 +89,7 @@ marginal_psychometrics <- function(relyt, test.cutoff, mu=0, ...) {
                                           mean=means, varcov=cov, maxpts=10*100000)[[1]]
 
     # nomination rate
-    nom.rate <- 1-pnorm(qnorm(arguments$nom.cutoff)-mu)
+    nom.rate <- 1-pnorm(qnorm(nom.cutoff)-mu)
 
     # nomination pass rate
     nom.passrate <-  mnormt::sadmvn(lower=c(-5, nu, tau), upper=c(5,5,5),

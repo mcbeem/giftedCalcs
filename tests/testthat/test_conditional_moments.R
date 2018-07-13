@@ -11,7 +11,6 @@ expect_equal(
   c(0, 0, 0.0198901989019891, 0, 0, 9.99999999995449e-06), tolerance=1e-7)
 
 expect_error(conditional_moments(relyt=.99999, valid=1, true.score=0))
-expect_error(conditional_moments(relyt=.99999, valid=0, true.score=0))
 expect_error(conditional_moments(relyt=.1, valid=.9, true.score=0))
 expect_error(conditional_moments(relyt=-1, valid=.9, true.score=0))
 

@@ -32,38 +32,15 @@
 #'   test.cutoff=.975, nom.cutoff=.9, mu=0)
 #' @export
 
-q_identified <- function(percentile, mu=0, ...) {
-
-  #check for the correct number of arguments
-  if (!nargs() %in% c(3, 4, 5, 6)) {stop("Incorrect arguments supplied; see ?q_identified")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("percentile") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?q_identified")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?q_identified")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be three arguments left
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?q_identified")}
+q_identified <- function(percentile, relyt, test.cutoff, valid=1e-7,
+                         nom.cutoff=1e-7, mu=0) {
 
   if (percentile <= 0 | percentile >= 1) {
     stop("\nThe value of percentile must be between zero and one. It is the percentile of the score you wish to identify.")
   }
 
   zero.at.percentile <- function(true.score)
-    p_identified(true.score, mu=mu, ...)-percentile
+    p_identified(true.score=true.score, relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                 nom.cutoff=nom.cutoff, mu=mu)-percentile
   return(uniroot(zero.at.percentile, interval=c(-10, 10))$root)
 }

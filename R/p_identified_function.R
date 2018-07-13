@@ -36,32 +36,9 @@
 #   or two-stage version of the calculation should commence. If improper
 #   arguments are supplied, the function exits with an error.
 
-p_identified <- function(true.score, ...) {
+p_identified <- function(true.score, relyt, test.cutoff, valid=1e-7,
+                         nom.cutoff=1e-7, mu=0) {
 
-  #check for the correct number of arguments
-  if (!nargs() %in% c(3, 4, 5, 6)) {stop("Incorrect arguments supplied; see ?p_identified")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("true.score") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?p_identified")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?p_identified")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be three arguments left
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?p_identified")}
-
-  return(integrate(d_identified, normalize=T, ..., lower=-Inf, upper=true.score)[[1]])
+  return(integrate(d_identified, relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                   nom.cutoff=nom.cutoff, mu=mu, normalize=T, lower=-Inf, upper=true.score)[[1]])
 }

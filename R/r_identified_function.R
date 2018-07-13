@@ -43,50 +43,35 @@
 #' points(x=Tscores, y=p.id, type="l", col="red")
 #' @export
 
-r_identified <- function(n, normalize=T, ...) {
-
-  #check for the correct number of arguments
-  if (!nargs() %in% c(3, 4, 5, 6)) {stop("aIncorrect arguments supplied; see ?r_identified")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("n") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("bIncorrect arguments supplied; see ?r_identified")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?r_identified")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be three arguments left
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?r_identified")}
+r_identified <- function(n, relyt, test.cutoff, valid=1e-7,
+                         nom.cutoff=1e-7, mu=0, normalize=T) {
 
   if (n <= 0) {
     stop("\ncThe value of n must be greater than zero.")
   }
 
-  errortrapping(...)
+  #errortrapping(...)
 
   M <- d_identified(
-    true.score=mean_identified(...), normalize=T, ...)*3
+    true.score=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                               nom.cutoff=nom.cutoff, mu=mu),
+    relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+    nom.cutoff=nom.cutoff, mu=mu, normalize=T)*3
 
-  df <- function(true.score) {d_identified(true.score, normalize=T, ...)}
+  df <- function(true.score) {d_identified(true.score=true.score, relyt=relyt,
+                                           test.cutoff=test.cutoff, valid=valid,
+                                           nom.cutoff=nom.cutoff, mu=mu, normalize=T)}
 
-  dg <-function(x) {dnorm(x, mean=mean_identified(...),
-                          sd=sd_identified(...))}
+  dg <-function(x) {dnorm(x, mean=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                                                  nom.cutoff=nom.cutoff, mu=mu),
+                          sd=sd_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                                           nom.cutoff=nom.cutoff, mu=mu))}
 
   rg <- function(n) {
-    m <- mean_identified(...)
-    s <- sd_identified(...)
+    m <- mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                         nom.cutoff=nom.cutoff, mu=mu)
+    s <- sd_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                       nom.cutoff=nom.cutoff, mu=mu)
     return(rnorm(n, mean=m, sd=s))
   }
 

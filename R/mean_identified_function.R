@@ -27,39 +27,19 @@
 #' test.cutoff=.9, nom.cutoff=.5, mu=0)*15)
 #' @export
 
-mean_identified <- function(...) {
+mean_identified <- function(relyt, test.cutoff, valid=1e-7,
+                            nom.cutoff=1e-7, mu=0) {
 
-  # this code checks the arguments supplied for errors
-  #check for the correct number of arguments
-  if (!nargs() %in% c(2, 3, 4, 5)) {stop("Incorrect arguments supplied; see ?mean_identified")}
-
-  arguments <- as.list(match.call()[-1])
-
-  #check if incorrect arguments are supplied
-  if (!(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?mean_identified")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-      stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?mean_identified")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  # there should be two arguments left
-  if (length(argcheck) != 2) {stop("Incorrect arguments supplied; see ?mean_identified")}
-
-  errortrapping(...)
+# errortrapping(...)
 
   # expectation
-  f1 <- function(true.score, ...) {
-    return(true.score * d_identified(true.score=true.score, ...))
+  f1 <- function(true.score=true.score, relyt=relyt, test.cutoff=test.cutoff,
+                 valid=valid, nom.cutoff=nom.cutoff, mu=mu) {
+    return(true.score * d_identified(true.score=true.score, relyt=relyt,
+                                     test.cutoff=test.cutoff, valid=valid,
+                                    nom.cutoff=nom.cutoff, mu=mu, normalize=T))
   }
 
-  return(integrate(f1, ..., lower=-Inf, upper=Inf)[[1]])
+  return(integrate(f1, relyt=relyt, test.cutoff=test.cutoff,
+                   valid=valid, nom.cutoff=nom.cutoff, mu=mu, lower=-Inf, upper=Inf)[[1]])
 }

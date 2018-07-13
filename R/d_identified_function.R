@@ -60,54 +60,35 @@
 #' points(x=Tscores, y=p.bad, type="l", col="red")
 #' @export
 
-d_identified <- function(normalize=T, true.score, mu=0, ...) {
+d_identified <- function(true.score, relyt, test.cutoff,
+                         mu=0, valid=1e-7, nom.cutoff=1e-7, normalize=T) {
 
-  # this code checks the arguments supplied to determine if the one-stage
-  #   or two-stage version of the calculation should commence. If improper
-  #   arguments are supplied, the function exits with an error.
+   errortrapping(mu=mu)
 
-  #check argument normalize
-  if (is.logical(normalize) == FALSE) {stop("argument normalize must be set to TRUE or FALSE")}
+  # if (!is.logical(normalize)) {
+  #   stop("\nargument normalize must be TRUE or FALSE")}
 
-  #check for the correct number of arguments
-  if (!nargs() %in% c(2, 3, 4, 5, 6, 7)) {stop("Incorrect arguments supplied; see ?d_identified")}
+  d_identified_unnormed <- function(true.score=true.score, relyt=relyt,
+                                    test.cutoff=test.cutoff, valid=valid,
+                                    nom.cutoff=nom.cutoff, mu=mu) {
 
-  arguments <- as.list(match.call()[-1])
+    p.id <- conditional_p_id(true.score=true.score, relyt=relyt,
+                             test.cutoff=test.cutoff, valid=valid,
+                             nom.cutoff=nom.cutoff)
 
-  #check if incorrect arguments are supplied
-  if (!(("true.score") %in% names(arguments)) |
-      !(("relyt") %in% names(arguments)) |
-      !(("test.cutoff") %in% names(arguments))) {
-    stop("Incorrect arguments supplied; see ?d_identified")}
-
-  argcheck <- arguments
-  # how many arguments were supplied?
-  start.length <- length(arguments)
-  # remove valid and nom.cutoff from the set, if they are there
-  argcheck$valid <- NULL
-  argcheck$nom.cutoff <- NULL
-  # if the list only got shorter by 1, then one of valid or nom.cutoff was not specified
-  if (start.length-length(argcheck) == 1) {
-    stop(" You must specify arguments nom.cutoff and valid for two-stage system; see ?d_identified")}
-  # remove mu if it was specified
-  argcheck$mu <- NULL
-  argcheck$normalize <- NULL
-  # there should be three arguments left
-  if (length(argcheck) != 3) {stop("Incorrect arguments supplied; see ?d_identified")}
-
-  errortrapping(mu=mu, ...)
-
-  d_identified_unnormed <- function(true.score, mu, ...) {
-    p.id <- conditional_p_id(true.score, ...)
     return(p.id*dnorm(true.score, mean=mu))
   }
 
   if (normalize==F) {
-    return(d_identified_unnormed(true.score=true.score, mu, ...))
-  }
-
-  if (normalize==T) {
-    return(d_identified_unnormed(true.score=true.score, mu, ...) /
-             integrate(d_identified_unnormed, mu, ..., lower=-Inf, upper=Inf)[[1]])
+    return(d_identified_unnormed(true.score=true.score, relyt=relyt,
+                                 test.cutoff=test.cutoff, valid=valid,
+                                 nom.cutoff=nom.cutoff, mu=mu))
+  } else {
+    return(d_identified_unnormed(true.score=true.score, relyt=relyt,
+                                 test.cutoff=test.cutoff, valid=valid,
+                                 nom.cutoff=nom.cutoff, mu=mu) /
+             integrate(d_identified_unnormed, relyt=relyt,
+                       test.cutoff=test.cutoff, valid=valid,
+                       nom.cutoff=nom.cutoff, mu=mu, lower=-Inf, upper=Inf)[[1]])
   }
 }

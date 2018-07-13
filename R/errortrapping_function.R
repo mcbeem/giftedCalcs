@@ -20,11 +20,11 @@ errortrapping <- function(relyt=.9999999, valid=1E-30,
                           nom.cutoff=.1, test.cutoff=.9, mu=0) {
 
   if (relyt <= 0 | relyt >= 1) {
-    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero or exactly one due to computational instability. Use a value like .0000001 instead of zero or .9999999 instead of one.")
+    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero or exactly one due to computational instability.")
   }
 
   if (valid <= 0 | valid >= 1) {
-    stop("\nThe value of valid must be between zero and one. It is a validity coefficient. It cannot be exactly zero or exactly one due to computational instability. Use a value like .0000001 instead of zero or .9999999 instead of one.")
+    stop("\nThe value of valid must be between zero and one. It is a validity coefficient. It cannot be exactly zero or exactly one due to computational instability.")
   }
 
   if (valid > sqrt(relyt)) {
@@ -43,4 +43,12 @@ errortrapping <- function(relyt=.9999999, valid=1E-30,
    if (abs(mu)>2) {
      warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -2 to +2. Please verify your value of mu.")
    }
+
+  if (valid == 1e-7 & nom.cutoff != 1e-7) {
+    warning("\nTwo-stage system is modeled but nomination validity may not have been specified..")
+  }
+
+  if (valid != 1e-7 & nom.cutoff == 1e-7) {
+    warning("\nTwo-stage system is modeled but nomination cutoff may not have been specified.")
+  }
 }

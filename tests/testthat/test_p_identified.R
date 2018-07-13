@@ -7,6 +7,10 @@ expect_equal(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           nom.cutoff=.9, valid=.5, mu=0),
              0.03479571, tolerance=1e-5)
 
+expect_equal(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
+                          nom.cutoff=.9, valid=.5),
+             0.03479571, tolerance=1e-5)
+
 Tscores <- seq(0,4, length.out=4)
 expect_equal(sapply(Tscores, p_identified, relyt=.9,
                     test.cutoff=.9),
@@ -22,10 +26,10 @@ expect_error(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
 
 expect_error(p_identified(relyt=.9, test.cutoff=.9, blarg=4))
 
-expect_error(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
+expect_warning(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           nom.cutoff=.9, mu=-1))
 
-expect_error(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
+expect_warning(p_identified(relyt=.9, true.score=1, test.cutoff=.9,
                           valid=.6, mu=-1))
 
 expect_error(p_identified(relyt=.9, true.score=1, test.cutoff=1,
