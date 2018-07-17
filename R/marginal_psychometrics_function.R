@@ -141,3 +141,5 @@ marginal_psychometrics <- function(relyt, test.cutoff, valid=1e-7, nom.cutoff=1e
                 identification.rate=identification.rate))
   }
 }
+
+#marginal_psychometrics <- Vectorize(marginal_psychometrics, SIMPLIFY=F, USE.NAMES=F)
