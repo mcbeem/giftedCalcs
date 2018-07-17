@@ -1,7 +1,7 @@
-#' Conditional density of true scores for identified students
+#' Conditional density of true scores for identified students (vectorized version)
 #'
-#' \code{d_identified} is the conditional probability density function (pdf) for
-#' identified students.
+#' \code{d_identified_v} is the conditional probability density function (pdf) for
+#' identified students. Unlike \code{d_identified}, it is vectorized.
 #'
 #' See also \code{p_identified} for the cumulative density, \code{q_identified}
 #' for the quantile function, and \code{r_identified} for random generation.
@@ -60,35 +60,4 @@
 #' points(x=Tscores, y=p.bad, type="l", col="red")
 #' @export
 
-d_identified <- function(true.score, relyt, test.cutoff,
-                         mu=0, valid=1e-7, nom.cutoff=1e-7, normalize=T) {
-
-   errortrapping(mu=mu)
-
-  # if (!is.logical(normalize)) {
-  #   stop("\nargument normalize must be TRUE or FALSE")}
-
-  d_identified_unnormed <- function(true.score=true.score, relyt=relyt,
-                                    test.cutoff=test.cutoff, valid=valid,
-                                    nom.cutoff=nom.cutoff, mu=mu) {
-
-    p.id <- conditional_p_id(true.score=true.score, relyt=relyt,
-                             test.cutoff=test.cutoff, valid=valid,
-                             nom.cutoff=nom.cutoff)
-
-    return(p.id*dnorm(true.score, mean=mu))
-  }
-
-  if (normalize==F) {
-    return(d_identified_unnormed(true.score=true.score, relyt=relyt,
-                                 test.cutoff=test.cutoff, valid=valid,
-                                 nom.cutoff=nom.cutoff, mu=mu))
-  } else {
-    return(d_identified_unnormed(true.score=true.score, relyt=relyt,
-                                 test.cutoff=test.cutoff, valid=valid,
-                                 nom.cutoff=nom.cutoff, mu=mu) /
-             integrate(d_identified_unnormed, relyt=relyt,
-                       test.cutoff=test.cutoff, valid=valid,
-                       nom.cutoff=nom.cutoff, mu=mu, lower=-Inf, upper=Inf)[[1]])
-  }
-}
+d_identified_v <- Vectorize(d_identified)

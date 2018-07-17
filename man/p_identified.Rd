@@ -4,23 +4,23 @@
 \alias{p_identified}
 \title{Conditional cumulative density function of true scores for identified students}
 \usage{
-p_identified(relyt, valid, test.cutoff, nom.cutoff, true.score, mu = 0)
+\code{p_identified(true.score, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
 }
 \arguments{
+\item{true.score}{The student's true score on a standardized (z-score) metric.}
+
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
+Must not be exactly 0 or 1.}
+
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
 
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
-
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
-
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
 
 \item{mu}{Population mean true score on a standardized (z-score) metric.
 Defaults to zero.}
@@ -32,9 +32,12 @@ of scores for identified students that will the lower than the target. In short,
 returns the percentile for a given true score.
 }
 \details{
-See also \code{d_identified_unnormed} for the unnormalized density, \code{d_identified}
-for the normalized density, \code{q_identified} for the quantile function, and
-\code{r_identified} for random generation.
+See also \code{d_identified} for the density function, \code{q_identified} for
+the quantile function, and \code{r_identified} for random generation.
+
+Warning: use named arguments only; do not rely on position.
+ e.g., use \code{p_identified(true.score=1.5, relyt=.9, test.cutoff=.9)}
+ rather than \code{p_identified(1.5, .9, .9)}
 }
 \examples{
 p_identified(relyt=.95, valid=.6, test.cutoff=.975,

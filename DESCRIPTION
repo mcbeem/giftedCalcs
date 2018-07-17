@@ -1,6 +1,6 @@
 Package: giftedCalcs
 Title: Psychometrics for Gifted Program Identification
-Version: 0.0.5
+Version: 0.0.7
 Authors: person("Matthew", "McBee", email = "mcbeem@etsu.edu", role = c("aut", "cre"))
 Description: Psychometrics for gifted and talented program identification, including one-
   and two-stage identification systems, conditional multivariate moments, and functions for the 
@@ -10,5 +10,10 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: mnormt,
-  SimDesign
+  SimDesign,
+  minpack.lm,
+  scdensity,
+  boot,
+  pbapply
 RoxygenNote: 6.0.1
+Suggests: testthat

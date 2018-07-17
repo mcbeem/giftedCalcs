@@ -3,9 +3,11 @@
 #' \code{r_identified} samples random variates from the distribution of true scores for
 #'   identified students.
 #'
-#' See also \code{d_identified_unnormed} for the unnormalized density, \code{d_identified}
-#' for the normalized density, \code{p_identified} for the cumulative density function, and
-#' \code{q_identified} for the quantile function.
+#' See also \code{d_identified} for the normalized density, \code{p_identified}
+#' for the cumulative density function, and \code{q_identified} for the quantile
+#' function.
+#'
+#' @usage \code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
 #'
 #' @param n The number of values to sample.
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
@@ -41,33 +43,37 @@
 #' points(x=Tscores, y=p.id, type="l", col="red")
 #' @export
 
-r_identified <- function(n, relyt, valid, test.cutoff, nom.cutoff, mu=0) {
+r_identified <- function(n, relyt, test.cutoff, valid=1e-7,
+                         nom.cutoff=1e-7, mu=0, normalize=T) {
 
   if (n <= 0) {
-    stop("\nThe value of n must be greater than zero.")
+    stop("\ncThe value of n must be greater than zero.")
   }
 
+  #errortrapping(...)
+
   M <- d_identified(
-    true.score=mean_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
-                               nom.cutoff=nom.cutoff, mu=mu), relyt=relyt, valid=valid, test.cutoff=test.cutoff,
-    nom.cutoff=nom.cutoff, mu=mu)*2
+    true.score=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+                               nom.cutoff=nom.cutoff, mu=mu),
+    relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+    nom.cutoff=nom.cutoff, mu=mu, normalize=T)*3
 
+  df <- function(true.score) {d_identified(true.score=true.score, relyt=relyt,
+                                           test.cutoff=test.cutoff, valid=valid,
+                                           nom.cutoff=nom.cutoff, mu=mu, normalize=T)}
 
-  df <- function(true.score) {d_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
-                                           nom.cutoff=nom.cutoff, true.score=true.score, mu=mu)}
-
-  dg <-function(x) {dnorm(x, mean=mean_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
+  dg <-function(x) {dnorm(x, mean=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                                                   nom.cutoff=nom.cutoff, mu=mu),
-                          sd=sd_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
+                          sd=sd_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                                            nom.cutoff=nom.cutoff, mu=mu))}
 
   rg <- function(n) {
-    m <- mean_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
+    m <- mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                          nom.cutoff=nom.cutoff, mu=mu)
-    s <- sd_identified(relyt=relyt, valid=valid, test.cutoff=test.cutoff,
+    s <- sd_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                        nom.cutoff=nom.cutoff, mu=mu)
     return(rnorm(n, mean=m, sd=s))
   }
 
-  return(SimDesign::rejectionSampling(n+1, df=df, dg=dg, rg=rg, M=M)[1:n])
+  return(SimDesign::rejectionSampling(n+20, df=df, dg=dg, rg=rg, M=M)[1:n])
 }

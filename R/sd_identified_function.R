@@ -25,20 +25,17 @@
 #' test.cutoff=.9, nom.cutoff=.5, mu=0))
 #' @export
 
+sd_identified <- function(relyt=relyt, test.cutoff=test.cutoff, valid=1e-7,
+                          nom.cutoff=1e-7, mu=0) {
 
-sd_identified <- function(relyt, valid, test.cutoff, nom.cutoff, mu=0) {
-
-  f2 <- function(relyt, valid, test.cutoff, nom.cutoff, true.score, mu=0) {
-    return(true.score^2 * d_identified(relyt=relyt, valid=valid,
-                                       test.cutoff=test.cutoff, nom.cutoff=nom.cutoff,
-                                       true.score=true.score, mu=mu))
+  f2 <- function(true.score, relyt, test.cutoff, valid, nom.cutoff, mu, normalize) {
+    return(true.score^2 * d_identified(true.score=true.score, relyt=relyt, test.cutoff=test.cutoff,
+                                       valid=valid, nom.cutoff=nom.cutoff, mu=mu, normalize=T))
   }
 
-  v <- integrate(f2, relyt=relyt, valid=valid,
-                 test.cutoff=test.cutoff, nom.cutoff=nom.cutoff,
-                 mu=mu,
-                 lower=-Inf, upper=Inf)[[1]]-
-    mean_identified(relyt=relyt, valid=valid,
-                    test.cutoff=test.cutoff, nom.cutoff=nom.cutoff, mu=mu)^2
+  v <- integrate(f2, relyt=relyt, test.cutoff=test.cutoff,
+                 valid=valid, nom.cutoff=nom.cutoff, mu=mu, normalize=T, lower=-Inf, upper=Inf)[[1]]-
+    mean_identified(relyt=relyt, test.cutoff=test.cutoff,
+                    valid=valid, nom.cutoff=nom.cutoff, mu=mu)^2
   return(sqrt(v))
 }

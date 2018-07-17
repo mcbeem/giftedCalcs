@@ -4,7 +4,7 @@
 \alias{r_identified}
 \title{Random generation from the distribution of true scores for identified students}
 \usage{
-r_identified(n, relyt, valid, test.cutoff, nom.cutoff, mu = 0)
+\code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
 }
 \arguments{
 \item{n}{The number of values to sample.}
@@ -12,12 +12,12 @@ r_identified(n, relyt, valid, test.cutoff, nom.cutoff, mu = 0)
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
+Must not be exactly 0 or 1.}
+
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
-
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -30,9 +30,9 @@ Defaults to zero.}
   identified students.
 }
 \details{
-See also \code{d_identified_unnormed} for the unnormalized density, \code{d_identified}
-for the normalized density, \code{p_identified} for the cumulative density function, and
-\code{q_identified} for the quantile function.
+See also \code{d_identified} for the normalized density, \code{p_identified}
+for the cumulative density function, and \code{q_identified} for the quantile
+function.
 }
 \examples{
 r_identified(n=10, relyt=.9, valid=.6,

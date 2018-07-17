@@ -20,11 +20,11 @@ errortrapping <- function(relyt=.9999999, valid=1E-30,
                           nom.cutoff=.1, test.cutoff=.9, mu=0) {
 
   if (relyt <= 0 | relyt >= 1) {
-    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero or exactly one due to computational instability. Use a value like .0000001 instead of zero or .9999999 instead of one.")
+    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero or exactly one due to computational instability.")
   }
 
   if (valid <= 0 | valid >= 1) {
-    stop("\nThe value of valid must be between zero and one. It is a validity coefficient. It cannot be exactly zero or exactly one due to computational instability. Use a value like .0000001 instead of zero or .9999999 instead of one.")
+    stop("\nThe value of valid must be between zero and one. It is a validity coefficient. It cannot be exactly zero or exactly one due to computational instability.")
   }
 
   if (valid > sqrt(relyt)) {
@@ -40,7 +40,15 @@ errortrapping <- function(relyt=.9999999, valid=1E-30,
     stop("\nThe value of test.cutoff must be between zero and one. It is the percentile cutoff score for the confirmatory test. For example, a value of 0.9 is a cutoff at the 90th percentile. It cannot be exactly zero or one, as these would imply infinite cutoff values. The pnorm() function can be used to convert a known cutoff score into a percentile. For example, a cutoff of 120 can be converted to a percentile by running\n\npnorm(120, mean=100, sd=15)")
   }
 
-  if (abs(mu)>1) {
-    warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -1 to +1. Please verify your value of mu.")
+   if (abs(mu)>2) {
+     warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -2 to +2. Please verify your value of mu.")
+   }
+
+  if (valid == 1e-7 & nom.cutoff != 1e-7) {
+    warning("\nTwo-stage system is modeled but nomination validity may not have been specified..")
+  }
+
+  if (valid != 1e-7 & nom.cutoff == 1e-7) {
+    warning("\nTwo-stage system is modeled but nomination cutoff may not have been specified.")
   }
 }

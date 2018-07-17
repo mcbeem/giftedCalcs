@@ -4,18 +4,19 @@
 \alias{sd_identified}
 \title{Standard deviation of the conditional distribution of ability for identified students}
 \usage{
-sd_identified(relyt, valid, test.cutoff, nom.cutoff, mu = 0)
+sd_identified(relyt = relyt, test.cutoff = test.cutoff, valid = 1e-07,
+  nom.cutoff = 1e-07, mu = 0)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
+\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
+Must not be exactly 0 or 1.}
+
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 must be less than the square root of the test reliability.}
-
-\item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
