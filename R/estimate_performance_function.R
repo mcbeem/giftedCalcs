@@ -65,7 +65,7 @@
 #' @export
 
 estimate_performance <- function(scores, id.rate, nom.rate, reps, pop.mean=0,
-                                   pop.sd=1, adjust=.5, CI=.95, multicore=FALSE, ...) {
+                                   pop.sd=1, adjust=.5, CI=.95, multicore=FALSE) {
 
       a <- boot_estimate_parms(scores=scores, reps=reps, id.rate=id.rate,
                          nom.rate=nom.rate, multicore=multicore)

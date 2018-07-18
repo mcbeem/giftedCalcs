@@ -138,19 +138,19 @@ expect_warning(estimate_performance(scores=scores, id.rate=id.rate,
 
 set.seed(123)
 a <- estimate_performance(scores=scores, id.rate=id.rate,
-                          nom.rate=nom.rate, reps=200)
+                          nom.rate=nom.rate, reps=500)
 
 expect_equal(unlist(a$summary),
-             structure(c(0.90956, 0.94024, 0.53945, 0.32084, 0.10913, 0.32515,
-                         0.9, 0.1, 0.00401, 0.01875, 0.02103, 0.01443, 0.01533, 0.0054,
-                         NA, NA, 0.90171, 0.90349, 0.49823, 0.29256, 0.07907, 0.31456,
-                         NA, NA, 0.91741, 0.977, 0.58068, 0.34912, 0.13918, 0.33574, NA,
-                         NA), .Names = c("Estimate1", "Estimate2", "Estimate3", "Estimate4",
-                                         "Estimate5", "Estimate6", "Estimate7", "Estimate8", "StdErr1",
-                                         "StdErr2", "StdErr3", "StdErr4", "StdErr5", "StdErr6", "StdErr7",
-                                         "StdErr8", "CI.95.lower1", "CI.95.lower2", "CI.95.lower3", "CI.95.lower4",
-                                         "CI.95.lower5", "CI.95.lower6", "CI.95.lower7", "CI.95.lower8",
-                                         "CI.95.upper1", "CI.95.upper2", "CI.95.upper3", "CI.95.upper4",
-                                         "CI.95.upper5", "CI.95.upper6", "CI.95.upper7", "CI.95.upper8"
+             structure(c(0.90895, 0.94027, 0.53664, 0.31852, 0.10913, 0.32496,
+                         0.9, 0.1, 0.00399, 0.01808, 0.02107, 0.01489, 0.01462, 0.00507,
+                         NA, NA, 0.90112, 0.90484, 0.49535, 0.28933, 0.08049, 0.31502,
+                         NA, NA, 0.91677, 0.97571, 0.57794, 0.34771, 0.13778, 0.33491,
+                         NA, NA), .Names = c("Estimate1", "Estimate2", "Estimate3", "Estimate4",
+                                             "Estimate5", "Estimate6", "Estimate7", "Estimate8", "StdErr1",
+                                             "StdErr2", "StdErr3", "StdErr4", "StdErr5", "StdErr6", "StdErr7",
+                                             "StdErr8", "CI.95.lower1", "CI.95.lower2", "CI.95.lower3", "CI.95.lower4",
+                                             "CI.95.lower5", "CI.95.lower6", "CI.95.lower7", "CI.95.lower8",
+                                             "CI.95.upper1", "CI.95.upper2", "CI.95.upper3", "CI.95.upper4",
+                                             "CI.95.upper5", "CI.95.upper6", "CI.95.upper7", "CI.95.upper8"
                          )),
-                         tolerance=1e-3)
+                         tolerance=1e-2)

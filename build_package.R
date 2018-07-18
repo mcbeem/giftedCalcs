@@ -1,5 +1,6 @@
 library(devtools)
 library(roxygen2)
+library(testthat)
 
 setwd("/Users/matt/OneDrive/giftedCalcs")
 document()
@@ -23,7 +24,7 @@ test(filter="conditional_moments")
 test(filter="conditional_p_id")
 test(filter="estimate_parms")
 test(filter="estimate_performance")
-test(filter="pbboot")
+test(filter="boot_estimate_parms")
 
 
 

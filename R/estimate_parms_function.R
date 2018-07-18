@@ -80,8 +80,9 @@ estimate_parms <- function(scores, w, id.rate, nom.rate, pop.mean=0,
   #   the Levenburg-Marquardt algorithm
 
   data <- matrix(cbind(dens$x, dens$y*id.rate), ncol=2)
+  parms <- NULL
 
-  parms <- try(summary(
+ try(parms <- summary(
     minpack.lm::nlsLM(data[,2] ~ d_identified_v(true.score=data[,1],
                                                 test.cutoff=test.cutoff,
                                                 relyt=relyt,
@@ -92,12 +93,17 @@ estimate_parms <- function(scores, w, id.rate, nom.rate, pop.mean=0,
                       lower=c(.5, .5, -.7),
                       upper=c(.999, .999, -.001),
                       start=list(test.cutoff=.9, relyt=.9, valid=-.2),
-                      control= minpack.lm::nls.lm.control(maxiter=200))))$coef
+                      control= minpack.lm::nls.lm.control(maxiter=200)))$coef,
+          silent=TRUE)
 
-  results <- parms[,1]
-  results[3] <- sqrt(parms[2,1])+parms[3,1]
-  results[4] <- nom.cutoff
+    if (!is.null(parms)) {
+      results <- parms[,1]
+      results[3] <- sqrt(parms[2,1])+parms[3,1]
+      results[4] <- nom.cutoff
+
+    } else {
+      results <- c(NA, NA, NA, nom.cutoff) }
+
   names(results) <- c("test.cutoff", "relyt", "valid", "nom.cutoff")
-
   return(results)
 }

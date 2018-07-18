@@ -15,7 +15,7 @@ boot_estimate_parms(reps, scores, id.rate, nom.rate, multicore = FALSE)
 
 \item{nom.rate}{Nomination rate. Must be between 0 and 1.}
 
-\item{multicore.}{Logical value indicating whether parallel processing should be used.
+\item{multicore}{Logical value indicating whether parallel processing should be used.
 Must be \code{TRUE} or \code{FALSE}. Defaults to \code{FALSE}.}
 }
 \description{
