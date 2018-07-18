@@ -8,12 +8,16 @@
   type = "density", ...)
 }
 \arguments{
+\item{x}{an object of class est_performance to be plotted}
+
 \item{width}{Adjusts the scale of the x-axis. Defaults to 0.3.}
 
 \item{adjust}{Adjusts the smoothing bandwidth for density estimation. Defaults to 1.2.}
 
 \item{type}{A character string selecting density plots or histograms. Must be one of
 "density" or "hist"}
+
+\item{...}{additional arguments to be passed to \code{plot}}
 }
 \description{
 Plot method for class est_performance

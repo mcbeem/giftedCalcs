@@ -138,7 +138,7 @@ expect_warning(estimate_performance(scores=scores, id.rate=id.rate,
 
 set.seed(123)
 a <- estimate_performance(scores=scores, id.rate=id.rate,
-                          nom.rate=nom.rate, reps=500, ncpus=4, parallel="multicore")
+                          nom.rate=nom.rate, reps=200)
 
 expect_equal(unlist(a$summary),
              structure(c(0.90902, 0.94139, 0.53699, 0.31914, 0.10827, 0.32495,

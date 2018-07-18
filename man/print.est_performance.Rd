@@ -6,6 +6,11 @@
 \usage{
 \method{print}{est_performance}(x, ...)
 }
+\arguments{
+\item{x}{an object of class est_performance to be printed}
+
+\item{...}{additional arguments to be passed to \code{print}}
+}
 \description{
 Print method for class est_performance
 }

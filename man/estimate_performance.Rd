@@ -70,12 +70,6 @@ a <- estimate_performance(scores=scores, id.rate=id.rate,
   nom.rate=nom.rate, reps=200)
 a
 
-#' # estimate the system parameters with 200 bootstrapped samples
-#  this uses four CPUs and runs faster on multicore hardware
-a <- estimate_performance(scores=scores, id.rate=id.rate,
-  nom.rate=nom.rate, reps=200, ncpus=4, parallel="multicore")
-a
-
 # plot the results for each parameter
 plot(a)
 

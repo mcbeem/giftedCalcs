@@ -23,8 +23,6 @@
 #'
 #'  identification.rate: The proportion of the student population that is identified.
 #'
-#' @usage marginal_psychometrics(relyt, test.cutoff, mu, valid=1e-7, nom.cutoff=1e-7}
-#'
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
 #'  Must not be exactly 0 or 1.
 #' @param test.cutoff Confirmatory test cutoff percentile. Range (0, 1).

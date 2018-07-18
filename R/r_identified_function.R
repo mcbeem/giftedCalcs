@@ -29,7 +29,7 @@
 #' # make a histogram of data from 100000 draws
 #' draws <- r_identified(n=100000, relyt=.99, valid=.6,
 #'  test.cutoff=.95, nom.cutoff=.9, mu=0)
-#' hist(draws, breaks=80, freq=F, xlab="True score")
+#' hist(draws, breaks=80, freq=FALSE, xlab="True score")
 #'
 #' # superimpose the theoretical density
 #'
