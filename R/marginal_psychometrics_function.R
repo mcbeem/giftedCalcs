@@ -1,11 +1,11 @@
 #' Marginal performance statistics identification systems
 #'
-#' \code{marginal_psychometrics} calculates marginal performance statistics for
+#' This function calculates marginal performance statistics for
 #'  one- and two-stage identification systems. A two-stage system is one in which
 #'  an initial nomination process is used to select students who are tested on
 #'  the confirmatory assessment.
 #'
-#' Two-stage system results are reported if arguments \code{valid} and \code{nom.cutoff}
+#' Two-stage system results are reported if arguments valid and nom.cutoff
 #'  are provided. Otherwise, one-stage results are reported.
 #'
 #' The function returns a list containing the following:
@@ -23,19 +23,19 @@
 #'
 #'  identification.rate: The proportion of the student population that is identified.
 #'
-#' @usage \code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff)}
+#' @usage marginal_psychometrics(relyt, test.cutoff, mu, valid=1e-7, nom.cutoff=1e-7}
 #'
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
 #'  Must not be exactly 0 or 1.
 #' @param test.cutoff Confirmatory test cutoff percentile. Range (0, 1).
 #'  Must not be exactly 0 or 1.
-#' @param mu Population mean true score on a standardized (z-score) metric.
-#'  Defaults to zero.
 #' @param valid Nomination validity coefficient. Controls the relatedness of the nomination
 #'  scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 #'  must be less than the square root of the test reliability.
 #' @param nom.cutoff Nomination cutoff percentile. Range (0, 1).
 #'  Must not be exactly 0 or 1.
+#' @param mu Population mean true score on a standardized (z-score) metric.
+#'  Defaults to zero.
 #'
 #' @examples
 #' # one-stage system
@@ -44,6 +44,10 @@
 #' # two-stage system
 #' marginal_psychometrics(mu=0, test.cutoff=.9,
 #'         nom.cutoff=.8, relyt=.95, valid=.7)
+#'
+#' @importFrom graphics hist par plot
+#' @importFrom stats complete.cases density dnorm integrate
+#'          na.omit pnorm qnorm rnorm runif sd uniroot
 #' @export
 
 marginal_psychometrics <- function(relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0) {

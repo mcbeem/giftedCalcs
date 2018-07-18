@@ -1,13 +1,13 @@
 #' Quantile function for true scores for identified students
 #'
-#' \code{q_identified} is the conditional quantile function for identified students.
+#' This is the conditional quantile function for identified students.
 #' Given a percentile for the true score, it returns the corresponding true score (on a
 #' z-score metric).
 #'
 #' See also \code{d_identified} for the normalized density, \code{p_identified} for
 #' the cumulative density function, and \code{r_identified} for random generation.
 #'
-#' @usage \code{q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+#' @usage q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 #'
 #' @param percentile The percentile of the distribution of identified students. Range (0, 1).
 #'   Must not be exactly 0 or 1.
@@ -17,9 +17,11 @@
 #'  Must not be exactly 0 or 1.
 #' @param valid Nomination validity coefficient. Controls the relatedness of the nomination
 #'  scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-#'  must be less than the square root of the test reliability.
+#'  must be less than the square root of the test reliability. Defaults to 1e-7 for a single-
+#'  stage identification system.
 #' @param nom.cutoff Nomination cutoff percentile. Range (0, 1).
-#'  Must not be exactly 0 or 1.
+#'  Must not be exactly 0 or 1. Defaults to 1e-7 for a single-
+#'  stage identification system.
 #' @param mu Population mean true score on a standardized (z-score) metric.
 #'  Defaults to zero.
 #'

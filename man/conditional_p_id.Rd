@@ -4,7 +4,7 @@
 \alias{conditional_p_id}
 \title{Conditional probability of identification given the true score}
 \usage{
-\code{conditional_p_id(true.score, relyt, test.cutoff, valid, nom.cutoff)}
+conditional_p_id(true.score, relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7)
 }
 \arguments{
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
@@ -17,13 +17,14 @@ Must not be exactly 0 or 1. Can be a vector or scalar.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-must be less than the square root of the test reliability.}
+must be less than the square root of the test reliability. Defaults to 1e-7 for a single-
+stage system.}
 
-\item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1). Defaults to 1e-7 for a single-
+stage system. Must not be exactly 0 or 1.}
 }
 \description{
-\code{conditional_p_id} calculates the conditional probabilty of identification
+This function calculates the conditional probabilty of identification
  for a one- or two-stage system given a student's true score, the test reliability,
  and, for two-stage systems, the nomination validity and the nomination cutoff. A
  two-stage system is one in which an initial nomination process is used to select
@@ -33,8 +34,8 @@ Must not be exactly 0 or 1.}
 The probabilities returned by this function can be plotted against a range of true
  scores to create an identification curve (see examples).
 
-The two-stage identification probability is reported if arguments \code{valid}
- and \code{nom.cutoff} are provided. Otherwise, the one-stage probability is
+The two-stage identification probability is reported if arguments valid
+ and nom.cutoff are provided. Otherwise, the one-stage probability is
  reported.
 }
 \examples{

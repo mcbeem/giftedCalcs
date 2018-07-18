@@ -23,7 +23,7 @@
 #' @param nom.rate The proportion of students who have been nominated. Range (0, 1). Used to
 #'  calculate the nomination cutoff.
 #' @param pop.mean The known general population mean of the scores. Defaults to 0.
-#' @param pop.mean The known general population standard deviation of the scores.
+#' @param pop.sd The known general population standard deviation of the scores.
 #'  Defaults to 1.
 #' @param adjust Controls the bandwidth of the density estimator. Defaults to 0.5, which
 #'  has been found to perform well in simulation.
@@ -73,8 +73,8 @@ estimate_parms <- function(scores, w, id.rate, nom.rate, pop.mean=0,
     # make the vector of row numbers
 
   # estimate the density
-  #dens <- density(scores[w], n=256, from=.5, to=3.5, adjust=adjust, window="t")
-  dens <- scdensity::scdensity(scores[w], adjust=adjust, constraint="unimodal", n=256)
+  dens <- density(scores[w], n=256, from=.5, to=3.5, adjust=adjust, window="t")
+  #dens <- scdensity::scdensity(scores[w], adjust=adjust, constraint="unimodal", n=256)
 
   # search for parameters of mixture distribution using
   #   the Levenburg-Marquardt algorithm

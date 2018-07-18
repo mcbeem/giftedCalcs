@@ -4,7 +4,7 @@
 \alias{print.est_performance}
 \title{Print method for class est_performance}
 \usage{
-\method{print}{est_performance}(x)
+\method{print}{est_performance}(x, ...)
 }
 \description{
 Print method for class est_performance

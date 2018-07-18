@@ -4,7 +4,7 @@
 \alias{r_identified}
 \title{Random generation from the distribution of true scores for identified students}
 \usage{
-\code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 }
 \arguments{
 \item{n}{The number of values to sample.}
@@ -26,12 +26,12 @@ Must not be exactly 0 or 1.}
 Defaults to zero.}
 }
 \description{
-\code{r_identified} samples random variates from the distribution of true scores for
+This function samples random variates from the distribution of true scores for
   identified students.
 }
 \details{
-See also \code{d_identified} for the normalized density, \code{p_identified}
-for the cumulative density function, and \code{q_identified} for the quantile
+See also \code{\link{d_identified}} for the normalized density, \code{\link{p_identified}}
+for the cumulative density function, and \code{\link{q_identified}} for the quantile
 function.
 }
 \examples{

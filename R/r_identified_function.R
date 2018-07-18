@@ -1,13 +1,13 @@
 #' Random generation from the distribution of true scores for identified students
 #'
-#' \code{r_identified} samples random variates from the distribution of true scores for
+#' This function samples random variates from the distribution of true scores for
 #'   identified students.
 #'
-#' See also \code{d_identified} for the normalized density, \code{p_identified}
-#' for the cumulative density function, and \code{q_identified} for the quantile
+#' See also \code{\link{d_identified}} for the normalized density, \code{\link{p_identified}}
+#' for the cumulative density function, and \code{\link{q_identified}} for the quantile
 #' function.
 #'
-#' @usage \code{r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+#' @usage r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 #'
 #' @param n The number of values to sample.
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
@@ -44,7 +44,7 @@
 #' @export
 
 r_identified <- function(n, relyt, test.cutoff, valid=1e-7,
-                         nom.cutoff=1e-7, mu=0, normalize=T) {
+                         nom.cutoff=1e-7, mu=0) {
 
   if (n <= 0) {
     stop("\ncThe value of n must be greater than zero.")

@@ -1,3 +1,5 @@
+context("conditional_p()")
+
 expect_equal(
   conditional_p_id(true.score=1, relyt=.9, test.cutoff=.9),
   0.1462572, tolerance=1e-5)

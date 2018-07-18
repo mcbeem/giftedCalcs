@@ -4,8 +4,8 @@
 \alias{d_identified}
 \title{Conditional density of true scores for identified students}
 \usage{
-\code{d_identified(true.score, relyt, test.cutoff, valid,
- nom.cutoff, mu=0, normalize=T)}
+d_identified(true.score, relyt, test.cutoff, mu=0, valid=1e-7,
+nom.cutoff=1e-7, normalize=TRUE)
 }
 \arguments{
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
@@ -21,10 +21,12 @@ Defaults to zero.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-must be less than the square root of the test reliability.}
+must be less than the square root of the test reliability. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
+Must not be exactly 0 or 1. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{normalize}{Logical. Should the density be normalized to have a total area of one?
 Defaults to TRUE.}
@@ -34,21 +36,17 @@ Defaults to TRUE.}
 identified students.
 }
 \details{
-See also \code{p_identified} for the cumulative density, \code{q_identified}
-for the quantile function, and \code{r_identified} for random generation.
-
-Warning: use explicitly named arguments only; do not rely on position.
- e.g., use \code{d_identified(true.score=1.5, relyt=.9, test.cutoff=.9)}
- rather than \code{d_identified(1.5, .9, .9)}
+See also \code{\link{p_identified}} for the cumulative density, \code{\link{q_identified}}
+for the quantile function, and \code{\link{r_identified}} for random generation.
 }
 \examples{
 # un-normalized density for t=1.0
 d_identified(relyt=.9, true.score=1, test.cutoff=.9,
-  nom.cutoff=.9, valid=.5, mu=0, normalize=F)
+  nom.cutoff=.9, valid=.5, mu=0, normalize=FALSE)
 
 # normalized density for t=1.0
 d_identified(relyt=.9, true.score=1, test.cutoff=.9,
-  nom.cutoff=.9, valid=.5, mu=0, normalize=T)
+  nom.cutoff=.9, valid=.5, mu=0, normalize=TRUE)
 
 # compare the density of identified students for universal
 # screening vs. a poor-performing nomination stage
@@ -60,14 +58,14 @@ d_identified(relyt=.9, true.score=1, test.cutoff=.9,
 Tscores <- seq(0,4, length.out=200)
 
 p.universal <- sapply(Tscores, d_identified, relyt=.9,
-  test.cutoff=.9, normalize=F)
+  test.cutoff=.9, normalize=FALSE)
 
 plot(x=Tscores, y=p.universal, type="l", xlab="true score",
   col="blue")
 
 # add the un-normed density for the bad system
 p.bad <- sapply(Tscores, d_identified, relyt=.9,
-  test.cutoff=.9, nom.cutoff=.9, valid=.5, normalize=F)
+  test.cutoff=.9, nom.cutoff=.9, valid=.5, normalize=FALSE)
 
 points(x=Tscores, y=p.bad, type="l", col="red")
 }

@@ -1,3 +1,5 @@
+context("marginal_psychometrics()")
+
 # one-stage system
 expect_equal(
  as.numeric(unlist(marginal_psychometrics(mu=0, test.cutoff=.9, relyt=.95))),

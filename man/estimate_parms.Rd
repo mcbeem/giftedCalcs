@@ -23,11 +23,11 @@ calculate the nomination cutoff.}
 
 \item{pop.mean}{The known general population mean of the scores. Defaults to 0.}
 
+\item{pop.sd}{The known general population standard deviation of the scores.
+Defaults to 1.}
+
 \item{adjust}{Controls the bandwidth of the density estimator. Defaults to 0.5, which
 has been found to perform well in simulation.}
-
-\item{pop.mean}{The known general population standard deviation of the scores.
-Defaults to 1.}
 }
 \description{
 \code{estimate_params} estimates the psychometric parameters of an identification system

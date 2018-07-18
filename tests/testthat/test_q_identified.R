@@ -1,3 +1,4 @@
+context("q_identified()")
 
 expect_equal(q_identified(relyt=.9, percentile=.9, test.cutoff=.9,
                           nom.cutoff=.9, valid=.5, mu=0),

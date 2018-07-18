@@ -4,7 +4,8 @@
 \alias{marginal_psychometrics}
 \title{Marginal performance statistics identification systems}
 \usage{
-\code{marginal_psychometrics(relyt, test.cutoff, mu, valid, nom.cutoff)}
+marginal_psychometrics(relyt, test.cutoff, valid = 1e-07,
+  nom.cutoff = 1e-07, mu = 0)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
@@ -24,13 +25,13 @@ Must not be exactly 0 or 1.}
 Defaults to zero.}
 }
 \description{
-\code{marginal_psychometrics} calculates marginal performance statistics for
+This function calculates marginal performance statistics for
  one- and two-stage identification systems. A two-stage system is one in which
  an initial nomination process is used to select students who are tested on
  the confirmatory assessment.
 }
 \details{
-Two-stage system results are reported if arguments \code{valid} and \code{nom.cutoff}
+Two-stage system results are reported if arguments valid and nom.cutoff
  are provided. Otherwise, one-stage results are reported.
 
 The function returns a list containing the following:
@@ -55,4 +56,5 @@ marginal_psychometrics(mu=0, test.cutoff=.9, relyt=.95)
 # two-stage system
 marginal_psychometrics(mu=0, test.cutoff=.9,
         nom.cutoff=.8, relyt=.95, valid=.7)
+
 }

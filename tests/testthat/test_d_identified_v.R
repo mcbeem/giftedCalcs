@@ -1,3 +1,4 @@
+context("d_identified_v()")
 
 expect_equal(d_identified_v(relyt=.9, true.score=1, test.cutoff=.9,
              nom.cutoff=.9, valid=.5, mu=0, normalize=F),  0.006629165, tolerance=1e-5)

@@ -1,3 +1,4 @@
+context("r_identified()")
 
 set.seed(1)
 

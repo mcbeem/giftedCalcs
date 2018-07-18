@@ -1,3 +1,5 @@
+context("sd_identified()")
+
 expect_equal(sd_identified(relyt=.9, test.cutoff=.000000001), 1, tolerance=1e-5)
 
 expect_equal(sd_identified(relyt=.9, test.cutoff=.9), 0.5022167, tolerance=1e-5)

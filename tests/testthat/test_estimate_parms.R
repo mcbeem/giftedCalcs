@@ -1,3 +1,5 @@
+context("estimate_parms()")
+
 scores <- c(1.40236529425179, 2.62577297912122, 2.06822264994019, 1.66922014393072,
             2.38905923766592, 1.81476534824985, 2.23621075762004, 2.12180711963801,
             1.86043988688217, 1.79466544707949, 1.74450599310729, 1.58227410186153,
@@ -133,7 +135,8 @@ nom.rate <- .15
 
 expect_equal(
   as.numeric(estimate_parms(scores=scores, id.rate=id.rate, nom.rate=nom.rate)),
-  c(0.9098419, 0.9029993, 0.6583936, 0.8500000 ), tolerance=1e-6)
+  c(0.9098419, 0.9030073, 0.6585561, 0.8500000 ), tolerance=1e-4)
 
 expect_error(
   estimate_parms(scores=scores, id.rate=id.rate, nom.rate=nom.rate, w=1:600))
+

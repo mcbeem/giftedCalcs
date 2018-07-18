@@ -1,3 +1,5 @@
+context("conditional_moments()")
+
 expect_equal(
   as.numeric(unlist(conditional_moments(relyt=.9, true.score=2))),
   c(1.89736659610103, 0.1), tolerance=1e-7)

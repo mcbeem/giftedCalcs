@@ -1,3 +1,5 @@
+context("mean_identified()")
+
 expect_equal(mean_identified(relyt=.9, test.cutoff=.000000001), 0, tolerance=1e-5)
 
 expect_equal(mean_identified(relyt=.9, test.cutoff=.9), 1.664923, tolerance=1e-5)

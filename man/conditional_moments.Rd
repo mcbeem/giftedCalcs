@@ -5,7 +5,7 @@
 \title{Conditional moments of the observed score distribution given the true score
  and identification system parameters}
 \usage{
-\code{conditional_moments(true.score, relyt, valid)}
+conditional_moments(true.score, relyt, valid)
 }
 \arguments{
 \item{true.score}{The student's true score on a standardized (z-score) metric.}
@@ -19,7 +19,7 @@ must be less than the square root of the test reliability. If provided, the two-
 version of the computation is performed.}
 }
 \description{
-\code{conditional_moments} calculates the mean and variance of observed scores
+This function calculates the mean and variance of observed scores
  conditional on the true score and the identification system parameters. In a
  one-stage identification system, the only observed score is the observed test
  score, and so the mean and variance are scalar values. The distribution of
@@ -37,7 +37,7 @@ The observed score distribution for a student with a specific true score is just
  observed scores are true score (T) plus random error (E), the observed scores are
  also random variables.
 
-If the argument \code{valid} is supplied, the two-stage conditional moments are
+If the argument valid is supplied, the two-stage conditional moments are
  returned. Otherwise the one-stage moments are returned.
 
 This function returns a list containing the following:

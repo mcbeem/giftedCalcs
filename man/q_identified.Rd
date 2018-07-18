@@ -4,7 +4,7 @@
 \alias{q_identified}
 \title{Quantile function for true scores for identified students}
 \usage{
-\code{q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 }
 \arguments{
 \item{percentile}{The percentile of the distribution of identified students. Range (0, 1).
@@ -18,16 +18,18 @@ Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-must be less than the square root of the test reliability.}
+must be less than the square root of the test reliability. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
+Must not be exactly 0 or 1. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{mu}{Population mean true score on a standardized (z-score) metric.
 Defaults to zero.}
 }
 \description{
-\code{q_identified} is the conditional quantile function for identified students.
+This is the conditional quantile function for identified students.
 Given a percentile for the true score, it returns the corresponding true score (on a
 z-score metric).
 }

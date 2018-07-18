@@ -4,7 +4,7 @@
 \alias{mean_identified}
 \title{Mean of the conditional distribution of ability for identified students}
 \usage{
-\code{mean_identified(relyt, test.cutoff, valid, nom.cutoff, mu=0)}
+mean_identified(relyt, test.cutoff, valid, nom.cutoff, mu=0)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
@@ -15,16 +15,18 @@ Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
 scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-must be less than the square root of the test reliability.}
+must be less than the square root of the test reliability. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{nom.cutoff}{Nomination cutoff percentile. Range (0, 1).
-Must not be exactly 0 or 1.}
+Must not be exactly 0 or 1. Defaults to 1e-7 for a single-
+stage identification system.}
 
 \item{mu}{Population mean true score on a standardized (z-score) metric.
 Defaults to zero.}
 }
 \description{
-\code{mean_identified} calculates the expected value (mean) of the ability true
+This function calculates the expected value (mean) of the ability true
   score distribution for identified students.
 }
 \examples{
