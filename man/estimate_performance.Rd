@@ -6,7 +6,7 @@
  of the identified students using bootstrapping to provide uncertainty estimates.}
 \usage{
 estimate_performance(scores, id.rate, nom.rate, reps, pop.mean = 0,
-  pop.sd = 1, adjust = 0.5, CI = 0.95, ...)
+  pop.sd = 1, adjust = 0.5, CI = 0.95, multicore = FALSE, ...)
 }
 \arguments{
 \item{scores}{Confirmatory test reliability coefficient. Range (0, 1).

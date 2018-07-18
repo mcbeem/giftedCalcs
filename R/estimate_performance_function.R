@@ -25,9 +25,8 @@
 #' @param adjust Number that controls the amount of smoothing in the density
 #'   estimation. Defaults to 0.5. Values much larger than this result in biased estimates.
 #' @param CI The confidence limit. Must be between 0 and 1. Defaults to .95.
-#' @param ... optional parameters passed to the boot::boot() function. The \code{ncpus} and
-#'  \code{parallel} arguments can be specified to increase performance on multiprocessor
-#'  hardware.
+#' @param multicore Logical; should parallel processing be used on all available cores?
+#'   Defaults to false.
 #'
 #' @examples
 #' # generate some data
@@ -66,12 +65,11 @@
 #' @export
 
 estimate_performance <- function(scores, id.rate, nom.rate, reps, pop.mean=0,
-                                   pop.sd=1, adjust=.5, CI=.95, ...) {
+                                   pop.sd=1, adjust=.5, CI=.95, multicore=FALSE, ...) {
 
-     bootdata <- pbboot(data=scores, statistic=estimate_parms, R=reps, id.rate=id.rate,
-                           nom.rate=nom.rate, ...)
+      a <- boot_estimate_parms(scores=scores, reps=reps, id.rate=id.rate,
+                         nom.rate=nom.rate, multicore=multicore)
      # a contains the samples returned from boot
-     a <- bootdata$t
 
      #boundary estimates usually indicate convergence problems
      for (i in 1:nrow(a)) {
@@ -85,12 +83,12 @@ estimate_performance <- function(scores, id.rate, nom.rate, reps, pop.mean=0,
      # b contains the result of feeding the samples in a to the marginal_psychometrics
      #  function (calc sensitivity etc)
      b <- mapply(marginal_psychometrics, test.cutoff=a[,1], relyt=a[,2],
-                 valid=a[,3], nom.cutoff=a[,4])
-     b <- matrix(unlist(b), nrow=nrow(a), ncol=5, byrow=T)
+                 valid=a[,3], nom.cutoff=a[,4])[1:4,] # drop estimated id.rate
+     b <- matrix(unlist(b), nrow=nrow(a), ncol=4, byrow=T)
 
      # column names
      nms <-  c("test.cutoff", "relyt", "valid", "nom.cutoff",
-               "sensitivity", "IIR", "nom.rate", "nom.passrate", "identification.rate")
+               "sensitivity", "IIR", "nom.rate", "nom.passrate")
 
      # object samples is a data frame containing all the sampled values
      samples <- data.frame(cbind(a,b))
@@ -110,20 +108,22 @@ estimate_performance <- function(scores, id.rate, nom.rate, reps, pop.mean=0,
      names(summary) <- c("Estimate", "StdErr", paste0("CI.", CI*100, ".lower"),
                          paste0("CI.", CI*100, ".upper"))
      # fixed values should have NAs for stderr and CIs
+     # id.rate is known and therefore fixed
      summary[c(4,7), c(2:4)] <- NA
-     summary[9, c(2:4)] <- NA
 
      # re-order the rows
-     summary <- summary[c(1,2,3,5,6,8,4,7,9),]
+     summary <- summary[c(1,2,3,5,6,8,4,7),]
 
      if (reps < 500) {
        warning("A minimum of 500 reps is suggested for trustworthy standard errors and confidence intervals.")
        }
 
-     output <- list(samples=samples, summary=summary, boot.output=bootdata)
+     output <- list(samples=samples, summary=summary)
      class(output) <- c("est_performance", "list")
      # don't print the samples or the boot output
-     attr(output, "hidden") <- c("samples", "boot.output")
+     attr(output, "hidden") <- c("samples")
 
      return(output)
 }
+
+
