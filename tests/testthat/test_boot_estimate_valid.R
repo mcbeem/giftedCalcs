@@ -1,4 +1,6 @@
-context("estimate_performance()")
+context("boot_estimate_parms()")
+
+# generate some data
 set.seed(123)
 x <- c(1.56686705285826, 2.13334006753374, 2.48389959160847, 2.48907956253638,
        1.62443028300905, 1.35295035569658, 1.50550985067319, 1.45411569712668,
@@ -53,19 +55,12 @@ x <- c(1.56686705285826, 2.13334006753374, 2.48389959160847, 2.48907956253638,
 )
 
 
-expect_warning(estimate_performance(x=x, id.rate=0.02665284,
-                                    nom.rate=.1, reps=3))
 
-set.seed(123)
-a <- estimate_performance(x=x, id.rate= 0.02665284, nom.rate=.1, reps=500)
+a <-boot_estimate_valid(x, id.rate= 0.02665284, nom.rate=.1, reps=100)
+apply(a, 1, mean)
 
-expect_equal(unlist(a$summary),
-             structure(c(0.38196, 0.25808, 0.25373, 0.90169, 0.9, 0.01587,
-                         0.0084, 0.00826, NA, NA, 0.35085, 0.24161, 0.23753, NA, NA, 0.41307,
-                         0.27455, 0.26992, NA, NA), .Names = c("Estimate1", "Estimate2",
-                                                               "Estimate3", "Estimate4", "Estimate5", "StdErr1", "StdErr2",
-                                                               "StdErr3", "StdErr4", "StdErr5", "CI.95.lower1", "CI.95.lower2",
-                                                               "CI.95.lower3", "CI.95.lower4", "CI.95.lower5", "CI.95.upper1",
-                                                               "CI.95.upper2", "CI.95.upper3", "CI.95.upper4", "CI.95.upper5"
-                         )),
-                         tolerance=1e-2)
+expect_equal(
+  apply(a, 1, mean),
+  0.381,
+  tolerance=1e-2)
+

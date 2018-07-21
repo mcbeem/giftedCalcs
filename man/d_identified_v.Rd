@@ -2,16 +2,20 @@
 % Please edit documentation in R/d_identified_v_function.R
 \name{d_identified_v}
 \alias{d_identified_v}
-\title{Conditional density of true scores for identified students (vectorized version)}
+\title{Conditional density of true or observed scores for identified students (vectorized version)}
 \usage{
-d_identified_v(true.score, relyt, test.cutoff, mu = 0, valid = 1e-07,
+d_identified_v(x, relyt = 1, test.cutoff, mu = 0, valid = 1e-07,
   nom.cutoff = 1e-07, normalize = TRUE)
 }
 \arguments{
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
+\item{x}{The student's score on a standardized (z-score) metric. Interpreted
+as a true score if a value is specified for \code{relyt}, otherwise intepreted
+as an observed score.}
 
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, x is assumed
+to be an observed score. If an alternative value is supplied for
+\code{relyt}, x is assumed to be a true score.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -39,11 +43,11 @@ for the quantile function, and \code{\link{r_identified}} for random generation.
 }
 \examples{
 # un-normalized density for t=1.0
-d_identified(relyt=.9, true.score=1, test.cutoff=.9,
+d_identified(relyt=.9, x=1, test.cutoff=.9,
   nom.cutoff=.9, valid=.5, mu=0, normalize=FALSE)
 
 # normalized density for t=1.0
-d_identified(relyt=.9, true.score=1, test.cutoff=.9,
+d_identified(relyt=.9, x=1, test.cutoff=.9,
   nom.cutoff=.9, valid=.5, mu=0, normalize=TRUE)
 
 # compare the density of identified students for universal

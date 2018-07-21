@@ -2,7 +2,7 @@
 % Please edit documentation in R/q_identified_function.R
 \name{q_identified}
 \alias{q_identified}
-\title{Quantile function for true scores for identified students}
+\title{Quantile function for true or observed scores for identified students}
 \usage{
 q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 }
@@ -10,8 +10,10 @@ q_identified(percentile, relyt, test.cutoff, valid, nom.cutoff, mu=0)
 \item{percentile}{The percentile of the distribution of identified students. Range (0, 1).
 Must not be exactly 0 or 1.}
 
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, the returned value is an
+observed score. If an alternative value is supplied for
+\code{relyt}, the returned value is a true score.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -30,7 +32,7 @@ Defaults to zero.}
 }
 \description{
 This is the conditional quantile function for identified students.
-Given a percentile for the true score, it returns the corresponding true score (on a
+Given a percentile, it returns the corresponding score (on a
 z-score metric).
 }
 \details{
@@ -39,9 +41,15 @@ the cumulative density function, and \code{r_identified} for random generation.
 }
 \examples{
 # one-stage identification program
-q_identified(percentile=.9, relyt=.95, test.cutoff=.975)
+# returns the true score
+q_identified(percentile=.1, relyt=.9, test.cutoff=.9)
+
+# one-stage identification program
+# returns the observed score
+q_identified(percentile=.1, test.cutoff=.9)
 
 # two-stage identification program
+#  returns the true score
 q_identified(percentile=.9, relyt=.95, valid=.6,
-  test.cutoff=.975, nom.cutoff=.9, mu=0)
+  test.cutoff=.975, nom.cutoff=.9)
 }

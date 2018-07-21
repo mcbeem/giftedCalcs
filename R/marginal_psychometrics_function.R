@@ -24,7 +24,7 @@
 #'  identification.rate: The proportion of the student population that is identified.
 #'
 #' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
-#'  Must not be exactly 0 or 1.
+#'  Must not be exactly 0 or 1. Defaults to .9.
 #' @param test.cutoff Confirmatory test cutoff percentile. Range (0, 1).
 #'  Must not be exactly 0 or 1.
 #' @param valid Nomination validity coefficient. Controls the relatedness of the nomination
@@ -48,7 +48,7 @@
 #'          na.omit pnorm qnorm rnorm runif sd uniroot
 #' @export
 
-marginal_psychometrics <- function(relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0) {
+marginal_psychometrics <- function(relyt=.9, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0) {
 
 
   # select 1- or 2-stage version based on the supplied arguments

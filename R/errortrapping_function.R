@@ -4,8 +4,8 @@
 #'
 #' Internal function used to validate parameters supplied to other functions.
 #'
-#' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
-#'  Must not be exactly 0 or 1.
+#' @param relyt Confirmatory test reliability coefficient. Range (0, 1].
+#'  Must not be exactly 0.
 #' @param valid Nomination validity coefficient. Range (0, 1).
 #'  Must not be exactly 0 or 1.
 #' @param nom.cutoff Nomination cutoff percentile. Range (0, 1).
@@ -16,11 +16,11 @@
 #'
 #' @export
 
-errortrapping <- function(relyt=.9999999, valid=1E-30,
+errortrapping <- function(relyt=1, valid=1E-30,
                           nom.cutoff=.1, test.cutoff=.9, mu=0) {
 
-  if (relyt <= 0 | relyt >= 1) {
-    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero or exactly one due to computational instability.")
+  if (relyt <= 0 | relyt > 1) {
+    stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero due to computational instability.")
   }
 
   if (valid <= 0 | valid >= 1) {

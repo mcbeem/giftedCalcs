@@ -2,15 +2,19 @@
 % Please edit documentation in R/conditional_p_id_function.R
 \name{conditional_p_id}
 \alias{conditional_p_id}
-\title{Conditional probability of identification given the true score}
+\title{Conditional probability of identification}
 \usage{
-conditional_p_id(true.score, relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7)
+conditional_p_id(x, relyt=1, test.cutoff, valid=1e-7, nom.cutoff=1e-7)
 }
 \arguments{
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
+\item{x}{The student's score on a standardized (z-score) metric. Interpreted
+as a true score if a value is specified for \code{relyt}, otherwise intepreted
+as an observed score.}
 
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, x is assumed
+to be an observed score. If an alternative value is supplied for
+\code{relyt}, x is assumed to be a true score.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1. Can be a vector or scalar.}
@@ -25,7 +29,7 @@ stage system. Must not be exactly 0 or 1.}
 }
 \description{
 This function calculates the conditional probabilty of identification
- for a one- or two-stage system given a student's true score, the test reliability,
+ for a one- or two-stage system given a student's true or observed score, the test reliability,
  and, for two-stage systems, the nomination validity and the nomination cutoff. A
  two-stage system is one in which an initial nomination process is used to select
  students who are tested on the confirmatory assessment.
@@ -39,20 +43,29 @@ The two-stage identification probability is reported if arguments valid
  reported.
 }
 \examples{
-# one-stage system
-conditional_p_id(true.score=1, relyt=.9, test.cutoff=.9)
+# one-stage system, true score=1
+conditional_p_id(x=1, relyt=.9, test.cutoff=.9)
 
-# two-stage system
-conditional_p_id(true.score=1, relyt=.9, test.cutoff=.9,
+# one-stage system, observed score=1
+# (note that the relyt argument is not specified)
+conditional_p_id(x=1, test.cutoff=.9)
+
+# two-stage system, true score=2
+conditional_p_id(x=2, relyt=.9, test.cutoff=.9,
    nom.cutoff=.9, valid=.5)
 
-# make an identification curve
+# two-stage system, observed score=2
+conditional_p_id(x=2, test.cutoff=.9,
+   nom.cutoff=.9, valid=.5)
+
+# make an identification curve:
+#  true score vs p identified
 #
 # create vector of true scores
 Tscores <- seq(0,3, length.out=100)
 
 # calculate the identification probability for each
-p.id <- conditional_p_id(true.score=Tscores, relyt=.9,
+p.id <- conditional_p_id(x=Tscores, relyt=.9,
   test.cutoff=.9, nom.cutoff=.9, valid=.5)
 
 # make a plot

@@ -13,7 +13,7 @@ expect_equal(mean_identified(relyt=.9, valid=.8, test.cutoff=.9, nom.cutoff=.9, 
 expect_equal(mean_identified(relyt=.9, valid=.8, test.cutoff=.9, nom.cutoff=.5, mu=-1),
              1.46008, tolerance=1e-5)
 
-expect_error(mean_identified(relyt=1, test.cutoff=.9))
+expect_error(mean_identified(relyt=1.1, test.cutoff=.9))
 
 expect_error(mean_identified(relyt=.9, test.cutoff=0))
 

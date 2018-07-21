@@ -2,15 +2,20 @@
 % Please edit documentation in R/p_identified_function.R
 \name{p_identified}
 \alias{p_identified}
-\title{Conditional cumulative density function of true scores for identified students}
+\title{Conditional cumulative density function of true or observed scores for identified students}
 \usage{
-p_identified(true.score, relyt, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0)
+p_identified(x, relyt = 1, test.cutoff, valid = 1e-07, nom.cutoff = 1e-07,
+  mu = 0)
 }
 \arguments{
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
+\item{x}{The student's score on a standardized (z-score) metric. Interpreted
+as a true score if a value is specified for \code{relyt}, otherwise intepreted
+as an observed score.}
 
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, x is assumed
+to be an observed score. If an alternative value is supplied for
+\code{relyt}, x is assumed to be a true score.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -39,5 +44,5 @@ the quantile function, and \code{r_identified} for random generation.
 }
 \examples{
 p_identified(relyt=.95, valid=.6, test.cutoff=.975,
-  nom.cutoff=.9, true.score=2.5, mu=0)
+  nom.cutoff=.9, x=2.5)
 }

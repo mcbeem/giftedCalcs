@@ -2,14 +2,14 @@
 % Please edit documentation in R/estimate_performance_function.R
 \name{estimate_performance}
 \alias{estimate_performance}
-\title{Estimate psychometric parameters of an identification system given scores
+\title{Estimate psychometric parameters of an identification system given x
  of the identified students using bootstrapping to provide uncertainty estimates.}
 \usage{
-estimate_performance(scores, id.rate, nom.rate, reps, pop.mean = 0,
-  pop.sd = 1, adjust = 0.5, CI = 0.95, multicore = FALSE)
+estimate_performance(x, id.rate, nom.rate, reps, relyt = 1, pop.mean = 0,
+  pop.sd = 1, adjust = 1, CI = 0.95)
 }
 \arguments{
-\item{scores}{Confirmatory test reliability coefficient. Range (0, 1).
+\item{x}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{id.rate}{The proportion of students who have been identified. Range (0, 1). Must
@@ -20,52 +20,53 @@ calculate the nomination cutoff.}
 
 \item{reps}{The number of bootstrap samples.}
 
-\item{pop.mean}{The known general population mean of the scores. Defaults to 0.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0,1]. Must not be exactly 0.
+Used in the calculation of sensitivity. Defaults to 1, in which case the reported
+sensitivity is relative to a universal screening system and does not include sensitivity
+loss from imperfect test reliability. If <1, the test reliability is included in the
+sensitivity calculation.}
 
-\item{pop.sd}{The known general population standard deviation of the scores.
+\item{pop.mean}{The known general population mean of the x. Defaults to 0.}
+
+\item{pop.sd}{The known general population standard deviation of the x.
 Defaults to 1.}
 
 \item{adjust}{Number that controls the amount of smoothing in the density
-estimation. Defaults to 0.5. Values much larger than this result in biased estimates.}
+estimation. Defaults to 1.0, which has been found to work well in simulation.}
 
 \item{CI}{The confidence limit. Must be between 0 and 1. Defaults to .95.}
-
-\item{multicore}{Logical; should parallel processing be used on all available cores?
-Defaults to false.}
 }
 \value{
 This function stimates the psychometric parameters of an identification system
- given the scores of the identified students. This function calculates statistics
- using the \code{\link{estimate_parms}} function with bootstrapping. The resulting
- \code{relyt}, \code{test.cutoff}, and \code{valid} estimates are passed to the
+ given the x of the identified students. This function calculates statistics
+ using the \code{\link{estimate_valid}} function with bootstrapping. The resulting
+ nomination validity (\code{valid}) estimates are passed to the
  \code{\link{marginal_psychometrics}} function in order to calculate the implied
  performance statistics.
 
- Simulation results suggest a mimimum sample size of n=150 to n=200 for reasonable
-  performance. Further, at least 500 bootstrapped samples are suggested.
-  This can take a while.
+ At least 500 bootstrapped samples are suggested. This can take a while.
 }
 \description{
-Estimate psychometric parameters of an identification system given scores
+Estimate psychometric parameters of an identification system given x
  of the identified students using bootstrapping to provide uncertainty estimates.
 }
 \examples{
 # generate some data
 set.seed(123)
-scores <- r_identified(n=500, test.cutoff=.9, relyt=.93, valid=.5,
+x <- r_identified(n=300, test.cutoff=.9, valid=.5,
   nom.cutoff=.9)
 
 # calculate the identification rate implied by the system parameters
-id.rate <- marginal_psychometrics(test.cutoff=.9, relyt=.93, valid=.5,
+id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.5,
   nom.cutoff=.9)$identification.rate
 
 # calculate the nomination rate implied by the system parameters
-nom.rate <- marginal_psychometrics(test.cutoff=.9, relyt=.93, valid=.5,
+nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.5,
   nom.cutoff=.9)$nom.rate
 
 # estimate the system parameters with 200 bootstrapped samples
 #  this uses one CPU
-a <- estimate_performance(scores=scores, id.rate=id.rate,
+a <- estimate_performance(x=x, id.rate=id.rate,
   nom.rate=nom.rate, reps=200)
 a
 

@@ -1,17 +1,19 @@
-#' Random generation from the distribution of true scores for identified students
+#' Random generation from the distribution of true or observed scores for identified students
 #'
 #' This function samples random variates from the distribution of true scores for
-#'   identified students.
+#'   identified students using rejection sampling.
 #'
+#' The returned values are interpreted as true scores if a value is provided for
+#' argument \code{relyt}; otherwise, they are observed scores.
 #' See also \code{\link{d_identified}} for the normalized density, \code{\link{p_identified}}
 #' for the cumulative density function, and \code{\link{q_identified}} for the quantile
 #' function.
 #'
-#' @usage r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)
-#'
 #' @param n The number of values to sample.
-#' @param relyt Confirmatory test reliability coefficient. Range (0, 1).
-#'  Must not be exactly 0 or 1.
+#' @param relyt Confirmatory test reliability coefficient. Range (0, 1].
+#'  Must not be exactly 0. Defaults to 1; in this case, the returned values are
+#'  observed scores. If an alternative value is supplied for
+#'  \code{relyt}, the returned values are true scores.
 #' @param valid Nomination validity coefficient. Controls the relatedness of the nomination
 #'  scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
 #'  must be less than the square root of the test reliability.
@@ -23,6 +25,11 @@
 #'  Defaults to zero.
 #'
 #' @examples
+#' # generate true scores
+#' r_identified(n=10, relyt=.9, valid=.6,
+#'  test.cutoff=.9, nom.cutoff=.1, mu=0)
+#'
+#' # generate observed scores
 #' r_identified(n=10, relyt=.9, valid=.6,
 #'  test.cutoff=.9, nom.cutoff=.1, mu=0)
 #'
@@ -43,7 +50,7 @@
 #' points(x=Tscores, y=p.id, type="l", col="red")
 #' @export
 
-r_identified <- function(n, relyt, test.cutoff, valid=1e-7,
+r_identified <- function(n, relyt=1, test.cutoff, valid=1e-7,
                          nom.cutoff=1e-7, mu=0) {
 
   if (n <= 0) {
@@ -53,12 +60,12 @@ r_identified <- function(n, relyt, test.cutoff, valid=1e-7,
   #errortrapping(...)
 
   M <- d_identified(
-    true.score=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
+    x=mean_identified(relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                                nom.cutoff=nom.cutoff, mu=mu),
     relyt=relyt, test.cutoff=test.cutoff, valid=valid,
     nom.cutoff=nom.cutoff, mu=mu, normalize=T)*3
 
-  df <- function(true.score) {d_identified(true.score=true.score, relyt=relyt,
+  df <- function(x) {d_identified(x=x, relyt=relyt,
                                            test.cutoff=test.cutoff, valid=valid,
                                            nom.cutoff=nom.cutoff, mu=mu, normalize=T)}
 

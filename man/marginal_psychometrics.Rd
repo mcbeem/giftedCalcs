@@ -4,12 +4,12 @@
 \alias{marginal_psychometrics}
 \title{Marginal performance statistics identification systems}
 \usage{
-marginal_psychometrics(relyt, test.cutoff, valid = 1e-07,
+marginal_psychometrics(relyt = 0.9, test.cutoff, valid = 1e-07,
   nom.cutoff = 1e-07, mu = 0)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+Must not be exactly 0 or 1. Defaults to .9.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}

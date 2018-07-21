@@ -2,15 +2,18 @@
 % Please edit documentation in R/r_identified_function.R
 \name{r_identified}
 \alias{r_identified}
-\title{Random generation from the distribution of true scores for identified students}
+\title{Random generation from the distribution of true or observed scores for identified students}
 \usage{
-r_identified(n, relyt, test.cutoff, valid, nom.cutoff, mu=0)
+r_identified(n, relyt = 1, test.cutoff, valid = 1e-07, nom.cutoff = 1e-07,
+  mu = 0)
 }
 \arguments{
 \item{n}{The number of values to sample.}
 
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, the returned values are
+observed scores. If an alternative value is supplied for
+\code{relyt}, the returned values are true scores.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -27,14 +30,21 @@ Defaults to zero.}
 }
 \description{
 This function samples random variates from the distribution of true scores for
-  identified students.
+  identified students using rejection sampling.
 }
 \details{
+The returned values are interpreted as true scores if a value is provided for
+argument \code{relyt}; otherwise, they are observed scores.
 See also \code{\link{d_identified}} for the normalized density, \code{\link{p_identified}}
 for the cumulative density function, and \code{\link{q_identified}} for the quantile
 function.
 }
 \examples{
+# generate true scores
+r_identified(n=10, relyt=.9, valid=.6,
+ test.cutoff=.9, nom.cutoff=.1, mu=0)
+
+# generate observed scores
 r_identified(n=10, relyt=.9, valid=.6,
  test.cutoff=.9, nom.cutoff=.1, mu=0)
 

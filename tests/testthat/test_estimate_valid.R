@@ -1,5 +1,5 @@
-context("estimate_performance()")
-set.seed(123)
+context("estimate_parms()")
+
 x <- c(1.56686705285826, 2.13334006753374, 2.48389959160847, 2.48907956253638,
        1.62443028300905, 1.35295035569658, 1.50550985067319, 1.45411569712668,
        1.38445460407334, 1.61174906939096, 1.63342092459411, 2.32227782810227,
@@ -52,20 +52,15 @@ x <- c(1.56686705285826, 2.13334006753374, 2.48389959160847, 2.48907956253638,
        1.47423126050689, 2.50753900436195, 1.74455299594638, 2.95790745198419
 )
 
+# calculate the identification rate implied by the system parameters
+id.rate <- 0.02665284
 
-expect_warning(estimate_performance(x=x, id.rate=0.02665284,
-                                    nom.rate=.1, reps=3))
+# calculate the nomination rate implied by the system parameters
+nom.rate <- .1
 
-set.seed(123)
-a <- estimate_performance(x=x, id.rate= 0.02665284, nom.rate=.1, reps=500)
+expect_equal(
+  as.numeric(estimate_valid(x=x, id.rate=id.rate, nom.rate=nom.rate)),
+  0.3785884, tolerance=1e-3)
 
-expect_equal(unlist(a$summary),
-             structure(c(0.38196, 0.25808, 0.25373, 0.90169, 0.9, 0.01587,
-                         0.0084, 0.00826, NA, NA, 0.35085, 0.24161, 0.23753, NA, NA, 0.41307,
-                         0.27455, 0.26992, NA, NA), .Names = c("Estimate1", "Estimate2",
-                                                               "Estimate3", "Estimate4", "Estimate5", "StdErr1", "StdErr2",
-                                                               "StdErr3", "StdErr4", "StdErr5", "CI.95.lower1", "CI.95.lower2",
-                                                               "CI.95.lower3", "CI.95.lower4", "CI.95.lower5", "CI.95.upper1",
-                                                               "CI.95.upper2", "CI.95.upper3", "CI.95.upper4", "CI.95.upper5"
-                         )),
-                         tolerance=1e-2)
+
+

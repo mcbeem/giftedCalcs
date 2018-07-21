@@ -2,14 +2,17 @@
 % Please edit documentation in R/sd_identified_function.R
 \name{sd_identified}
 \alias{sd_identified}
-\title{Standard deviation of the conditional distribution of ability for identified students}
+\title{Standard deviation of the conditional distribution of true or observed scores for
+ identified students}
 \usage{
-sd_identified(relyt = relyt, test.cutoff = test.cutoff, valid = 1e-07,
-  nom.cutoff = 1e-07, mu = 0)
+sd_identified(relyt = 1, test.cutoff, valid = 1e-07, nom.cutoff = 1e-07,
+  mu = 0)
 }
 \arguments{
-\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
+Must not be exactly 0. Defaults to 1; in this case, x is assumed
+to be an observed score. If an alternative value is supplied for
+\code{relyt}, x is assumed to be a true score.}
 
 \item{test.cutoff}{Confirmatory test cutoff percentile. Range (0, 1).
 Must not be exactly 0 or 1.}
@@ -29,11 +32,11 @@ Defaults to zero.}
   score distribution for identified students.
 }
 \examples{
-# std dev on the z-score metric
+# std dev for true scores
 sd_identified(relyt=.9, valid=.8,
   test.cutoff=.9, nom.cutoff=.5, mu=0)
 
-# sd on the IQ-metric
-15*(sd_identified(relyt=.9, valid=.8,
+# std dev for observed scores
+15*(sd_identified(valid=.8,
 test.cutoff=.9, nom.cutoff=.5, mu=0))
 }
