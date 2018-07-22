@@ -70,24 +70,24 @@ conditional_p_id <- function(x, relyt=1, test.cutoff, valid=1e-7, nom.cutoff=1e-
 
   # select true or observed-score version based on supplied arguments
   if (relyt==1) {version="O"} else {version="T"}
-    # select 1- or 2-stage version based on the supplied arguments
+  # select 1- or 2-stage version based on the supplied arguments
   if (valid==1e-7 & nom.cutoff==1e-7) {stages=1} else {stages=2}
 
   if (version=="T") {
 
     if(stages==2) {
-        errortrapping(relyt=relyt, test.cutoff=test.cutoff,
-                      nom.cutoff=nom.cutoff, valid=valid)
+      errortrapping(relyt=relyt, test.cutoff=test.cutoff,
+                    nom.cutoff=nom.cutoff, valid=valid)
 
-        b_C <- qnorm(test.cutoff) / sqrt(relyt)
-        a_C <- sqrt(relyt / (1-relyt))
+      b_C <- qnorm(test.cutoff) / sqrt(relyt)
+      a_C <- sqrt(relyt / (1-relyt))
 
-        b_N <- (qnorm(nom.cutoff)*sqrt(relyt)) / valid
-        a_N <- sqrt(((valid^2) / relyt) /
-                      (1-((valid^2) / relyt)))
+      b_N <- (qnorm(nom.cutoff)*sqrt(relyt)) / valid
+      a_N <- sqrt(((valid^2) / relyt) /
+                    (1-((valid^2) / relyt)))
 
-        p.identification <- pnorm(a_C*(x-b_C))*
-                pnorm(a_N*(x-b_N))
+      p.identification <- pnorm(a_C*(x-b_C))*
+        pnorm(a_N*(x-b_N))
     }
 
     if(stages==1) {

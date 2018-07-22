@@ -12,7 +12,6 @@ LazyData: true
 Imports: minpack.lm,
 	mnormt,
     pbapply,
-  	SimDesign,
-  	scdensity
+  	SimDesign
 RoxygenNote: 6.0.1
 Suggests: testthat

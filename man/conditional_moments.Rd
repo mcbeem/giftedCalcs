@@ -2,60 +2,62 @@
 % Please edit documentation in R/conditional_moments_function.R
 \name{conditional_moments}
 \alias{conditional_moments}
-\title{Conditional moments of the observed score distribution given the true score
- and identification system parameters}
+\title{Conditional moments of scores}
 \usage{
-conditional_moments(true.score, relyt, valid)
+conditional_moments(t.true = NA, n.obs = NA, t.obs = NA, relyt,
+  valid = 1e-07)
 }
 \arguments{
-\item{true.score}{The student's true score on a standardized (z-score) metric.}
+\item{t.true}{The confirmatory test true score on a standardized (z-score) metric. Only
+one of \code{t.true}, \code{t.obs}, or \code{n.obs} should be specified.}
+
+\item{n.obs}{The nomination observed score on a standardized (z-score) metric. If \code{n.obs}
+is specified, a value for \code{valid} must also be given.}
+
+\item{t.obs}{The confirmatory test observed score on a standardized (z-score) metric.}
 
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
 Must not be exactly 0 or 1.}
 
 \item{valid}{Nomination validity coefficient. Controls the relatedness of the nomination
-scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
-must be less than the square root of the test reliability. If provided, the two-stage
-version of the computation is performed.}
-}
-\description{
-This function calculates the mean and variance of observed scores
- conditional on the true score and the identification system parameters. In a
- one-stage identification system, the only observed score is the observed test
- score, and so the mean and variance are scalar values. The distribution of
- observed scores is assumed to be normal.
-}
-\details{
-In a two-stage identification system, there are observed scores for
- both the nomination and the confirmatory test. In this case, there is a mean vector
- and a covariance matrix, and the joint distribution is assumed to be bivariate
- normal. A two-stage system is one in which an initial nomination process is used
- to select students who are tested on the confirmatory assessment.
+ scores and the confirmatory test scores. Range (0, 1). Must not be exactly 0 or 1, and
+ must be less than the square root of the test reliability. If provided, the two-stage
+ version of the computation is performed.
 
-The observed score distribution for a student with a specific true score is justified
- by classical test theory, in which measurement errors are random variables. Because
- observed scores are true score (T) plus random error (E), the observed scores are
- also random variables.
+ @return A list containing the following:
 
-If the argument valid is supplied, the two-stage conditional moments are
- returned. Otherwise the one-stage moments are returned.
-
-This function returns a list containing the following:
-
-conditional.mean: For one-stage systems, the mean of the confirmatory test scores.
+ conditional.mean: For one-stage systems, the mean of the confirmatory test scores.
  For two-stage systems, the mean vector of the bivariate normal distribution of
  the observed nomination and confirmatory test scores, in that order.
 
-conditional.cov: For one-stage systems, the variance of the observed confirmatory
+ conditional.cov: For one-stage systems, the variance of the observed confirmatory
   test scores. For two-stage systems, the covariance matrix of the bivariate
   normal distribution of the observed nomination and confirmatory test scores,
-  in that order.
+  in that order.}
+}
+\description{
+This function calculates the conditional mean and variance of scores. The user specifies
+ a value for the confirmatory test true score, the confirmatory test observed score, or
+ the nomination observed score. The moments of the conditional distribution of the other
+ two scores are calculated.
+}
+\details{
+In a two-stage identification system, there is a test true score, a test observed score,
+ and a nomination observed score. (In principle there is also a nomination true score, but
+ it is irrelevant and may be ignored). In a one-stage system, there is a test true score and
+ observed score.
+
+The joint distribution of these three variables is assumed to be multivariate
+normal. Therefore, the conditional distribution is also normal.
+
+If the argument valid is supplied, the two-stage conditional moments are
+ returned. Otherwise the one-stage moments are returned.
 }
 \examples{
 
 # one-stage system
-conditional_moments(relyt=.9, true.score=2)
+conditional_moments(t.true=2, relyt=.9)
 
 # two-stage system
-conditional_moments(relyt=.9, true.score=2, valid=.6)
+conditional_moments(t.true=2, relyt=.9, valid=.6)
 }
