@@ -9,8 +9,7 @@ estimate_performance(x, id.rate, nom.rate, reps, relyt = 1, pop.mean = 0,
   pop.sd = 1, adjust = 1, CI = 0.95)
 }
 \arguments{
-\item{x}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{x}{Numeric vector of observed scores.}
 
 \item{id.rate}{The proportion of students who have been identified. Range (0, 1). Must
 be less than or equal to \code{nom.rate}.}
@@ -38,7 +37,7 @@ estimation. Defaults to 1.0, which has been found to work well in simulation.}
 }
 \value{
 This function stimates the psychometric parameters of an identification system
- given the x of the identified students. This function calculates statistics
+ given the observed scores of the identified students. This function calculates statistics
  using the \code{\link{estimate_valid}} function with bootstrapping. The resulting
  nomination validity (\code{valid}) estimates are passed to the
  \code{\link{marginal_psychometrics}} function in order to calculate the implied

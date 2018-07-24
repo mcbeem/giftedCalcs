@@ -38,9 +38,9 @@ This function calculates the conditional probabilty of identification
 The probabilities returned by this function can be plotted against a range of true
  scores to create an identification curve (see examples).
 
-The two-stage identification probability is reported if arguments valid
+The two-stage identification probability is returned if arguments valid
  and nom.cutoff are provided. Otherwise, the one-stage probability is
- reported.
+ returned.
 }
 \examples{
 # one-stage system, true score=1

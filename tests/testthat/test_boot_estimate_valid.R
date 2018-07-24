@@ -64,3 +64,17 @@ expect_equal(
   0.381,
   tolerance=1e-2)
 
+expect_equal(
+  apply(a, 1, mean),
+  0.381,
+  tolerance=1e-2)
+
+b <-boot_estimate_valid((2*x+10), id.rate= 0.02665284, nom.rate=.1,
+                        reps=100, pop.mean=10, pop.sd=2)
+apply(b, 1, mean)
+
+expect_equal(
+  apply(b, 1, mean),
+  0.381,
+  tolerance=1e-2)
+

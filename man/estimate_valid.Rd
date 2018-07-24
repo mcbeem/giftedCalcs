@@ -8,8 +8,7 @@
 estimate_valid(x, nom.rate, id.rate, pop.mean = 0, pop.sd = 1, adjust = 1)
 }
 \arguments{
-\item{x}{Confirmatory test reliability coefficient. Range (0, 1).
-Must not be exactly 0 or 1.}
+\item{x}{Numeric vector of observed scores.}
 
 \item{nom.rate}{The proportion of students who have been nominated. Range (0, 1). Used to
 calculate the nomination cutoff.}
@@ -27,7 +26,7 @@ has been found to perform well in simulation.}
 }
 \description{
 \code{estimate_valid} estimates the nomination validity of an identification system
- given the observed x of the identified students, the confirmatory test
+ given the observed scores of the identified students, the confirmatory test
  cutoff, the nomination cutoff, and the proportion of students that are
  identified. The test cutoff, if not known, is inferred from the minimum score.
  The nomination cutoff is inferred from the proportion of students who are nominated

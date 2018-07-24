@@ -69,3 +69,20 @@ expect_equal(unlist(a$summary),
                                                                "CI.95.upper2", "CI.95.upper3", "CI.95.upper4", "CI.95.upper5"
                          )),
                          tolerance=1e-2)
+
+
+set.seed(123)
+x <- c(x, rep(NA, 100))
+b <- estimate_performance(x=(x*5)-10, id.rate= 0.02665284, nom.rate=.1,
+                          pop.mean=-10, pop.sd=5, reps=500)
+
+expect_equal(unlist(b$summary),
+             structure(c(0.38196, 0.25808, 0.25373, 0.90169, 0.9, 0.01587,
+                         0.0084, 0.00826, NA, NA, 0.35085, 0.24161, 0.23753, NA, NA, 0.41307,
+                         0.27455, 0.26992, NA, NA), .Names = c("Estimate1", "Estimate2",
+                                                               "Estimate3", "Estimate4", "Estimate5", "StdErr1", "StdErr2",
+                                                               "StdErr3", "StdErr4", "StdErr5", "CI.95.lower1", "CI.95.lower2",
+                                                               "CI.95.lower3", "CI.95.lower4", "CI.95.lower5", "CI.95.upper1",
+                                                               "CI.95.upper2", "CI.95.upper3", "CI.95.upper4", "CI.95.upper5"
+                         )),
+             tolerance=1e-2)

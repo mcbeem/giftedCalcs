@@ -1,7 +1,7 @@
 #' Bootstrapping with a progress bar
 #'
 #' @param reps Number of bootstrapped repetitions.
-#' @param x Numeric vector of observed x.
+#' @param x Numeric vector of observed scores.
 #' @param id.rate Identification rate. Must be between 0 and 1.
 #' @param nom.rate Nomination rate. Must be between 0 and 1.
 #' @param pop.mean The known general population mean of x. Defaults to 0.
@@ -34,10 +34,16 @@
 boot_estimate_valid <- function(reps, x, nom.rate, id.rate, pop.mean=0,
                                 pop.sd=1, adjust=1) {
 
+  # remove any missing values in x and convert it to a vector
+  x <- as.numeric(unlist(na.omit(x)))
+
+  # standardize the scores wrt the population mean and sd
+  x <- (x-pop.mean)/pop.sd
+
     samples <- pbapply::pbreplicate(n=reps,
                     expr=estimate_valid(x=sample(x, size=length(x),
                                         replace=T),
-                             id.rate=id.rate, nom.rate=nom.rate, adjust=adjust,
-                             pop.mean=pop.mean, pop.sd=pop.sd), simplify="matrix")
+                             id.rate=id.rate, nom.rate=nom.rate, adjust=adjust),
+                    simplify="matrix")
     return(t(samples))
 }

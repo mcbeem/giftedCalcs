@@ -2,7 +2,7 @@
 #'  of the identified students using bootstrapping to provide uncertainty estimates.
 #'
 #' @return This function stimates the psychometric parameters of an identification system
-#'  given the x of the identified students. This function calculates statistics
+#'  given the observed scores of the identified students. This function calculates statistics
 #'  using the \code{\link{estimate_valid}} function with bootstrapping. The resulting
 #'  nomination validity (\code{valid}) estimates are passed to the
 #'  \code{\link{marginal_psychometrics}} function in order to calculate the implied
@@ -10,8 +10,7 @@
 #'
 #'  At least 500 bootstrapped samples are suggested. This can take a while.
 #'
-#' @param x Confirmatory test reliability coefficient. Range (0, 1).
-#'  Must not be exactly 0 or 1.
+#' @param x Numeric vector of observed scores.
 #' @param id.rate The proportion of students who have been identified. Range (0, 1). Must
 #'  be less than or equal to \code{nom.rate}.
 #' @param nom.rate The proportion of students who have been nominated. Range (0, 1). Used to
@@ -68,9 +67,14 @@
 estimate_performance <- function(x, id.rate, nom.rate, reps, relyt=1, pop.mean=0,
                                    pop.sd=1, adjust=1.0, CI=.95) {
 
+      # remove any missing values in x and convert it to a vector
+      x <- as.numeric(unlist(na.omit(x)))
+
+      # standardize the scores wrt the population mean and sd
+      x <- (x-pop.mean)/pop.sd
+
       a <- boot_estimate_valid(x=x, reps=reps, id.rate=id.rate,
-                         nom.rate=nom.rate, pop.mean=pop.mean, pop.sd=pop.sd,
-                         adjust=adjust)
+                         nom.rate=nom.rate, adjust=adjust)
 
       a <- matrix(a, ncol=1)
      # a contains the samples returned from boot

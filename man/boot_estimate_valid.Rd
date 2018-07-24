@@ -10,7 +10,7 @@ boot_estimate_valid(reps, x, nom.rate, id.rate, pop.mean = 0, pop.sd = 1,
 \arguments{
 \item{reps}{Number of bootstrapped repetitions.}
 
-\item{x}{Numeric vector of observed x.}
+\item{x}{Numeric vector of observed scores.}
 
 \item{nom.rate}{Nomination rate. Must be between 0 and 1.}
 
