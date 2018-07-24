@@ -42,3 +42,5 @@ p_identified <- function(x, relyt=1, test.cutoff, valid=1e-7,
   return(integrate(d_identified, relyt=relyt, test.cutoff=test.cutoff, valid=valid,
                    nom.cutoff=nom.cutoff, mu=mu, normalize=T, lower=-Inf, upper=x)[[1]])
 }
+
+p_identified <- Vectorize(p_identified)

@@ -54,3 +54,5 @@ q_identified <- function(percentile, relyt=1, test.cutoff, valid=1e-7,
                  nom.cutoff=nom.cutoff, mu=mu)-percentile
   return(uniroot(zero.at.percentile, interval=c(-10, 10))$root)
 }
+
+q_identified <- Vectorize(q_identified)
