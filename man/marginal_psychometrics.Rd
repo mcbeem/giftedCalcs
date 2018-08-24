@@ -2,7 +2,7 @@
 % Please edit documentation in R/marginal_psychometrics_function.R
 \name{marginal_psychometrics}
 \alias{marginal_psychometrics}
-\title{Marginal performance statistics identification systems}
+\title{Marginal performance statistics for identification systems}
 \usage{
 marginal_psychometrics(relyt = 0.9, test.cutoff, valid = 1e-07,
   nom.cutoff = 1e-07, mu = 0)

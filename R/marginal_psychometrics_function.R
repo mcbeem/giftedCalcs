@@ -1,4 +1,4 @@
-#' Marginal performance statistics identification systems
+#' Marginal performance statistics for identification systems
 #'
 #' This function calculates marginal performance statistics for
 #'  one- and two-stage identification systems. A two-stage system is one in which
@@ -46,6 +46,7 @@
 #' @importFrom graphics hist par plot
 #' @importFrom stats complete.cases density dnorm integrate
 #'          na.omit pnorm qnorm rnorm runif sd uniroot
+#' @importFrom utils combn
 #' @export
 
 marginal_psychometrics <- function(relyt=.9, test.cutoff, valid=1e-7, nom.cutoff=1e-7, mu=0) {
