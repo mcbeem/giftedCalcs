@@ -115,7 +115,7 @@ estimate_performance <- function(x, id.rate, nom.rate, reps, relyt=1, pop.mean=0
      }
 
      nms <-  c("test.cutoff", "relyt", "valid", "nom.cutoff",
-               "sensitivity", "IIR", "nom.rate", "nom.passrate")
+               "sensitivity", "nom.rate", "nom.passrate")
 
      # object samples is a data frame containing all the sampled values
      samples <- data.frame(cbind(a,b))
@@ -139,7 +139,7 @@ estimate_performance <- function(x, id.rate, nom.rate, reps, relyt=1, pop.mean=0
      summary[c(1,2,4,7), c(2:4)] <- NA
 
      # re-order the rows
-     summary <- summary[c(3,5,6,8,1,4),]
+     summary <- summary[c(3,5,8,1,4),]
 
      if (reps < 500) {
        warning("A minimum of 500 reps is suggested for trustworthy standard errors and confidence intervals.")
