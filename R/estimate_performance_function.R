@@ -115,7 +115,7 @@ estimate_performance <- function(x, id.rate, nom.rate, reps, relyt=1, pop.mean=0
      }
 
      nms <-  c("test.cutoff", "relyt", "valid", "nom.cutoff",
-               "sensitivity", "nom.rate", "nom.passrate")
+               "sensitivity", "IIR", "nom.rate", "nom.passrate")
 
      # object samples is a data frame containing all the sampled values
      samples <- data.frame(cbind(a,b))
