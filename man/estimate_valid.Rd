@@ -5,7 +5,8 @@
 \title{Estimate the nomination validity of an identification system given x
  of the identified students}
 \usage{
-estimate_valid(x, nom.rate, id.rate, pop.mean = 0, pop.sd = 1, adjust = 1)
+estimate_valid(x, nom.rate, id.rate, pop.mean = 0, pop.sd = 1,
+  adjust = 1)
 }
 \arguments{
 \item{x}{Numeric vector of observed scores.}

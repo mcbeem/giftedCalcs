@@ -2,11 +2,11 @@
 % Please edit documentation in R/estimate_performance_function.R
 \name{estimate_performance}
 \alias{estimate_performance}
-\title{Estimate psychometric parameters of an identification system given x
+\title{Estimate psychometric parameters of an identification system given the observed scores
  of the identified students using bootstrapping to provide uncertainty estimates.}
 \usage{
-estimate_performance(x, id.rate, nom.rate, reps, relyt = 1, pop.mean = 0,
-  pop.sd = 1, adjust = 1, CI = 0.95)
+estimate_performance(x, id.rate, nom.rate, reps, relyt = 1,
+  pop.mean = 0, pop.sd = 1, adjust = 1, CI = 0.95)
 }
 \arguments{
 \item{x}{Numeric vector of observed scores.}
@@ -46,7 +46,7 @@ This function stimates the psychometric parameters of an identification system
  At least 500 bootstrapped samples are suggested. This can take a while.
 }
 \description{
-Estimate psychometric parameters of an identification system given x
+Estimate psychometric parameters of an identification system given the observed scores
  of the identified students using bootstrapping to provide uncertainty estimates.
 }
 \examples{
