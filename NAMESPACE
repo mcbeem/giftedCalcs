@@ -3,7 +3,6 @@
 S3method(plot,est_performance)
 S3method(print,est_performance)
 S3method(print,perf_by_cutoff)
-export(areColors)
 export(boot_estimate_valid)
 export(conditional_moments)
 export(conditional_p_id)
