@@ -73,7 +73,7 @@ cor_mean <- function(r, w=NA) {
   w <- w / sum(w)
 
   # stop if the number of weights and the number of assessments is not compatible
-  if (choose(length(w), 2) != nrow(cov)) {stop("Either the wrong number of weights or the wrong number of correlations was given")}
+  if (length(w) != nrow(cov)) {stop("Either the wrong number of weights or the wrong number of correlations was given")}
 
   #define vector to hold results
   corrs <- vector()

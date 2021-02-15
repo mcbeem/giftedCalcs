@@ -113,7 +113,7 @@ estimate_performance <- function(x, id.rate, nom.rate, reps, relyt=1, pop.mean=0
      } else {
        note <- "Since the test reliability was not specified, the sensitivity value is interpreted as relative to universal screening. Achieved sensitivity is dependent on the test reliability."
      }
-
+#summary[c(3,5,8,1,4),]
      nms <-  c("test.cutoff", "relyt", "valid", "nom.cutoff",
                "sensitivity", "IIR", "nom.rate", "nom.passrate")
 

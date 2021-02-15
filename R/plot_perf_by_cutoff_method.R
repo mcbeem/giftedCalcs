@@ -8,16 +8,6 @@
 #'
 #' @export
 
-# the areColors function is courtesy of StackOverflow user Josh O'Brien
-# https://stackoverflow.com/questions/13289009/check-if-character-string-is-a-valid-color-representation
-
-areColors <- function(x) {
-  sapply(x, function(X) {
-    tryCatch(is.matrix(col2rgb(X)),
-             error = function(e) FALSE)
-  })
-}
-
 plot.perf_by_cutoff <- function(x, colors=c("#377eb8","#e41a1c"),
                                 show.optimal=TRUE, show.cost=TRUE) {
 
@@ -26,6 +16,16 @@ plot.perf_by_cutoff <- function(x, colors=c("#377eb8","#e41a1c"),
   if (!is.logical(show.cost)) {stop("Argument show.cost must be TRUE or FALSE")}
   if (min(areColors(colors)) != 1) {stop("Argument colors must be a vector of two valid colors")}
   if (length(colors) != 2) {stop("Argument colors must be a vector of two valid colors")}
+
+  # the areColors function is courtesy of StackOverflow user Josh O'Brien
+  # https://stackoverflow.com/questions/13289009/check-if-character-string-is-a-valid-color-representation
+
+  areColors <- function(x) {
+    sapply(x, function(X) {
+      tryCatch(is.matrix(col2rgb(X)),
+               error = function(e) FALSE)
+    })
+  }
 
   wide <- x$perf_by_cutoff
   bestvalues <- x$optimal
