@@ -17,7 +17,7 @@
 #'  returned. Otherwise the one-stage moments are returned.
 #'
 #' @param t.true The confirmatory test true score on a standardized (z-score) metric. Only
-#'  one of \code{t.true}, \code{t.obs}, or \code{n.obs} should be specified.
+#'  one of \code{t.true}, \code{t.obs}, or \code{n.obs} should be specified
 #' @param t.obs The confirmatory test observed score on a standardized (z-score) metric.
 #' @param n.obs The nomination observed score on a standardized (z-score) metric. If \code{n.obs}
 #'  is specified, a value for \code{valid} must also be given.
