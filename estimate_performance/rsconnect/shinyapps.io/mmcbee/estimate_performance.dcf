@@ -1,0 +1,13 @@
+name: estimate_performance
+title: estimate_performance
+username:
+account: mmcbee
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 566544
+bundleId: 1701140
+url: https://mmcbee.shinyapps.io/estimate_performance/
+when: 1542222158.17717
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data/data1.csv|data/data2.csv
