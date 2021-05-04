@@ -1,4 +1,4 @@
-#' Shrinkage of the standard deviation of the mean of a set of scores
+#' Shrinkage of the standard deviation of the mean of a set of scores DEPRECATED
 #'
 #' This function calculates the shrinkage (proportional reduction in the standard deviation)
 #'  of a weighted mean of assessments given the reliability coefficient of each assessment,
@@ -22,7 +22,7 @@
 #'                .7, .5,  1), 3,3, byrow=TRUE)
 #' shrinkage_mean(rely=c(.9, .85, .88), r=r, w=c(.5, .3, .2))
 #'
-#' @export
+#'
 
 shrinkage_mean <- function(rely, r, w=NA) {
 

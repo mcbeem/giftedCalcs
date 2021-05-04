@@ -28,8 +28,13 @@
 
 var_mean <- function(r, w=NA) {
 
+  # calculate the number of assessments
+  if ("matrix" %in% class(r)) {
+    n_scores <- nrow(r) } else if ("numeric" %in% class(r)) {
+      n_scores <- choose(length(r), 2)}
+
   # if no weights were provided, create a vector of equal weights
-  if (is.na(min(w))) {w <- rep(1/length(rely), times=length(rely))}
+  if (is.na(min(w))) {w <- rep(1/n_scores, times=n_scores)}
 
   # check weights
   if (min(w)<0) {stop("Weights must be positive")}
