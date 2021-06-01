@@ -10,7 +10,7 @@
 #'
 #' The function returns a list containing the following:
 #'
-#'  sensitivity: The proprtion of qualifying students who are identified.
+#'  sensitivity: The proportion of qualifying students who are identified.
 #'
 #'  IIR: Incorrect identification rate; the proportion of identified students
 #'    who do not qualify.
