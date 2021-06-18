@@ -162,7 +162,7 @@ plot.giftedCalcsMC = function(x) {
 #' This function calculates marginal psychometrics (currently only sensitivity) for
 #' one- and two-stage multiple criteria identification systems. A plot method is
 #' available for visualizing the distributions of scores on each assessment for the
-#' identified student. This function uses Monte Carlo simulation to approximate the
+#' identified students. This function uses Monte Carlo simulation to approximate the
 #' integrals involved in computing the metrics; as such the results will vary somewhat
 #' from run to run. Users should determine the necessary sample size (\code{n}) needed
 #' to achieve the required level of precision. The default value of \code{n=50000} will
@@ -173,8 +173,8 @@ plot.giftedCalcsMC = function(x) {
 #'   ignore_nomination=FALSE, labels=NA)
 #'
 #' @param policy a matrix describing the identification policy. assessments are in
-#'   columns, pathways in are in rows. values are percentile cutoffs. within a row,
-#'   multiple requirements are joined by "and" combination rules, whereas the "or"
+#'   columns, pathways in are in rows. values are percentile cutoffs. multiple
+#'   requirements within a row are joined by "and" combination rules, whereas the "or"
 #'   rule joins across rows
 #' @param corr a correlation matrix
 #' @param rely a vector of reliability coefficients
@@ -188,29 +188,29 @@ plot.giftedCalcsMC = function(x) {
 #'   criteria policy without needing to respecify the other inputs. defaults to FALSE
 #' @param labels an optional vector of labels for the assessments; defaults to NA
 #'
-#' @return an object of class giftedCalcsMC, a list with the following elements:
-#'    $identified: the proportion of students that are identified
-#'    $gifted: the proportion of students that are gifted
-#'    $sensitivity: the sensitivity
-#'    $scores: a data of scores for identified students
+#' @return an object of class \code{giftedCalcsMC}, which is a list with the following elements:
+#'    \code{$identified}: the proportion of students that are identified
+#'    \code{$gifted}: the proportion of students that are gifted
+#'    \code{$sensitivity}: the sensitivity
+#'    \code{$scores}: a data frame of scores for identified students
 #'
 #' @examples
 #'
 #' policy = matrix(c(
 #'  .9, .9, .9, 0,
 #'  .9, 0, .9, .9,
-#'  .9, 0, 0, .95), ncol=4, byrow=T)
+#'  .9, 0, 0, .95), ncol=4, byrow=TRUE)
 #'
 #' corr = matrix(c(  1,  .5,  .4, .3,
 #'                  .5,  1, .7, .6,
 #'                  .4,  .7,  1, .5,
-#'                  .3,  .6, .5,  1), byrow=T, nrow=4)
+#'                  .3,  .6, .5,  1), byrow=TRUE, nrow=4)
 #'
 #' rely=c(.8, .9, .8, .85)
 #'
 #' result = marginal_psychometrics_MC(n=50000, policy=policy, corr=corr,
 #'  rely=rely, nomination=1, labels=c("nom", "IQ", "ach", "creativity"),
-#'  ignore_nomination=F)
+#'  ignore_nomination=FALSE)
 #'
 #' result
 #'
