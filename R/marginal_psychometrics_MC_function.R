@@ -110,7 +110,7 @@ rowwise_compare <- function(datarow, bounds) {
 #' @param ..., additional arguments passed to print()
 #'
 #' @return a printed subset of x
-
+#' @export
 print.giftedCalcsMC  <- function (x, ...) {
   hid <- attr(x, "hidden")
   print(x[!names(x) %in% hid], ...)
@@ -121,8 +121,7 @@ print.giftedCalcsMC  <- function (x, ...) {
 #' @param x list, the output of the marginal_psychometrics_MC function
 #'
 #' @return a ggplot ridgeline plot
-
-
+#' @export
 plot.giftedCalcsMC = function(x) {
 
   x = x$scores
