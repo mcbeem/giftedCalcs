@@ -5,8 +5,13 @@
 \title{Standard deviation of the conditional distribution of true or observed scores for
  identified students}
 \usage{
-sd_identified(relyt = 1, test.cutoff, valid = 1e-07,
-  nom.cutoff = 1e-07, mu = 0)
+sd_identified(
+  relyt = 1,
+  test.cutoff,
+  valid = 1e-07,
+  nom.cutoff = 1e-07,
+  mu = 0
+)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].

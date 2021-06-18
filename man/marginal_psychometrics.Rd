@@ -4,8 +4,13 @@
 \alias{marginal_psychometrics}
 \title{Marginal performance statistics for identification systems}
 \usage{
-marginal_psychometrics(relyt = 0.9, test.cutoff, valid = 1e-07,
-  nom.cutoff = 1e-07, mu = 0)
+marginal_psychometrics(
+  relyt = 0.9,
+  test.cutoff,
+  valid = 1e-07,
+  nom.cutoff = 1e-07,
+  mu = 0
+)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1).
@@ -36,18 +41,18 @@ Two-stage system results are reported if arguments valid and nom.cutoff
 
 The function returns a list containing the following:
 
-sensitivity: The proprtion of qualifying students who are identified.
+ sensitivity: The proportion of qualifying students who are identified.
 
-IIR: Incorrect identification rate; the proportion of identified students
+ IIR: Incorrect identification rate; the proportion of identified students
    who do not qualify.
 
-nom.rate: Nomination rate; the proportion of students who are nominated, which controls
+ nom.rate: Nomination rate; the proportion of students who are nominated, which controls
    testing costs. (Two-stage only).
 
-nom.passrate: The proportion of nominated students who go on to be identified.
+ nom.passrate: The proportion of nominated students who go on to be identified.
    (Two-stage only)
 
-identification.rate: The proportion of the student population that is identified.
+ identification.rate: The proportion of the student population that is identified.
 }
 \examples{
 # one-stage system

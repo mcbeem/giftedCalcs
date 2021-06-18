@@ -4,8 +4,7 @@
 \alias{plot.est_performance}
 \title{Plot method for class est_performance}
 \usage{
-\method{plot}{est_performance}(x, width = 0.3, adjust = 1.2,
-  type = "density", ...)
+\method{plot}{est_performance}(x, width = 0.3, adjust = 1.2, type = "density", ...)
 }
 \arguments{
 \item{x}{an object of class est_performance to be plotted}

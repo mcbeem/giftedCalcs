@@ -1,6 +1,6 @@
 #' Conditional probability of identification
 #'
-#'  This function calculates the conditional probabilty of identification
+#'  This function calculates the conditional probability of identification
 #'  for a one- or two-stage system given a student's true or observed score, the test reliability,
 #'  and, for two-stage systems, the nomination validity and the nomination cutoff. A
 #'  two-stage system is one in which an initial nomination process is used to select

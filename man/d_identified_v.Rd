@@ -4,8 +4,15 @@
 \alias{d_identified_v}
 \title{Conditional density of true or observed scores for identified students (vectorized version)}
 \usage{
-d_identified_v(x, relyt = 1, test.cutoff, mu = 0, valid = 1e-07,
-  nom.cutoff = 1e-07, normalize = TRUE)
+d_identified_v(
+  x,
+  relyt = 1,
+  test.cutoff,
+  mu = 0,
+  valid = 1e-07,
+  nom.cutoff = 1e-07,
+  normalize = TRUE
+)
 }
 \arguments{
 \item{x}{The student's score on a standardized (z-score) metric. Interpreted

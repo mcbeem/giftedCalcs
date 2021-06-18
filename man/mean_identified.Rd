@@ -4,8 +4,13 @@
 \alias{mean_identified}
 \title{Mean of the conditional distribution of true or observed scores for identified students}
 \usage{
-mean_identified(relyt = 1, test.cutoff, valid = 1e-07,
-  nom.cutoff = 1e-07, mu = 0)
+mean_identified(
+  relyt = 1,
+  test.cutoff,
+  valid = 1e-07,
+  nom.cutoff = 1e-07,
+  mu = 0
+)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].

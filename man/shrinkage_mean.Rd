@@ -2,7 +2,7 @@
 % Please edit documentation in R/shrinkage_mean.R
 \name{shrinkage_mean}
 \alias{shrinkage_mean}
-\title{Shrinkage of the standard deviation of the mean of a set of scores}
+\title{Shrinkage of the standard deviation of the mean of a set of scores DEPRECATED}
 \usage{
 shrinkage_mean(rely, r, w = NA)
 }
@@ -33,5 +33,6 @@ r <- matrix(c(  1, .4, .7,
                .4,  1, .5,
                .7, .5,  1), 3,3, byrow=TRUE)
 shrinkage_mean(rely=c(.9, .85, .88), r=r, w=c(.5, .3, .2))
+
 
 }

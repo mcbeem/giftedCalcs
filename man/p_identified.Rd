@@ -4,8 +4,14 @@
 \alias{p_identified}
 \title{Conditional cumulative density function of true or observed scores for identified students}
 \usage{
-p_identified(x, relyt = 1, test.cutoff, valid = 1e-07,
-  nom.cutoff = 1e-07, mu = 0)
+p_identified(
+  x,
+  relyt = 1,
+  test.cutoff,
+  valid = 1e-07,
+  nom.cutoff = 1e-07,
+  mu = 0
+)
 }
 \arguments{
 \item{x}{The student's score on a standardized (z-score) metric. Interpreted

@@ -4,12 +4,11 @@
 \alias{conditional_moments}
 \title{Conditional moments of scores}
 \usage{
-conditional_moments(t.true = NA, n.obs = NA, t.obs = NA, relyt,
-  valid = 1e-07)
+conditional_moments(t.true = NA, n.obs = NA, t.obs = NA, relyt, valid = 1e-07)
 }
 \arguments{
 \item{t.true}{The confirmatory test true score on a standardized (z-score) metric. Only
-one of \code{t.true}, \code{t.obs}, or \code{n.obs} should be specified.}
+one of \code{t.true}, \code{t.obs}, or \code{n.obs} should be specified}
 
 \item{n.obs}{The nomination observed score on a standardized (z-score) metric. If \code{n.obs}
 is specified, a value for \code{valid} must also be given.}

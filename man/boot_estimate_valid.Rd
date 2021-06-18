@@ -4,8 +4,15 @@
 \alias{boot_estimate_valid}
 \title{Bootstrapping with a progress bar}
 \usage{
-boot_estimate_valid(reps, x, nom.rate, id.rate, pop.mean = 0,
-  pop.sd = 1, adjust = 1)
+boot_estimate_valid(
+  reps,
+  x,
+  nom.rate,
+  id.rate,
+  pop.mean = 0,
+  pop.sd = 1,
+  adjust = 1
+)
 }
 \arguments{
 \item{reps}{Number of bootstrapped repetitions.}

@@ -5,8 +5,17 @@
 \title{Estimate psychometric parameters of an identification system given the observed scores
  of the identified students using bootstrapping to provide uncertainty estimates.}
 \usage{
-estimate_performance(x, id.rate, nom.rate, reps, relyt = 1,
-  pop.mean = 0, pop.sd = 1, adjust = 1, CI = 0.95)
+estimate_performance(
+  x,
+  id.rate,
+  nom.rate,
+  reps,
+  relyt = 1,
+  pop.mean = 0,
+  pop.sd = 1,
+  adjust = 1,
+  CI = 0.95
+)
 }
 \arguments{
 \item{x}{Numeric vector of observed scores.}

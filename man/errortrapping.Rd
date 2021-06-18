@@ -4,8 +4,13 @@
 \alias{errortrapping}
 \title{Catch out-of-range parameter values}
 \usage{
-errortrapping(relyt = 1, valid = 1e-30, nom.cutoff = 0.1,
-  test.cutoff = 0.9, mu = 0)
+errortrapping(
+  relyt = 1,
+  valid = 1e-30,
+  nom.cutoff = 0.1,
+  test.cutoff = 0.9,
+  mu = 0
+)
 }
 \arguments{
 \item{relyt}{Confirmatory test reliability coefficient. Range (0, 1].
