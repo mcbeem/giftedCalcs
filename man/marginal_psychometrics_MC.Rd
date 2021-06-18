@@ -38,7 +38,15 @@ an object of class giftedCalcsMC, a list with the following elements:
    $scores: a data of scores for identified students
 }
 \description{
-This function is really cool.
+This function calculates marginal psychometrics (currently only sensitivity) for
+one- and two-stage multiple criteria identification systems. A plot method is
+available for visualizing the distributions of scores on each assessment for the
+identified student. This function uses Monte Carlo simulation to approximate the
+integrals involved in computing the metrics; as such the results will vary somewhat
+from run to run. Users should determine the necessary sample size (\code{n}) needed
+to achieve the required level of precision. The default value of \code{n=50000} will
+likely suffice for most situations. Users may also wish to set a random number seed
+for reproducibility.
 }
 \examples{
 
