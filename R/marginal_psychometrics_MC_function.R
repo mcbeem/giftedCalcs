@@ -111,6 +111,7 @@ rowwise_compare <- function(datarow, bounds) {
 #'
 #' @return a printed subset of x
 #' @export
+#'
 print.giftedCalcsMC  <- function (x, ...) {
   hid <- attr(x, "hidden")
   print(x[!names(x) %in% hid], ...)
@@ -122,6 +123,7 @@ print.giftedCalcsMC  <- function (x, ...) {
 #'
 #' @return a ggplot ridgeline plot
 #' @export
+#'
 plot.giftedCalcsMC = function(x) {
 
   x = x$scores
@@ -253,11 +255,12 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n=50000, nomination=NA
     # full correlation matrix
   full_mat = cbind(rbind(corr, ccur), rbind(cclr, true))
 
-  # sample data from multivariate normal dist
-  data = mnormt::rmnorm(n=n, mean=rep(0, nrow(full_mat)), varcov=full_mat)
-
+  # define the vectors of lower bounds defining giftedness and identification
   policy_gifted = cbind(matrix(-Inf, nrow=nrow(policy), ncol=ncol(policy)), policy)
   policy_identified = cbind(policy, policy)
+
+  # case 1: no nomination provided is the default!
+  #  so don't alter the policy_gifted or policy_identified vectors
 
   # case 3: nomination is provided and it should be used
   if (ignore_nomination == FALSE & !is.na(nomination)) {
@@ -270,40 +273,68 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n=50000, nomination=NA
     policy_identified[, ncol(policy)+nomination] = rep(-Inf, times=nrow(policy))
   }
 
-  # case 1: no nomination provided is the default!
+  # if the policy matrix has only one row, it has no or's. So an analytic solution is convenient.
+  if (nrow(policy) == 1) {
 
-  #initialize sensitivity
-  gifted_flag = rep(0, times=n)
-  identified_flag = rep(0, times=n)
+    gifted = mnormt::sadmvn(lower=policy_gifted,
+                       upper=rep(Inf, times=length(policy_gifted)),
+                       mean=rep(0, times=length(policy_gifted)),
+                       varcov=full_mat)[1]
 
-  for (i in 1:nrow(policy)) {
+    identified = mnormt::sadmvn(lower=policy_identified,
+                            upper=rep(Inf, times=length(policy_gifted)),
+                            mean=rep(0, times=length(policy_gifted)),
+                            varcov=full_mat)[1]
 
-    gifted_flag = mapply(max,
-                         apply(data, 1, rowwise_compare, policy_gifted[i,]),
-                         gifted_flag)
+    sensitivity = identified / gifted
 
-
-    identified_flag = mapply(max,
-                             apply(data, 1, rowwise_compare, policy_identified[i,]),
-                             identified_flag)
+    results = list(identified=identified, gifted=gifted, sensitivity=sensitivity )
 
   }
 
-    sensitivity = sum(identified_flag) / sum(gifted_flag)
+  # if the policy matrix has multiple rows, we can't do an analytic solution :( :( :(
+  #  must resort to Monte Carlo
 
-    scores = data.frame(data[identified_flag == 1,])
+  else {
 
-    if (!is.na(labels[1])) {
-      names(scores) = c(paste0("observed_", labels), paste0("true_", labels))
+    # sample data from multivariate normal dist
+    data = mnormt::rmnorm(n=n, mean=rep(0, nrow(full_mat)), varcov=full_mat)
+
+    #initialize sensitivity
+    gifted_flag = rep(0, times=n)
+    identified_flag = rep(0, times=n)
+
+    for (i in 1:nrow(policy)) {
+
+      gifted_flag = mapply(max,
+                           apply(data, 1, rowwise_compare, policy_gifted[i,]),
+                           gifted_flag)
+
+
+      identified_flag = mapply(max,
+                               apply(data, 1, rowwise_compare, policy_identified[i,]),
+                               identified_flag)
+
     }
 
+      sensitivity = sum(identified_flag) / sum(gifted_flag)
 
-    results = list(identified=sum(identified_flag)/n, gifted=sum(gifted_flag)/n,
-                   sensitivity=sensitivity, scores=scores )
+      #scores = data.frame(data[identified_flag == 1,])
 
-    # define a class for this object
-    class(results) = "giftedCalcsMC"
-    attr(results, "hidden") <- c("scores")
+      # if (!is.na(labels[1])) {
+      #   names(scores) = c(paste0("observed_", labels), paste0("true_", labels))
+      # }
+
+      results = list(identified=sum(identified_flag)/n, gifted=sum(gifted_flag)/n,
+                     sensitivity=sensitivity )
+
+
+  }
+
+
+  # define a class for this object
+  class(results) = "giftedCalcsMC"
+  # attr(results, "hidden") <- c("scores")
 
     return(results)
 }
