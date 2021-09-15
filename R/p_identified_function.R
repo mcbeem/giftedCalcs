@@ -28,19 +28,22 @@
 #'  Defaults to zero.
 #'
 #' @examples
-#' p_identified(relyt=.95, valid=.6, test.cutoff=.975,
-#'   nom.cutoff=.9, x=2.5)
+#' p_identified(
+#'   relyt = .95, valid = .6, test.cutoff = .975,
+#'   nom.cutoff = .9, x = 2.5
+#' )
 #' @export
 
 # this code checks the arguments supplied to determine if the one-stage
 #   or two-stage version of the calculation should commence. If improper
 #   arguments are supplied, the function exits with an error.
 
-p_identified <- function(x, relyt=1, test.cutoff, valid=1e-7,
-                         nom.cutoff=1e-7, mu=0) {
-
-  return(integrate(d_identified, relyt=relyt, test.cutoff=test.cutoff, valid=valid,
-                   nom.cutoff=nom.cutoff, mu=mu, normalize=T, lower=-Inf, upper=x)[[1]])
+p_identified <- function(x, relyt = 1, test.cutoff, valid = 1e-7,
+                         nom.cutoff = 1e-7, mu = 0) {
+  return(integrate(d_identified,
+    relyt = relyt, test.cutoff = test.cutoff, valid = valid,
+    nom.cutoff = nom.cutoff, mu = mu, normalize = T, lower = -Inf, upper = x
+  )[[1]])
 }
 
 p_identified <- Vectorize(p_identified)

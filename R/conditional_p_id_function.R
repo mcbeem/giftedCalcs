@@ -33,84 +33,103 @@
 #'
 #' @examples
 #' # one-stage system, true score=1
-#' conditional_p_id(x=1, relyt=.9, test.cutoff=.9)
+#' conditional_p_id(x = 1, relyt = .9, test.cutoff = .9)
 #'
 #' # one-stage system, observed score=1
 #' # (note that the relyt argument is not specified)
-#' conditional_p_id(x=1, test.cutoff=.9)
+#' conditional_p_id(x = 1, test.cutoff = .9)
 #'
 #' # two-stage system, true score=2
-#' conditional_p_id(x=2, relyt=.9, test.cutoff=.9,
-#'    nom.cutoff=.9, valid=.5)
+#' conditional_p_id(
+#'   x = 2, relyt = .9, test.cutoff = .9,
+#'   nom.cutoff = .9, valid = .5
+#' )
 #'
 #' # two-stage system, observed score=2
-#' conditional_p_id(x=2, test.cutoff=.9,
-#'    nom.cutoff=.9, valid=.5)
+#' conditional_p_id(
+#'   x = 2, test.cutoff = .9,
+#'   nom.cutoff = .9, valid = .5
+#' )
 #'
 #' # make an identification curve:
 #' #  true score vs p identified
 #' #
 #' # create vector of true scores
-#' Tscores <- seq(0,3, length.out=100)
+#' Tscores <- seq(0, 3, length.out = 100)
 #'
 #' # calculate the identification probability for each
-#' p.id <- conditional_p_id(x=Tscores, relyt=.9,
-#'   test.cutoff=.9, nom.cutoff=.9, valid=.5)
+#' p.id <- conditional_p_id(
+#'   x = Tscores, relyt = .9,
+#'   test.cutoff = .9, nom.cutoff = .9, valid = .5
+#' )
 #'
 #' # make a plot
-#' plot(x=Tscores, y=p.id, type="l", xlab="true score",
-#'   ylab="p identified")
+#' plot(
+#'   x = Tscores, y = p.id, type = "l", xlab = "true score",
+#'   ylab = "p identified"
+#' )
 #'
 #' # add a reference line for the test cutoff
-#' abline(v=qnorm(.9), col="red")
+#' abline(v = qnorm(.9), col = "red")
 #' @export
 #'
 
-conditional_p_id <- function(x, relyt=1, test.cutoff, valid=1e-7, nom.cutoff=1e-7) {
+conditional_p_id <- function(x, relyt = 1, test.cutoff, valid = 1e-7, nom.cutoff = 1e-7) {
 
   # select true or observed-score version based on supplied arguments
-  if (relyt==1) {version="O"} else {version="T"}
+  if (relyt == 1) {
+    version <- "O"
+  } else {
+    version <- "T"
+  }
   # select 1- or 2-stage version based on the supplied arguments
-  if (valid==1e-7 & nom.cutoff==1e-7) {stages=1} else {stages=2}
+  if (valid == 1e-7 & nom.cutoff == 1e-7) {
+    stages <- 1
+  } else {
+    stages <- 2
+  }
 
-  if (version=="T") {
-
-    if(stages==2) {
-      errortrapping(relyt=relyt, test.cutoff=test.cutoff,
-                    nom.cutoff=nom.cutoff, valid=valid)
+  if (version == "T") {
+    if (stages == 2) {
+      errortrapping(
+        relyt = relyt, test.cutoff = test.cutoff,
+        nom.cutoff = nom.cutoff, valid = valid
+      )
 
       b_C <- qnorm(test.cutoff) / sqrt(relyt)
-      a_C <- sqrt(relyt / (1-relyt))
+      a_C <- sqrt(relyt / (1 - relyt))
 
-      b_N <- (qnorm(nom.cutoff)*sqrt(relyt)) / valid
+      b_N <- (qnorm(nom.cutoff) * sqrt(relyt)) / valid
       a_N <- sqrt(((valid^2) / relyt) /
-                    (1-((valid^2) / relyt)))
+        (1 - ((valid^2) / relyt)))
 
-      p.identification <- pnorm(a_C*(x-b_C))*
-        pnorm(a_N*(x-b_N))
+      p.identification <- pnorm(a_C * (x - b_C)) *
+        pnorm(a_N * (x - b_N))
     }
 
-    if(stages==1) {
-      errortrapping(relyt=relyt, test.cutoff=test.cutoff)
+    if (stages == 1) {
+      errortrapping(relyt = relyt, test.cutoff = test.cutoff)
 
       b <- qnorm(test.cutoff) / sqrt(relyt)
-      a <- sqrt(relyt / (1-relyt))
+      a <- sqrt(relyt / (1 - relyt))
 
-      p.identification <- pnorm(a*(x-b))
+      p.identification <- pnorm(a * (x - b))
     }
   }
 
-  if (version=="O") {
+  if (version == "O") {
     if (stages == 2) {
-      errortrapping(test.cutoff = test.cutoff,
-                    nom.cutoff = nom.cutoff, valid = valid)
+      errortrapping(
+        test.cutoff = test.cutoff,
+        nom.cutoff = nom.cutoff, valid = valid
+      )
 
       b_N <- qnorm(nom.cutoff) / valid
       a_N <- sqrt((valid^2) / (1 - valid^2))
-      #trunc <- ifelse(x <= qnorm(test.cutoff), 0, 1)
-      #stepfun(x=qnorm(test.cutoff), y=c(0,1))(x)
+      # trunc <- ifelse(x <= qnorm(test.cutoff), 0, 1)
+      # stepfun(x=qnorm(test.cutoff), y=c(0,1))(x)
 
-      p.identification <- pnorm(9e5*(x-qnorm(test.cutoff)))*pnorm(a_N * (x - b_N))
+      p.identification <- pnorm(9e5 * (x - qnorm(test.cutoff))) * pnorm(a_N * (x - b_N))
     }
 
     if (stages == 1) {

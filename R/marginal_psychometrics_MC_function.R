@@ -8,21 +8,20 @@
 #' @return a correlation matrix of true scores which are disattentuated for
 #'   measurement error
 
-true_corrs = function(corr, rely) {
+true_corrs <- function(corr, rely) {
+  l <- nrow(corr)
 
-  l = nrow(corr)
-
-  mat = matrix(NA, nrow=l, ncol=l)
+  mat <- matrix(NA, nrow = l, ncol = l)
 
   for (i in 1:l) { # i will index rows
 
-    for (j in 1:l) {# j will index cols
+    for (j in 1:l) { # j will index cols
 
-      mat[i,j] = corr[i,j] / sqrt(rely[i] * rely[j])
+      mat[i, j] <- corr[i, j] / sqrt(rely[i] * rely[j])
     }
   }
 
-  diag(mat) = 1
+  diag(mat) <- 1
 
   return(mat)
 }
@@ -38,21 +37,20 @@ true_corrs = function(corr, rely) {
 #'
 #' @return a correlation matrix of disattenuated cross-correlations
 
-cross_corrs_upper_right = function(corr, rely) {
+cross_corrs_upper_right <- function(corr, rely) {
+  l <- nrow(corr)
 
-  l = nrow(corr)
-
-  mat = matrix(NA, nrow=l, ncol=l)
+  mat <- matrix(NA, nrow = l, ncol = l)
 
   for (i in 1:l) { # i will index rows
 
-    for (j in 1:l) {# j will index cols
+    for (j in 1:l) { # j will index cols
 
-      mat[i,j] = corr[i,j] / sqrt(rely[j])
+      mat[i, j] <- corr[i, j] / sqrt(rely[j])
     }
   }
 
-  diag(mat) = sqrt(rely)
+  diag(mat) <- sqrt(rely)
 
   return(mat)
 }
@@ -66,21 +64,20 @@ cross_corrs_upper_right = function(corr, rely) {
 #'
 #' @return a correlation matrix of disattenuated cross-correlations
 
-cross_corrs_lower_left = function(corr, rely) {
+cross_corrs_lower_left <- function(corr, rely) {
+  l <- nrow(corr)
 
-  l = nrow(corr)
-
-  mat = matrix(NA, nrow=l, ncol=l)
+  mat <- matrix(NA, nrow = l, ncol = l)
 
   for (i in 1:l) { # i will index rows
 
-    for (j in 1:l) {# j will index cols
+    for (j in 1:l) { # j will index cols
 
-      mat[i,j] = corr[i,j] / sqrt(rely[i])
+      mat[i, j] <- corr[i, j] / sqrt(rely[i])
     }
   }
 
-  diag(mat) = sqrt(rely)
+  diag(mat) <- sqrt(rely)
 
   return(mat)
 }
@@ -101,62 +98,6 @@ rowwise_compare <- function(datarow, bounds) {
 
 # define a 'not in' function
 `%!in%` <- Negate(`%in%`)
-
-
-#' print.giftedCalcsMC: print method for class giftedCalcsMC
-#' suppress the printing of scores for identified students
-#'
-#' @param x a list, the output of marginal_psychometrics_MC
-#' @param ..., additional arguments passed to print()
-#'
-#' @return a printed subset of x
-#' @export
-#'
-print.giftedCalcsMC  <- function (x, ...) {
-  hid <- attr(x, "hidden")
-  print(x[!names(x) %in% hid], ...)
-}
-
-#' plot.giftedCalcsMC: plot method
-#'
-#' @param x list, the output of the marginal_psychometrics_MC function
-#'
-#' @return a ggplot ridgeline plot
-#' @export
-#'
-plot.giftedCalcsMC = function(x) {
-
-  x = x$scores
-
-  num_assessments = ncol(x) / 2
-
-  x_observed = data.frame(x[, 1:num_assessments])
-  x_true = data.frame(x[, (1+num_assessments):(2*num_assessments)])
-
-  x_observed_long = tidyr::pivot_longer(x_observed, cols=everything())
-  x_observed_long$type = "observed"
-
-  x_true_long = tidyr::pivot_longer(x_true, cols=everything())
-  x_true_long$type = "true"
-
-  x_long = rbind(x_observed_long, x_true_long)
-
-  p = ggplot2::ggplot(data=x_long, ggplot2::aes(y=factor(name), x=value, group=factor(name),
-                                                fill=stat(ecdf)))+
-    ggridges::stat_density_ridges(geom="density_ridges_gradient", ggplot2::aes(height=..ndensity..), calc_ecdf=TRUE,
-                                  rel_min_height=.01, scale=.9, quantile_lines=TRUE,
-                                  quantiles=.5)+
-    ggplot2::theme_bw()+
-    viridis::scale_fill_viridis(name="Percentile", direction=-1, option = "D") +
-    ggplot2::facet_wrap(~type, scales="free_y")+
-    ggplot2::geom_vline(xintercept=0, color="gray10", linetype="dashed", size=.3, alpha=.7)+
-    ggplot2::ylab("assessment")+
-    ggplot2::theme(
-      legend.position="none")
-
-  return(p)
-
-}
 
 
 #' Marginal psychometrics for multiple criteria identification systems
@@ -198,66 +139,72 @@ plot.giftedCalcsMC = function(x) {
 #'
 #' @examples
 #'
-#' policy = matrix(c(
-#'  .9, .9, .9, 0,
-#'  .9, 0, .9, .9,
-#'  .9, 0, 0, .95), ncol=4, byrow=TRUE)
+#' policy <- matrix(c(
+#'   .9, .9, .9, 0,
+#'   .9, 0, .9, .9,
+#'   .9, 0, 0, .95
+#' ), ncol = 4, byrow = TRUE)
 #'
-#' corr = matrix(c(  1,  .5,  .4, .3,
-#'                  .5,  1, .7, .6,
-#'                  .4,  .7,  1, .5,
-#'                  .3,  .6, .5,  1), byrow=TRUE, nrow=4)
+#' corr <- matrix(c(
+#'   1, .5, .4, .3,
+#'   .5, 1, .7, .6,
+#'   .4, .7, 1, .5,
+#'   .3, .6, .5, 1
+#' ), byrow = TRUE, nrow = 4)
 #'
-#' rely=c(.8, .9, .8, .85)
+#' rely <- c(.8, .9, .8, .85)
 #'
-#' result = marginal_psychometrics_MC(n=50000, policy=policy, corr=corr,
-#'  rely=rely, nomination=1, labels=c("nom", "IQ", "ach", "creativity"),
-#'  ignore_nomination=FALSE)
+#' result <- marginal_psychometrics_MC(
+#'   n = 50000, policy = policy, corr = corr,
+#'   rely = rely, nomination = 1, labels = c("nom", "IQ", "ach", "creativity"),
+#'   ignore_nomination = FALSE
+#' )
 #'
 #' result
-#'
-#' plot(result)
-#'
 #' @export
 
-marginal_psychometrics_MC <- function(policy, corr, rely, n=50000, nomination=NA,
-                                     ignore_nomination=FALSE, labels=NA) {
+marginal_psychometrics_MC <- function(policy, corr, rely, n = 50000, nomination = NA,
+                                      ignore_nomination = FALSE, labels = NA) {
 
   # convert policy values from percentiles to scores
-  policy = qnorm(policy)
+  policy <- qnorm(policy)
 
   # if only one row of policy is passed, make it a matrix
-  if ("matrix" %!in% class(policy)) {policy = matrix(policy, nrow=1)}
+  if ("matrix" %!in% class(policy)) {
+    policy <- matrix(policy, nrow = 1)
+  }
 
 
   # case 2: nomination is provided but should be ignored
-  if (!is.na(nomination) & ignore_nomination==TRUE) {
+  if (!is.na(nomination) & ignore_nomination == TRUE) {
     # drop nomination cols from policy object, rows / cols for corrs object ,and rely entry
-    policy = policy[, -nomination]
-    corr = corr[-nomination, -nomination]
-    rely = rely[-nomination]
+    policy <- policy[, -nomination]
+    corr <- corr[-nomination, -nomination]
+    rely <- rely[-nomination]
 
     if (!is.na(labels[1])) {
       # if labels were given, drop the nomination label
-      labels = labels[-nomination]
+      labels <- labels[-nomination]
     }
 
-    if ("matrix" %!in% class(policy)) {policy = matrix(policy, nrow=1)}
+    if ("matrix" %!in% class(policy)) {
+      policy <- matrix(policy, nrow = 1)
+    }
   }
 
   # create full correlation matrix
-    # cross-corr upper right
-  ccur = cross_corrs_upper_right(corr, rely)
-    # cross-corr lower left
-  cclr = cross_corrs_lower_left(corr, rely)
-    # true score correlations
-  true = true_corrs(corr, rely)
-    # full correlation matrix
-  full_mat = cbind(rbind(corr, ccur), rbind(cclr, true))
+  # cross-corr upper right
+  ccur <- cross_corrs_upper_right(corr, rely)
+  # cross-corr lower left
+  cclr <- cross_corrs_lower_left(corr, rely)
+  # true score correlations
+  true <- true_corrs(corr, rely)
+  # full correlation matrix
+  full_mat <- cbind(rbind(corr, ccur), rbind(cclr, true))
 
   # define the vectors of lower bounds defining giftedness and identification
-  policy_gifted = cbind(matrix(-Inf, nrow=nrow(policy), ncol=ncol(policy)), policy)
-  policy_identified = cbind(policy, policy)
+  policy_gifted <- cbind(matrix(-Inf, nrow = nrow(policy), ncol = ncol(policy)), policy)
+  policy_identified <- cbind(policy, policy)
 
   # case 1: no nomination provided is the default!
   #  so don't alter the policy_gifted or policy_identified vectors
@@ -267,29 +214,31 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n=50000, nomination=NA
     # reset nomination criterion
     #  since nomination doesn't define who is gifted, set the appropriate columns
     #    on the true score side of the policy matrix to -Inf
-    policy_gifted[, ncol(policy)+nomination] = rep(-Inf, times=nrow(policy))
+    policy_gifted[, ncol(policy) + nomination] <- rep(-Inf, times = nrow(policy))
 
     # do the same thing in the identification policy object, again only on the true score side
-    policy_identified[, ncol(policy)+nomination] = rep(-Inf, times=nrow(policy))
+    policy_identified[, ncol(policy) + nomination] <- rep(-Inf, times = nrow(policy))
   }
 
   # if the policy matrix has only one row, it has no or's. So an analytic solution is convenient.
   if (nrow(policy) == 1) {
+    gifted <- mnormt::sadmvn(
+      lower = policy_gifted,
+      upper = rep(Inf, times = length(policy_gifted)),
+      mean = rep(0, times = length(policy_gifted)),
+      varcov = full_mat
+    )[1]
 
-    gifted = mnormt::sadmvn(lower=policy_gifted,
-                       upper=rep(Inf, times=length(policy_gifted)),
-                       mean=rep(0, times=length(policy_gifted)),
-                       varcov=full_mat)[1]
+    identified <- mnormt::sadmvn(
+      lower = policy_identified,
+      upper = rep(Inf, times = length(policy_gifted)),
+      mean = rep(0, times = length(policy_gifted)),
+      varcov = full_mat
+    )[1]
 
-    identified = mnormt::sadmvn(lower=policy_identified,
-                            upper=rep(Inf, times=length(policy_gifted)),
-                            mean=rep(0, times=length(policy_gifted)),
-                            varcov=full_mat)[1]
+    sensitivity <- identified / gifted
 
-    sensitivity = identified / gifted
-
-    results = list(identified=identified, gifted=gifted, sensitivity=sensitivity )
-
+    results <- list(identified = identified, gifted = gifted, sensitivity = sensitivity)
   }
 
   # if the policy matrix has multiple rows, we can't do an analytic solution :( :( :(
@@ -298,43 +247,39 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n=50000, nomination=NA
   else {
 
     # sample data from multivariate normal dist
-    data = mnormt::rmnorm(n=n, mean=rep(0, nrow(full_mat)), varcov=full_mat)
+    data <- mnormt::rmnorm(n = n, mean = rep(0, nrow(full_mat)), varcov = full_mat)
 
-    #initialize sensitivity
-    gifted_flag = rep(0, times=n)
-    identified_flag = rep(0, times=n)
+    # initialize sensitivity
+    gifted_flag <- rep(0, times = n)
+    identified_flag <- rep(0, times = n)
 
     for (i in 1:nrow(policy)) {
+      gifted_flag <- mapply(
+        max,
+        apply(data, 1, rowwise_compare, policy_gifted[i, ]),
+        gifted_flag
+      )
 
-      gifted_flag = mapply(max,
-                           apply(data, 1, rowwise_compare, policy_gifted[i,]),
-                           gifted_flag)
 
-
-      identified_flag = mapply(max,
-                               apply(data, 1, rowwise_compare, policy_identified[i,]),
-                               identified_flag)
-
+      identified_flag <- mapply(
+        max,
+        apply(data, 1, rowwise_compare, policy_identified[i, ]),
+        identified_flag
+      )
     }
 
-      sensitivity = sum(identified_flag) / sum(gifted_flag)
+    sensitivity <- sum(identified_flag) / sum(gifted_flag)
 
-      #scores = data.frame(data[identified_flag == 1,])
-
-      # if (!is.na(labels[1])) {
-      #   names(scores) = c(paste0("observed_", labels), paste0("true_", labels))
-      # }
-
-      results = list(identified=sum(identified_flag)/n, gifted=sum(gifted_flag)/n,
-                     sensitivity=sensitivity )
-
-
+    results <- list(
+      identified = sum(identified_flag) / n, gifted = sum(gifted_flag) / n,
+      sensitivity = sensitivity
+    )
   }
 
 
   # define a class for this object
-  class(results) = "giftedCalcsMC"
+  class(results) <- "giftedCalcsMC"
   # attr(results, "hidden") <- c("scores")
 
-    return(results)
+  return(results)
 }

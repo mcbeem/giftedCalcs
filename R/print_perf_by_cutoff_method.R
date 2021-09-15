@@ -5,7 +5,7 @@
 #'
 #' @export
 
-print.perf_by_cutoff <- function (x, ...) {
+print.perf_by_cutoff <- function(x, ...) {
   hid <- attr(x, "hidden")
   print(x[!names(x) %in% hid], ...)
 }

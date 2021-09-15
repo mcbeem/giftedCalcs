@@ -42,25 +42,27 @@
 #' @examples
 #'
 #' # one-stage system
-#' conditional_moments(t.true=2, relyt=.9)
+#' conditional_moments(t.true = 2, relyt = .9)
 #'
 #' # two-stage system
-#' conditional_moments(t.true=2, relyt=.9, valid=.6)
+#' conditional_moments(t.true = 2, relyt = .9, valid = .6)
 #' @export
 
-conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7) {
+conditional_moments <- function(t.true = NA, n.obs = NA, t.obs = NA, relyt, valid = 1e-7) {
+  if (valid == 1e-7 & !is.na(n.obs)) {
+    stop("A value for argument valid must be provided when an argument is given for n.obs")
+  }
 
-  if (valid==1e-7 & !is.na(n.obs)) {stop("A value for argument valid must be provided when an argument is given for n.obs")}
-
-  if(valid != 1e-7) {
-
-    errortrapping(relyt=relyt, valid=valid)
+  if (valid != 1e-7) {
+    errortrapping(relyt = relyt, valid = valid)
 
     # index of row/column positions for the arguments supplied
     # this is the value to be conditioned on
     has <- seq(1:3)[!is.na(c(n.obs, t.obs, t.true))]
 
-    if (length(has) != 1) {stop("Only one of n.obs, t.obs, or t.true should be provided")}
+    if (length(has) != 1) {
+      stop("Only one of n.obs, t.obs, or t.true should be provided")
+    }
 
     # index of row/column positions for the remaining arguments
     wants <- seq(1:3)[-has]
@@ -68,10 +70,12 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
     nms <- c("n.obs", "t.obs", "t.true")
 
     cov <- matrix(c(
-      1,                 valid,          valid/sqrt(relyt),
+      1,                 valid,          valid / sqrt(relyt),
       valid,             1,              sqrt(relyt),
-      valid/sqrt(relyt), sqrt(relyt),    1),
-      nrow=3, ncol=3, byrow=T)
+      valid / sqrt(relyt), sqrt(relyt),    1
+    ),
+    nrow = 3, ncol = 3, byrow = T
+    )
 
     # order:  n obs, t obs, t true
     means <- c(0, 0, 0)
@@ -83,14 +87,14 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
     # sigma.yy is the cov matrix of the values to be conditioned on
     sigma.yy <- cov[has, has]
 
-    sigma.xy <- matrix(cov[wants, has], ncol=1)
+    sigma.xy <- matrix(cov[wants, has], ncol = 1)
     sigma.yx <- t(sigma.xy)
 
     # y is the vector of known values to be conditioned on
     y <- as.numeric(na.omit(c(n.obs, t.obs, t.true)))
 
     # y is the expectation of the known values
-    Ey <-  means[has]
+    Ey <- means[has]
 
     # conditional means of nom true, nom obs, and test obs
     conditional.mean <- means[wants] + sigma.xy %*% solve(sigma.yy) * (y - Ey)
@@ -107,13 +111,15 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
   }
 
   if (valid == 1e-7) {
-    errortrapping(relyt=relyt)
+    errortrapping(relyt = relyt)
 
     # index of row/column positions for the arguments supplied
     # this is the value to be conditioned on
     has <- seq(1:2)[!is.na(c(t.obs, t.true))]
 
-    if (length(has) != 1) {stop("Only one of n.obs, t.obs, or t.true should be provided")}
+    if (length(has) != 1) {
+      stop("Only one of n.obs, t.obs, or t.true should be provided")
+    }
 
     # index of row/column positions for the remaining arguments
     wants <- seq(1:2)[-has]
@@ -122,8 +128,10 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
 
     cov <- matrix(c(
       1,              sqrt(relyt),
-      sqrt(relyt),    1),
-      nrow=2, ncol=2, byrow=T)
+      sqrt(relyt),    1
+    ),
+    nrow = 2, ncol = 2, byrow = T
+    )
 
     # marginal mean of the true [1] and observed [2] scores
     means <- c(0, 0)
@@ -135,14 +143,14 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
     # sigma.yy is the cov matrix of the values to be conditioned on
     sigma.yy <- cov[has, has]
 
-    sigma.xy <- matrix(cov[wants, has], ncol=1)
+    sigma.xy <- matrix(cov[wants, has], ncol = 1)
     sigma.yx <- t(sigma.xy)
 
     # y is the vector of known values to be conditioned on
     y <- as.numeric(na.omit(c(t.obs, t.true)))
 
     # y is the expectation of the known values
-    Ey <-  means[has]
+    Ey <- means[has]
 
     # conditional means of nom true, nom obs, and test obs
     conditional.mean <- means[wants] + sigma.xy %*% solve(sigma.yy) * (y - Ey)
@@ -155,10 +163,10 @@ conditional_moments <- function(t.true=NA, n.obs=NA, t.obs=NA, relyt, valid=1e-7
 
     # name the rows
     row.names(conditional.cov) <- nms[wants]
-
-    }
+  }
 
   return(list(
-    conditional.mean=conditional.mean,
-    conditional.cov=conditional.cov))
+    conditional.mean = conditional.mean,
+    conditional.cov = conditional.cov
+  ))
 }

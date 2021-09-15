@@ -15,35 +15,46 @@
 #' # (note the lack of a relyt argument)
 #' # true validity is .6
 #' set.seed(1)
-#' x <- r_identified(n=500, test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)
+#' x <- r_identified(
+#'   n = 500, test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )
 #'
 #' # calculate the identification rate implied by the system parameters
-#' id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)$identification.rate
+#' id.rate <- marginal_psychometrics(
+#'   test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )$identification.rate
 #'
 #' # calculate the nomination rate implied by the system parameters
-#' nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)$nom.rate
+#' nom.rate <- marginal_psychometrics(
+#'   test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )$nom.rate
 #'
 #' # estimate the nomination validity with 10 bootstrapped samples
-#' boot_estimate_valid(x, id.rate=id.rate, nom.rate=nom.rate, reps=10)
-#'
+#' boot_estimate_valid(x, id.rate = id.rate, nom.rate = nom.rate, reps = 10)
 #' @export
 
-boot_estimate_valid <- function(reps, x, nom.rate, id.rate, pop.mean=0,
-                                pop.sd=1, adjust=1) {
+boot_estimate_valid <- function(reps, x, nom.rate, id.rate, pop.mean = 0,
+                                pop.sd = 1, adjust = 1) {
 
   # remove any missing values in x and convert it to a vector
   x <- as.numeric(unlist(na.omit(x)))
 
   # standardize the scores wrt the population mean and sd
-  x <- (x-pop.mean)/pop.sd
+  x <- (x - pop.mean) / pop.sd
 
-    samples <- pbapply::pbreplicate(n=reps,
-                    expr=estimate_valid(x=sample(x, size=length(x),
-                                        replace=T),
-                             id.rate=id.rate, nom.rate=nom.rate, adjust=adjust),
-                    simplify="matrix")
-    return(t(samples))
+  samples <- pbapply::pbreplicate(
+    n = reps,
+    expr = estimate_valid(
+      x = sample(x,
+        size = length(x),
+        replace = T
+      ),
+      id.rate = id.rate, nom.rate = nom.rate, adjust = adjust
+    ),
+    simplify = "matrix"
+  )
+  return(t(samples))
 }

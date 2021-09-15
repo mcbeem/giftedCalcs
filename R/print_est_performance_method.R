@@ -5,7 +5,7 @@
 #'
 #' @export
 
-print.est_performance <- function (x, ...) {
+print.est_performance <- function(x, ...) {
   hid <- attr(x, "hidden")
   print(x[!names(x) %in% hid], ...)
 }

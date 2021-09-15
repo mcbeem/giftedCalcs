@@ -16,9 +16,8 @@
 #'
 #' @export
 
-errortrapping <- function(relyt=1, valid=1E-30,
-                          nom.cutoff=.1, test.cutoff=.9, mu=0) {
-
+errortrapping <- function(relyt = 1, valid = 1E-30,
+                          nom.cutoff = .1, test.cutoff = .9, mu = 0) {
   if (relyt <= 0 | relyt > 1) {
     stop("\nThe value of relyt must be between zero and one. It is a reliability coefficient similar to r squared. It cannot be exactly zero due to computational instability.")
   }
@@ -28,8 +27,10 @@ errortrapping <- function(relyt=1, valid=1E-30,
   }
 
   if (valid > sqrt(relyt)) {
-    stop(paste0("\nThe nomination validity (valid) cannot exceed the square root of the test reliability (relyt). In such a case, the implied correlation between the nomination and test true scores exeeds 1.0. For the current setting of test reliability, the maximum nomination validity is ", round(sqrt(relyt),2), ". ",
-                "Please increase test reliability or decrease nomination validity."))
+    stop(paste0(
+      "\nThe nomination validity (valid) cannot exceed the square root of the test reliability (relyt). In such a case, the implied correlation between the nomination and test true scores exeeds 1.0. For the current setting of test reliability, the maximum nomination validity is ", round(sqrt(relyt), 2), ". ",
+      "Please increase test reliability or decrease nomination validity."
+    ))
   }
 
   if (nom.cutoff <= 0 | nom.cutoff >= 1) {
@@ -40,9 +41,9 @@ errortrapping <- function(relyt=1, valid=1E-30,
     stop("\nThe value of test.cutoff must be between zero and one. It is the percentile cutoff score for the confirmatory test. For example, a value of 0.9 is a cutoff at the 90th percentile. It cannot be exactly zero or one, as these would imply infinite cutoff values. The pnorm() function can be used to convert a known cutoff score into a percentile. For example, a cutoff of 120 can be converted to a percentile by running\n\npnorm(120, mean=100, sd=15)")
   }
 
-   if (abs(mu)>2) {
-     warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -2 to +2. Please verify your value of mu.")
-   }
+  if (abs(mu) > 2) {
+    warning("\nThe population mean true score (mu) is represented as a z-score and is unlikely to be outside the range of -2 to +2. Please verify your value of mu.")
+  }
 
   if (valid == 1e-7 & nom.cutoff != 1e-7) {
     warning("\nTwo-stage system is modeled but nomination validity may not have been specified..")

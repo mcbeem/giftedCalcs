@@ -21,26 +21,34 @@
 #'
 #' @examples
 #' # mean true score for identified students
-#' mean_identified(relyt=.9, valid=.8,
-#'   test.cutoff=.9, nom.cutoff=.5)
+#' mean_identified(
+#'   relyt = .9, valid = .8,
+#'   test.cutoff = .9, nom.cutoff = .5
+#' )
 #'
 #' # mean observed score for identified students
-#' mean_identified(valid=.8,test.cutoff=.9,
-#' nom.cutoff=.5)
+#' mean_identified(
+#'   valid = .8, test.cutoff = .9,
+#'   nom.cutoff = .5
+#' )
 #' @export
 
-mean_identified <- function(relyt=1, test.cutoff, valid=1e-7,
-                            nom.cutoff=1e-7, mu=0) {
+mean_identified <- function(relyt = 1, test.cutoff, valid = 1e-7,
+                            nom.cutoff = 1e-7, mu = 0) {
 
-# errortrapping(...)
+  # errortrapping(...)
 
   # expectation
   f1 <- function(x, relyt, test.cutoff, valid, nom.cutoff, mu) {
-    return(x * d_identified(x=x, relyt=relyt,
-                                     test.cutoff=test.cutoff, valid=valid,
-                                    nom.cutoff=nom.cutoff, mu=mu, normalize=T))
+    return(x * d_identified(
+      x = x, relyt = relyt,
+      test.cutoff = test.cutoff, valid = valid,
+      nom.cutoff = nom.cutoff, mu = mu, normalize = T
+    ))
   }
 
-  return(integrate(f1, relyt=relyt, test.cutoff=test.cutoff,
-                   valid=valid, nom.cutoff=nom.cutoff, mu=mu, lower=-Inf, upper=Inf)[[1]])
+  return(integrate(f1,
+    relyt = relyt, test.cutoff = test.cutoff,
+    valid = valid, nom.cutoff = nom.cutoff, mu = mu, lower = -Inf, upper = Inf
+  )[[1]])
 }

@@ -29,12 +29,16 @@
 #'
 #' @examples
 #' # un-normalized density for true score=1.5
-#' d_identified(relyt=.9, x=1.5, test.cutoff=.9,
-#'   nom.cutoff=.9, valid=.5, mu=0, normalize=FALSE)
+#' d_identified(
+#'   relyt = .9, x = 1.5, test.cutoff = .9,
+#'   nom.cutoff = .9, valid = .5, mu = 0, normalize = FALSE
+#' )
 #'
 #' # normalized density for observed score=1.5
-#' d_identified(x=1.5, test.cutoff=.9,
-#'   nom.cutoff=.9, valid=.5, mu=0, normalize=TRUE)
+#' d_identified(
+#'   x = 1.5, test.cutoff = .9,
+#'   nom.cutoff = .9, valid = .5, mu = 0, normalize = TRUE
+#' )
 #'
 #' # compare the density of identified students for universal
 #' # screening vs. a poor-performing nomination stage
@@ -43,51 +47,63 @@
 #' # under each system
 #'
 #' # create vector of true scores
-#' Tscores <- seq(0,4, length.out=200)
+#' Tscores <- seq(0, 4, length.out = 200)
 #'
-# # plot the un-normed density for universal screening
-#' p.universal <- sapply(Tscores, d_identified, relyt=.9,
-#'   test.cutoff=.9, normalize=FALSE)
+#' # # plot the un-normed density for universal screening
+#' p.universal <- sapply(Tscores, d_identified,
+#'   relyt = .9,
+#'   test.cutoff = .9, normalize = FALSE
+#' )
 #'
-#' plot(x=Tscores, y=p.universal, type="l", xlab="true score",
-#'   col="blue")
+#' plot(
+#'   x = Tscores, y = p.universal, type = "l", xlab = "true score",
+#'   col = "blue"
+#' )
 #'
 #' # add the un-normed density for the bad system
-#' p.bad <- sapply(Tscores, d_identified, relyt=.9,
-#'   test.cutoff=.9, nom.cutoff=.9, valid=.5, normalize=FALSE)
+#' p.bad <- sapply(Tscores, d_identified,
+#'   relyt = .9,
+#'   test.cutoff = .9, nom.cutoff = .9, valid = .5, normalize = FALSE
+#' )
 #'
-#' points(x=Tscores, y=p.bad, type="l", col="red")
+#' points(x = Tscores, y = p.bad, type = "l", col = "red")
 #' @export
 
-d_identified <- function(x, relyt=1, test.cutoff,
-                         mu=0, valid=1e-7, nom.cutoff=1e-7, normalize=TRUE) {
-
-   errortrapping(mu=mu)
+d_identified <- function(x, relyt = 1, test.cutoff,
+                         mu = 0, valid = 1e-7, nom.cutoff = 1e-7, normalize = TRUE) {
+  errortrapping(mu = mu)
 
   # if (!is.logical(normalize)) {
   #   stop("\nargument normalize must be TRUE or FALSE")}
 
-  d_identified_unnormed <- function(x=x, relyt=relyt,
-                                    test.cutoff=test.cutoff, valid=valid,
-                                    nom.cutoff=nom.cutoff, mu=mu) {
+  d_identified_unnormed <- function(x = x, relyt = relyt,
+                                    test.cutoff = test.cutoff, valid = valid,
+                                    nom.cutoff = nom.cutoff, mu = mu) {
+    p.id <- conditional_p_id(
+      x = x, relyt = relyt,
+      test.cutoff = test.cutoff, valid = valid,
+      nom.cutoff = nom.cutoff
+    )
 
-    p.id <- conditional_p_id(x=x, relyt=relyt,
-                             test.cutoff=test.cutoff, valid=valid,
-                             nom.cutoff=nom.cutoff)
-
-    return(p.id*dnorm(x, mean=mu))
+    return(p.id * dnorm(x, mean = mu))
   }
 
-  if (normalize==F) {
-    return(d_identified_unnormed(x=x, relyt=relyt,
-                                 test.cutoff=test.cutoff, valid=valid,
-                                 nom.cutoff=nom.cutoff, mu=mu))
+  if (normalize == F) {
+    return(d_identified_unnormed(
+      x = x, relyt = relyt,
+      test.cutoff = test.cutoff, valid = valid,
+      nom.cutoff = nom.cutoff, mu = mu
+    ))
   } else {
-    return(d_identified_unnormed(x=x, relyt=relyt,
-                                 test.cutoff=test.cutoff, valid=valid,
-                                 nom.cutoff=nom.cutoff, mu=mu) /
-             integrate(d_identified_unnormed, relyt=relyt,
-                       test.cutoff=test.cutoff, valid=valid,
-                       nom.cutoff=nom.cutoff, mu=mu, lower=-Inf, upper=Inf)[[1]])
+    return(d_identified_unnormed(
+      x = x, relyt = relyt,
+      test.cutoff = test.cutoff, valid = valid,
+      nom.cutoff = nom.cutoff, mu = mu
+    ) /
+      integrate(d_identified_unnormed,
+        relyt = relyt,
+        test.cutoff = test.cutoff, valid = valid,
+        nom.cutoff = nom.cutoff, mu = mu, lower = -Inf, upper = Inf
+      )[[1]])
   }
 }

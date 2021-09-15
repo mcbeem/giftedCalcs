@@ -28,35 +28,40 @@
 #' # (note the lack of a relyt argument)
 #' # true validity is .6
 #' set.seed(1)
-#' x <- r_identified(n=500, test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)
+#' x <- r_identified(
+#'   n = 500, test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )
 #'
 #' # calculate the identification rate implied by the system parameters
-#' id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)$identification.rate
+#' id.rate <- marginal_psychometrics(
+#'   test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )$identification.rate
 #'
 #' # calculate the nomination rate implied by the system parameters
-#' nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-#'   nom.cutoff=.85)$nom.rate
+#' nom.rate <- marginal_psychometrics(
+#'   test.cutoff = .9, valid = .6,
+#'   nom.cutoff = .85
+#' )$nom.rate
 #'
 #' # estimate the system parameters from the data
-#' estimate_valid(x=x, id.rate=id.rate, nom.rate=nom.rate)
-#'
+#' estimate_valid(x = x, id.rate = id.rate, nom.rate = nom.rate)
 #' @export
 
 
-estimate_valid <- function(x, nom.rate, id.rate, pop.mean=0,
-                           pop.sd=1, adjust=1) {
+estimate_valid <- function(x, nom.rate, id.rate, pop.mean = 0,
+                           pop.sd = 1, adjust = 1) {
 
   # remove any missing values in x and convert it to a vector
   x <- as.numeric(unlist(na.omit(x)))
 
   # standardize the scores wrt the population mean and sd
-  x <- (x-pop.mean)/pop.sd
+  x <- (x - pop.mean) / pop.sd
 
   # calculate nomination cutoff
-  nom.cutoff <- 1-nom.rate
-  #nom.cutoff <- pnorm(qnorm(1-nom.rate-mu))
+  nom.cutoff <- 1 - nom.rate
+  # nom.cutoff <- pnorm(qnorm(1-nom.rate-mu))
 
   # calculate test cutoff
   test.cutoff <- pnorm(min(x))
@@ -65,36 +70,41 @@ estimate_valid <- function(x, nom.rate, id.rate, pop.mean=0,
   x <- na.omit(x)
 
   # estimate the density
-  dens <- density(x, n=256, from=min(x), to=max(x), adjust=adjust, window="g")
-  #dens <- scdensity::scdensity(x, adjust=adjust, constraint="unimodal", n=256)
+  dens <- density(x, n = 256, from = min(x), to = max(x), adjust = adjust, window = "g")
+  # dens <- scdensity::scdensity(x, adjust=adjust, constraint="unimodal", n=256)
 
   # search for parameters of mixture distribution using
   #   the Levenburg-Marquardt algorithm
 
-  data <- matrix(cbind(dens$x, dens$y*id.rate), ncol=2)
+  data <- matrix(cbind(dens$x, dens$y * id.rate), ncol = 2)
   # drop data near cutoff
-  data <- data[data[,1]>qnorm(test.cutoff)+.1 ,]
+  data <- data[data[, 1] > qnorm(test.cutoff) + .1, ]
 
   parms <- NULL
 
   try(parms <- summary(
-    minpack.lm::nlsLM(data[,2] ~ d_identified_v(x=data[,1],
-                                                  test.cutoff=test.cutoff,
-                                                  valid=valid,
-                                                  nom.cutoff=nom.cutoff,
-                                                  mu=0,
-                                                  normalize=F),
-                      lower=c(.1),
-                      upper=c(.999),
-                      start=list(valid=.6),
-                      control= minpack.lm::nls.lm.control(maxiter=200)))$coef,
-    silent=TRUE)
+    minpack.lm::nlsLM(data[, 2] ~ d_identified_v(
+      x = data[, 1],
+      test.cutoff = test.cutoff,
+      valid = valid,
+      nom.cutoff = nom.cutoff,
+      mu = 0,
+      normalize = F
+    ),
+    lower = c(.1),
+    upper = c(.999),
+    start = list(valid = .6),
+    control = minpack.lm::nls.lm.control(maxiter = 200)
+    )
+  )$coef,
+  silent = TRUE
+  )
 
   if (!is.null(parms)) {
-    results <- parms[,1]
-
+    results <- parms[, 1]
   } else {
-    results <- c(NA) }
+    results <- c(NA)
+  }
 
   names(results) <- c("valid")
   return(results)

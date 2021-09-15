@@ -30,29 +30,33 @@
 #' @examples
 #' # one-stage identification program
 #' # returns the true score
-#' q_identified(percentile=.1, relyt=.9, test.cutoff=.9)
+#' q_identified(percentile = .1, relyt = .9, test.cutoff = .9)
 #'
 #' # one-stage identification program
 #' # returns the observed score
-#' q_identified(percentile=.1, test.cutoff=.9)
+#' q_identified(percentile = .1, test.cutoff = .9)
 #'
 #' # two-stage identification program
 #' #  returns the true score
-#' q_identified(percentile=.9, relyt=.95, valid=.6,
-#'   test.cutoff=.975, nom.cutoff=.9)
+#' q_identified(
+#'   percentile = .9, relyt = .95, valid = .6,
+#'   test.cutoff = .975, nom.cutoff = .9
+#' )
 #' @export
 
-q_identified <- function(percentile, relyt=1, test.cutoff, valid=1e-7,
-                         nom.cutoff=1e-7, mu=0) {
-
+q_identified <- function(percentile, relyt = 1, test.cutoff, valid = 1e-7,
+                         nom.cutoff = 1e-7, mu = 0) {
   if (percentile <= 0 | percentile >= 1) {
     stop("\nThe value of percentile must be between zero and one. It is the percentile of the score you wish to identify.")
   }
 
-  zero.at.percentile <- function(x)
-    p_identified(x=x, relyt=relyt, test.cutoff=test.cutoff, valid=valid,
-                 nom.cutoff=nom.cutoff, mu=mu)-percentile
-  return(uniroot(zero.at.percentile, interval=c(-10, 10))$root)
+  zero.at.percentile <- function(x) {
+    p_identified(
+      x = x, relyt = relyt, test.cutoff = test.cutoff, valid = valid,
+      nom.cutoff = nom.cutoff, mu = mu
+    ) - percentile
+  }
+  return(uniroot(zero.at.percentile, interval = c(-10, 10))$root)
 }
 
 q_identified <- Vectorize(q_identified)

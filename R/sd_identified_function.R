@@ -20,25 +20,34 @@
 #'
 #' @examples
 #' # std dev for true scores
-#' sd_identified(relyt=.9, valid=.8,
-#'   test.cutoff=.9, nom.cutoff=.5, mu=0)
+#' sd_identified(
+#'   relyt = .9, valid = .8,
+#'   test.cutoff = .9, nom.cutoff = .5, mu = 0
+#' )
 #'
 #' # std dev for observed scores
-#' 15*(sd_identified(valid=.8,
-#' test.cutoff=.9, nom.cutoff=.5, mu=0))
+#' 15 * (sd_identified(
+#'   valid = .8,
+#'   test.cutoff = .9, nom.cutoff = .5, mu = 0
+#' ))
 #' @export
 
-sd_identified <- function(relyt=1, test.cutoff, valid=1e-7,
-                          nom.cutoff=1e-7, mu=0) {
-
+sd_identified <- function(relyt = 1, test.cutoff, valid = 1e-7,
+                          nom.cutoff = 1e-7, mu = 0) {
   f2 <- function(x, relyt, test.cutoff, valid, nom.cutoff, mu, normalize) {
-    return(x^2 * d_identified(x=x, relyt=relyt, test.cutoff=test.cutoff,
-                                       valid=valid, nom.cutoff=nom.cutoff, mu=mu, normalize=T))
+    return(x^2 * d_identified(
+      x = x, relyt = relyt, test.cutoff = test.cutoff,
+      valid = valid, nom.cutoff = nom.cutoff, mu = mu, normalize = T
+    ))
   }
 
-  v <- integrate(f2, relyt=relyt, test.cutoff=test.cutoff,
-                 valid=valid, nom.cutoff=nom.cutoff, mu=mu, normalize=T, lower=-Inf, upper=Inf)[[1]]-
-    mean_identified(relyt=relyt, test.cutoff=test.cutoff,
-                    valid=valid, nom.cutoff=nom.cutoff, mu=mu)^2
+  v <- integrate(f2,
+    relyt = relyt, test.cutoff = test.cutoff,
+    valid = valid, nom.cutoff = nom.cutoff, mu = mu, normalize = T, lower = -Inf, upper = Inf
+  )[[1]] -
+    mean_identified(
+      relyt = relyt, test.cutoff = test.cutoff,
+      valid = valid, nom.cutoff = nom.cutoff, mu = mu
+    )^2
   return(sqrt(v))
 }
