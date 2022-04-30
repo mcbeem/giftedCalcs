@@ -56,10 +56,11 @@ The function returns a list containing the following:
 }
 \examples{
 # one-stage system
-marginal_psychometrics(mu=0, test.cutoff=.9, relyt=.95)
+marginal_psychometrics(mu = 0, test.cutoff = .9, relyt = .95)
 
 # two-stage system
-marginal_psychometrics(mu=0, test.cutoff=.9,
-        nom.cutoff=.8, relyt=.95, valid=.7)
-
+marginal_psychometrics(
+  mu = 0, test.cutoff = .9,
+  nom.cutoff = .8, relyt = .95, valid = .7
+)
 }

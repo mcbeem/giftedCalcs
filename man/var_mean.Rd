@@ -28,10 +28,11 @@ of the variance of the weighted mean. The square root of this value is the shrin
 factor of the standard deviation of the weighted mean.
 }
 \examples{
-var_mean(r=c(.4, .7, .9), w=c(1,2,3))
+var_mean(r = c(.4, .7, .9), w = c(1, 2, 3))
 
-var_mean(r=matrix(c( 1,.4,.7,
-                      .4, 1,.9,
-                      .7,.9, 1), 3,3, byrow=TRUE))
-
+var_mean(r = matrix(c(
+  1, .4, .7,
+  .4, 1, .9,
+  .7, .9, 1
+), 3, 3, byrow = TRUE))
 }

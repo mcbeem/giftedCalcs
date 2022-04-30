@@ -38,10 +38,14 @@ Defaults to zero.}
 }
 \examples{
 # std dev for true scores
-sd_identified(relyt=.9, valid=.8,
-  test.cutoff=.9, nom.cutoff=.5, mu=0)
+sd_identified(
+  relyt = .9, valid = .8,
+  test.cutoff = .9, nom.cutoff = .5, mu = 0
+)
 
 # std dev for observed scores
-15*(sd_identified(valid=.8,
-test.cutoff=.9, nom.cutoff=.5, mu=0))
+15 * (sd_identified(
+  valid = .8,
+  test.cutoff = .9, nom.cutoff = .5, mu = 0
+))
 }

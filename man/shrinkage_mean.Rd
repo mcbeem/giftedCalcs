@@ -29,10 +29,10 @@ This function calculates the shrinkage (proportional reduction in the standard d
  the correlations between them, and the weights.
 }
 \examples{
-r <- matrix(c(  1, .4, .7,
-               .4,  1, .5,
-               .7, .5,  1), 3,3, byrow=TRUE)
-shrinkage_mean(rely=c(.9, .85, .88), r=r, w=c(.5, .3, .2))
-
-
+r <- matrix(c(
+  1, .4, .7,
+  .4, 1, .5,
+  .7, .5, 1
+), 3, 3, byrow = TRUE)
+shrinkage_mean(rely = c(.9, .85, .88), r = r, w = c(.5, .3, .2))
 }

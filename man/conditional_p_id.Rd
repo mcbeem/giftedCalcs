@@ -44,34 +44,42 @@ The two-stage identification probability is returned if arguments valid
 }
 \examples{
 # one-stage system, true score=1
-conditional_p_id(x=1, relyt=.9, test.cutoff=.9)
+conditional_p_id(x = 1, relyt = .9, test.cutoff = .9)
 
 # one-stage system, observed score=1
 # (note that the relyt argument is not specified)
-conditional_p_id(x=1, test.cutoff=.9)
+conditional_p_id(x = 1, test.cutoff = .9)
 
 # two-stage system, true score=2
-conditional_p_id(x=2, relyt=.9, test.cutoff=.9,
-   nom.cutoff=.9, valid=.5)
+conditional_p_id(
+  x = 2, relyt = .9, test.cutoff = .9,
+  nom.cutoff = .9, valid = .5
+)
 
 # two-stage system, observed score=2
-conditional_p_id(x=2, test.cutoff=.9,
-   nom.cutoff=.9, valid=.5)
+conditional_p_id(
+  x = 2, test.cutoff = .9,
+  nom.cutoff = .9, valid = .5
+)
 
 # make an identification curve:
 #  true score vs p identified
 #
 # create vector of true scores
-Tscores <- seq(0,3, length.out=100)
+Tscores <- seq(0, 3, length.out = 100)
 
 # calculate the identification probability for each
-p.id <- conditional_p_id(x=Tscores, relyt=.9,
-  test.cutoff=.9, nom.cutoff=.9, valid=.5)
+p.id <- conditional_p_id(
+  x = Tscores, relyt = .9,
+  test.cutoff = .9, nom.cutoff = .9, valid = .5
+)
 
 # make a plot
-plot(x=Tscores, y=p.id, type="l", xlab="true score",
-  ylab="p identified")
+plot(
+  x = Tscores, y = p.id, type = "l", xlab = "true score",
+  ylab = "p identified"
+)
 
 # add a reference line for the test cutoff
-abline(v=qnorm(.9), col="red")
+abline(v = qnorm(.9), col = "red")
 }

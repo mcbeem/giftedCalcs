@@ -25,11 +25,14 @@ This function calculates the reliability of a weighted mean of assessments given
  weights.
 }
 \examples{
-r <- matrix(c(  1, .4, .7,
-               .4,  1, .5,
-               .7, .5,  1), 3,3, byrow=TRUE)
+r <- matrix(c(
+  1, .4, .7,
+  .4, 1, .5,
+  .7, .5, 1
+), 3, 3, byrow = TRUE)
 rely <- c(.9, .9, .9)
-optimal_id(rely=rely, r=r, w=c(1,1,1),
-  test.cutoff=.9, nom.cutoff=.85)
-
+optimal_id(
+  rely = rely, r = r, w = c(1, 1, 1),
+  test.cutoff = .9, nom.cutoff = .85
+)
 }

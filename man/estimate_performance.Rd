@@ -61,35 +61,42 @@ Estimate psychometric parameters of an identification system given the observed 
 \examples{
 # generate some data
 set.seed(123)
-x <- r_identified(n=300, test.cutoff=.9, valid=.5,
-  nom.cutoff=.9)
+x <- r_identified(
+  n = 300, test.cutoff = .9, valid = .5,
+  nom.cutoff = .9
+)
 
 # calculate the identification rate implied by the system parameters
-id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.5,
-  nom.cutoff=.9)$identification.rate
+id.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .5,
+  nom.cutoff = .9
+)$identification.rate
 
 # calculate the nomination rate implied by the system parameters
-nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.5,
-  nom.cutoff=.9)$nom.rate
+nom.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .5,
+  nom.cutoff = .9
+)$nom.rate
 
 # estimate the system parameters with 200 bootstrapped samples
 #  this uses one CPU
-a <- estimate_performance(x=x, id.rate=id.rate,
-  nom.rate=nom.rate, reps=200)
+a <- estimate_performance(
+  x = x, id.rate = id.rate,
+  nom.rate = nom.rate, reps = 200
+)
 a
 
 # plot the results for each parameter
 plot(a)
 
 # plot with histograms
-plot(a, type="hist")
+plot(a, type = "hist")
 
 # the width argument controls the x-limits
-plot(a, type="hist", width=.0)
+plot(a, type = "hist", width = .0)
 
 # for type="density", the bandwidth is adjustable
 #  (default is 1.2, see ?density for details)
-plot(a, type="density", width=.05, adjust=.5)
-plot(a, type="density", width=.05, adjust=1.5)
-
+plot(a, type = "density", width = .05, adjust = .5)
+plot(a, type = "density", width = .05, adjust = 1.5)
 }

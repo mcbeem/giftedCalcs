@@ -19,7 +19,7 @@ rule joins across rows}
 
 \item{n}{scalar, the number of samples to draw. defaults to 50,000}
 
-\item{nomination}{scalar defining which column of the policy matrix,
+\item{nomination}{vector defining which columns of the policy matrix,
 row / column of the correlation matrix, and element of the reliability
 vector is the nomination. Defaults to NA, which is interpreted as no
 nomination stage}
@@ -31,7 +31,7 @@ criteria policy without needing to respecify the other inputs. defaults to FALSE
 \item{labels}{an optional vector of labels for the assessments; defaults to NA}
 }
 \value{
-an object of class \code{giftedCalcsMC}, which is a list with the following elements:
+a list with the following elements:
    \code{$identified}: the proportion of students that are identified
    \code{$gifted}: the proportion of students that are gifted
    \code{$sensitivity}: the sensitivity
@@ -50,24 +50,26 @@ for reproducibility.
 }
 \examples{
 
-policy = matrix(c(
- .9, .9, .9, 0,
- .9, 0, .9, .9,
- .9, 0, 0, .95), ncol=4, byrow=TRUE)
+policy <- matrix(c(
+  .9, .9, .9, 0,
+  .9, 0, .9, .9,
+  .9, 0, 0, .95
+), ncol = 4, byrow = TRUE)
 
-corr = matrix(c(  1,  .5,  .4, .3,
-                 .5,  1, .7, .6,
-                 .4,  .7,  1, .5,
-                 .3,  .6, .5,  1), byrow=TRUE, nrow=4)
+corr <- matrix(c(
+  1, .5, .4, .3,
+  .5, 1, .7, .6,
+  .4, .7, 1, .5,
+  .3, .6, .5, 1
+), byrow = TRUE, nrow = 4)
 
-rely=c(.8, .9, .8, .85)
+rely <- c(.8, .9, .8, .85)
 
-result = marginal_psychometrics_MC(n=50000, policy=policy, corr=corr,
- rely=rely, nomination=1, labels=c("nom", "IQ", "ach", "creativity"),
- ignore_nomination=FALSE)
+result <- marginal_psychometrics_MC(
+  n = 50000, policy = policy, corr = corr,
+  rely = rely, nomination = 1, labels = c("nom", "IQ", "ach", "creativity"),
+  ignore_nomination = FALSE
+)
 
 result
-
-plot(result)
-
 }

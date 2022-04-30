@@ -49,6 +49,8 @@ See also \code{d_identified} for the density function, \code{q_identified} for
 the quantile function, and \code{r_identified} for random generation.
 }
 \examples{
-p_identified(relyt=.95, valid=.6, test.cutoff=.975,
-  nom.cutoff=.9, x=2.5)
+p_identified(
+  relyt = .95, valid = .6, test.cutoff = .975,
+  nom.cutoff = .9, x = 2.5
+)
 }

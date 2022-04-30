@@ -55,8 +55,8 @@ If the argument valid is supplied, the two-stage conditional moments are
 \examples{
 
 # one-stage system
-conditional_moments(t.true=2, relyt=.9)
+conditional_moments(t.true = 2, relyt = .9)
 
 # two-stage system
-conditional_moments(t.true=2, relyt=.9, valid=.6)
+conditional_moments(t.true = 2, relyt = .9, valid = .6)
 }

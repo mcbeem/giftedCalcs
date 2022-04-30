@@ -42,18 +42,23 @@ The function uses the Levenburg-Marquardt algorithm to minimize the discrepancy
 # (note the lack of a relyt argument)
 # true validity is .6
 set.seed(1)
-x <- r_identified(n=500, test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)
+x <- r_identified(
+  n = 500, test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)
 
 # calculate the identification rate implied by the system parameters
-id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)$identification.rate
+id.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)$identification.rate
 
 # calculate the nomination rate implied by the system parameters
-nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)$nom.rate
+nom.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)$nom.rate
 
 # estimate the system parameters from the data
-estimate_valid(x=x, id.rate=id.rate, nom.rate=nom.rate)
-
+estimate_valid(x = x, id.rate = id.rate, nom.rate = nom.rate)
 }
