@@ -39,18 +39,23 @@ Bootstrapping with a progress bar
 # (note the lack of a relyt argument)
 # true validity is .6
 set.seed(1)
-x <- r_identified(n=500, test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)
+x <- r_identified(
+  n = 500, test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)
 
 # calculate the identification rate implied by the system parameters
-id.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)$identification.rate
+id.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)$identification.rate
 
 # calculate the nomination rate implied by the system parameters
-nom.rate <- marginal_psychometrics(test.cutoff=.9, valid=.6,
-  nom.cutoff=.85)$nom.rate
+nom.rate <- marginal_psychometrics(
+  test.cutoff = .9, valid = .6,
+  nom.cutoff = .85
+)$nom.rate
 
 # estimate the nomination validity with 10 bootstrapped samples
-boot_estimate_valid(x, id.rate=id.rate, nom.rate=nom.rate, reps=10)
-
+boot_estimate_valid(x, id.rate = id.rate, nom.rate = nom.rate, reps = 10)
 }

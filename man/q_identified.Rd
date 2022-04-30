@@ -42,14 +42,16 @@ the cumulative density function, and \code{r_identified} for random generation.
 \examples{
 # one-stage identification program
 # returns the true score
-q_identified(percentile=.1, relyt=.9, test.cutoff=.9)
+q_identified(percentile = .1, relyt = .9, test.cutoff = .9)
 
 # one-stage identification program
 # returns the observed score
-q_identified(percentile=.1, test.cutoff=.9)
+q_identified(percentile = .1, test.cutoff = .9)
 
 # two-stage identification program
 #  returns the true score
-q_identified(percentile=.9, relyt=.95, valid=.6,
-  test.cutoff=.975, nom.cutoff=.9)
+q_identified(
+  percentile = .9, relyt = .95, valid = .6,
+  test.cutoff = .975, nom.cutoff = .9
+)
 }

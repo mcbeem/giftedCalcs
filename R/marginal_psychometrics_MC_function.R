@@ -122,7 +122,7 @@ rowwise_compare <- function(datarow, bounds) {
 #' @param corr a correlation matrix
 #' @param rely a vector of reliability coefficients
 #' @param n scalar, the number of samples to draw. defaults to 50,000
-#' @param nomination scalar defining which column of the policy matrix,
+#' @param nomination vector defining which columns of the policy matrix,
 #'   row / column of the correlation matrix, and element of the reliability
 #'   vector is the nomination. Defaults to NA, which is interpreted as no
 #'   nomination stage
@@ -131,7 +131,7 @@ rowwise_compare <- function(datarow, bounds) {
 #'   criteria policy without needing to respecify the other inputs. defaults to FALSE
 #' @param labels an optional vector of labels for the assessments; defaults to NA
 #'
-#' @return an object of class \code{giftedCalcsMC}, which is a list with the following elements:
+#' @return a list with the following elements:
 #'    \code{$identified}: the proportion of students that are identified
 #'    \code{$gifted}: the proportion of students that are gifted
 #'    \code{$sensitivity}: the sensitivity
@@ -176,19 +176,23 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n = 50000, nomination 
 
 
   # case 2: nomination is provided but should be ignored
-  if (!is.na(nomination) & ignore_nomination == TRUE) {
+  if (all(!is.na(nomination)) & ignore_nomination == TRUE) {
     # drop nomination cols from policy object, rows / cols for corrs object ,and rely entry
     policy <- policy[, -nomination]
     corr <- corr[-nomination, -nomination]
     rely <- rely[-nomination]
 
-    if (!is.na(labels[1])) {
+    if (all(!is.na(labels))) {
       # if labels were given, drop the nomination label
       labels <- labels[-nomination]
     }
 
     if ("matrix" %!in% class(policy)) {
       policy <- matrix(policy, nrow = 1)
+    }
+
+    if ("matrix" %!in% class(corr)) {
+      corr <- matrix(corr, nrow = 1)
     }
   }
 
@@ -210,14 +214,14 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n = 50000, nomination 
   #  so don't alter the policy_gifted or policy_identified vectors
 
   # case 3: nomination is provided and it should be used
-  if (ignore_nomination == FALSE & !is.na(nomination)) {
+  if (ignore_nomination == FALSE & all(!is.na(nomination))) {
     # reset nomination criterion
     #  since nomination doesn't define who is gifted, set the appropriate columns
     #    on the true score side of the policy matrix to -Inf
-    policy_gifted[, ncol(policy) + nomination] <- rep(-Inf, times = nrow(policy))
+    policy_gifted[, ncol(policy) + nomination] <- -Inf
 
     # do the same thing in the identification policy object, again only on the true score side
-    policy_identified[, ncol(policy) + nomination] <- rep(-Inf, times = nrow(policy))
+    policy_identified[, ncol(policy) + nomination] <- -Inf
   }
 
   # if the policy matrix has only one row, it has no or's. So an analytic solution is convenient.
@@ -276,10 +280,6 @@ marginal_psychometrics_MC <- function(policy, corr, rely, n = 50000, nomination 
     )
   }
 
-
-  # define a class for this object
-  class(results) <- "giftedCalcsMC"
-  # attr(results, "hidden") <- c("scores")
 
   return(results)
 }

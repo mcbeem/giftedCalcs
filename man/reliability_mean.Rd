@@ -25,9 +25,10 @@ This function calculates the reliability of a weighted mean of assessments given
  weights.
 }
 \examples{
-r <- matrix(c(  1, .4, .7,
-               .4,  1, .5,
-               .7, .5,  1), 3,3, byrow=TRUE)
-reliability_mean(rely=c(.9, .85, .88), r=r, w=c(.5, .3, .2))
-
+r <- matrix(c(
+  1, .4, .7,
+  .4, 1, .5,
+  .7, .5, 1
+), 3, 3, byrow = TRUE)
+reliability_mean(rely = c(.9, .85, .88), r = r, w = c(.5, .3, .2))
 }

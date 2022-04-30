@@ -50,12 +50,16 @@ for the quantile function, and \code{\link{r_identified}} for random generation.
 }
 \examples{
 # un-normalized density for t=1.0
-d_identified(relyt=.9, x=1, test.cutoff=.9,
-  nom.cutoff=.9, valid=.5, mu=0, normalize=FALSE)
+d_identified(
+  relyt = .9, x = 1, test.cutoff = .9,
+  nom.cutoff = .9, valid = .5, mu = 0, normalize = FALSE
+)
 
 # normalized density for t=1.0
-d_identified(relyt=.9, x=1, test.cutoff=.9,
-  nom.cutoff=.9, valid=.5, mu=0, normalize=TRUE)
+d_identified(
+  relyt = .9, x = 1, test.cutoff = .9,
+  nom.cutoff = .9, valid = .5, mu = 0, normalize = TRUE
+)
 
 # compare the density of identified students for universal
 # screening vs. a poor-performing nomination stage
@@ -64,17 +68,24 @@ d_identified(relyt=.9, x=1, test.cutoff=.9,
 # under each system
 
 # create vector of true scores
-Tscores <- seq(0,4, length.out=200)
+Tscores <- seq(0, 4, length.out = 200)
 
-p.universal <- sapply(Tscores, d_identified, relyt=.9,
-  test.cutoff=.9, normalize=FALSE)
+# # plot the un-normed density for universal screening
+p.universal <- sapply(Tscores, d_identified,
+  relyt = .9,
+  test.cutoff = .9, normalize = FALSE
+)
 
-plot(x=Tscores, y=p.universal, type="l", xlab="true score",
-  col="blue")
+plot(
+  x = Tscores, y = p.universal, type = "l", xlab = "true score",
+  col = "blue"
+)
 
 # add the un-normed density for the bad system
-p.bad <- sapply(Tscores, d_identified, relyt=.9,
-  test.cutoff=.9, nom.cutoff=.9, valid=.5, normalize=FALSE)
+p.bad <- sapply(Tscores, d_identified,
+  relyt = .9,
+  test.cutoff = .9, nom.cutoff = .9, valid = .5, normalize = FALSE
+)
 
-points(x=Tscores, y=p.bad, type="l", col="red")
+points(x = Tscores, y = p.bad, type = "l", col = "red")
 }

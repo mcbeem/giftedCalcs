@@ -39,10 +39,14 @@ This function calculates the expected value (mean) of the ability true
 }
 \examples{
 # mean true score for identified students
-mean_identified(relyt=.9, valid=.8,
-  test.cutoff=.9, nom.cutoff=.5)
+mean_identified(
+  relyt = .9, valid = .8,
+  test.cutoff = .9, nom.cutoff = .5
+)
 
 # mean observed score for identified students
-mean_identified(valid=.8,test.cutoff=.9,
-nom.cutoff=.5)
+mean_identified(
+  valid = .8, test.cutoff = .9,
+  nom.cutoff = .5
+)
 }
